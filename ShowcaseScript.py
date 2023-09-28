@@ -72,4 +72,4 @@ plot_CGM(CGM_interval1)
 
 #%% Test Git
 
-print("Test Git")
+print("Test Git2")
