@@ -69,7 +69,3 @@ out_bed = summed_data.iloc[i]['Out Bed DateTime']
 
 CGM_interval1 = extract_one_night(in_bed, out_bed, CGM_data)
 plot_CGM(CGM_interval1)
-
-#%% Test Git
-
-print("Test Git2")
