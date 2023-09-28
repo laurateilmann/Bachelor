@@ -18,6 +18,7 @@ import plotly.io as io
 import pandas as pd
 from datetime import datetime 
 from MarkMissingData import MarkMissingData
+from CalcPctActiveTime import *
 
 #%% 
 
@@ -94,7 +95,7 @@ for family in families:
                     cgm_data.loc[i,'CGM'] = float("nan") 
                     
             # Percent active CGM time. OBS: not used or exported at the moment
-            PctActiveTime, TotalTime = CalcPctActiveTime(CGMData)
+            PctActiveTime, TotalTime = CalcPctActiveTime(cgm_data)
             
             # Export processed CGM data
             processed_filename = os.path.splitext(filename)[0] + '_processed.csv'
