@@ -107,6 +107,3 @@ for family in families:
         print(f"Processed features for {family}/{session}")
         
 
-
-#%% test
-        
