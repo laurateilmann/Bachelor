@@ -21,6 +21,7 @@ import plotly.graph_objects as go
 import plotly.io as io
 import matplotlib.pyplot as plt
 
+plt.close('all')
 
 #%% Set the base directory for the current family and session
 base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\MindYourDiabetes"
@@ -71,47 +72,66 @@ cgm_feature_df = pd.concat(dfs_cgm, ignore_index=True)
 #%% Plot: std and WASO
 
 plt.figure()
-plt.plot(cgm_feature_df['std'], epochs_feature_df['WASO'], '.')
-plt.title("Std against WASO")
-plt.xlabel("Standard deviation")
-plt.ylabel("WASO (min)")
+plt.plot(cgm_feature_df['std'], epochs_feature_df['WASO'], 'o')
+plt.title("Std against WASO", fontsize=16, family='Times New Roman', fontweight='bold')
+plt.xlabel("Standard deviation", fontsize=14, family='Times New Roman')
+plt.ylabel("WASO (min)", fontsize=14, family='Times New Roman')
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
+#plt.grid()
+
 
 #%% Plot: TIR and WASO
 
 plt.figure()
-plt.plot(cgm_feature_df['TIR (%)'], epochs_feature_df['WASO'], '.')
-plt.title("TIR against WASO")
-plt.xlabel("Time in range (%)")
-plt.ylabel("WASO (min)")
+plt.plot(cgm_feature_df['TIR (%)'], epochs_feature_df['WASO'], 'o')
+plt.title("TIR against WASO", fontsize=16, family='Times New Roman', fontweight='bold')
+plt.xlabel("Time in range (%)", fontsize=14, family='Times New Roman')
+plt.ylabel("WASO (min)", fontsize=14, family='Times New Roman')
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
+#plt.grid()
 
 #%% Plot: max IG and WASO
 
 plt.figure()
-plt.plot(cgm_feature_df['max'], epochs_feature_df['WASO'], '.')
-plt.title("Max IG against WASO")
-plt.xlabel("Max intestinal glucose (mmol/L)")
-plt.ylabel("WASO (min)")
+plt.plot(cgm_feature_df['max'], epochs_feature_df['WASO'], 'o')
+plt.title("Max IG against WASO", fontsize=16, family='Times New Roman', fontweight='bold')
+plt.xlabel("Max intestinal glucose (mmol/L)", fontsize=14, family='Times New Roman')
+plt.ylabel("WASO (min)",fontsize=14, family='Times New Roman')
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
+#plt.grid()
 
 #%% Plot: min IG and WASO
 
 plt.figure()
-plt.plot(cgm_feature_df['min'], epochs_feature_df['WASO'], '.')
-plt.title("Min. IG against WASO")
-plt.xlabel("Min. intestinal glucose (mmol/L)")
-plt.ylabel("WASO (min)")
+plt.plot(cgm_feature_df['min'], epochs_feature_df['WASO'], 'o')
+plt.title("Min. IG against WASO", fontsize=16, family='Times New Roman', fontweight='bold')
+plt.xlabel("Min. intestinal glucose (mmol/L)", fontsize=14, family='Times New Roman')
+plt.ylabel("WASO (min)", fontsize=14, family='Times New Roman')
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
+#plt.grid()
 
 #%% Plot: mean and TST
 
 plt.figure()
-plt.plot(cgm_feature_df['mean'], epochs_feature_df['TST'], '.')
-plt.title("Mean against TST")
-plt.xlabel("Mean intestinal glucose (mmol/L)")
-plt.ylabel("Total sleep time (min)")
+plt.plot(cgm_feature_df['mean'], epochs_feature_df['TST'], 'o')
+plt.title("Mean against TST", fontsize=16, family='Times New Roman', fontweight='bold')
+plt.xlabel("Mean intestinal glucose (mmol/L)", fontsize=14, family='Times New Roman')
+plt.ylabel("Total sleep time (min)", fontsize=14, family='Times New Roman')
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
+#plt.grid()
 
 #%% Plot: mean and number of awakenings
 
 plt.figure()
-plt.plot(cgm_feature_df['mean'], epochs_feature_df['Number of awakenings'], '.')
-plt.title("Mean against number of awakenings")
-plt.xlabel("Mean intestinal glucose (mmol/L)")
-plt.ylabel("Number of awakenings")
+plt.plot(cgm_feature_df['mean'], epochs_feature_df['Number of awakenings'], 'o')
+plt.title("Mean against number of awakenings", fontsize=16, family='Times New Roman', fontweight='bold')
+plt.xlabel("Mean intestinal glucose (mmol/L)", fontsize=14, family='Times New Roman')
+plt.ylabel("Number of awakenings", fontsize=14, family='Times New Roman')
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
+#plt.grid()
