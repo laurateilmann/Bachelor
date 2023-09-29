@@ -53,6 +53,7 @@ for family in families:
         nightly_features_list = []
         hourly_awakenings_list = []
         hourly_waso_list = []
+        hourly_avg_awakening_list = []
         
         # Loop through all relevant nights
         for i in range(summed_data.shape[0]):
@@ -72,37 +73,48 @@ for family in families:
             waso = calc_WASO(night_data)
             # WASO per hour per night
             h_waso = hourly_WASO(night_data)
+            
+            # Average awakening length
+            avg_awakening = calc_avg_awakening(night_data)
+            # Hourly average awakening length
+            h_avg_awakening = hourly_avg_awakening(night_data)
 
             # Total sleep time per night
             tst = calc_TST(night_data)
             
             # Append lists with calculated features
-            nightly_features_list.append([in_bed, out_bed, num_awakenings, waso, tst])
+            nightly_features_list.append([in_bed, out_bed, num_awakenings, waso, avg_awakening, tst])
             
             for awakening in h_awakenings:
                 hourly_awakenings_list.append(awakening)
             for waso in h_waso:
                 hourly_waso_list.append(waso)
+            for avg_awakening in h_avg_awakening:
+                hourly_avg_awakening_list.append(avg_awakening)
                 
             
         # Create a Pandas dataframes with calculated features
         nightly_features = pd.DataFrame(nightly_features_list, columns=['In Bed DateTime',
                                                                'Out Bed DateTime',
                                                                'Number of awakenings', 
-                                                               'WASO', 'TST'])
+                                                               'WASO', 'Average awakening length', 'TST'])
         
         hourly_awakenings_df = pd.DataFrame(hourly_awakenings_list, columns=['DateTime start',
                                                                 'Number of awakenings'])
         
         hourly_WASO_df = pd.DataFrame(hourly_waso_list, columns=['DateTime start',
                                                                 'WASO'])
+        
+        hourly_avg_awakening_df = pd.DataFrame(hourly_avg_awakening_list, columns=['DateTime start',
+                                                                'Average awakening length'])
                                                                 
         # Merge dataframes with hourly awakenings and waso to one dataframe
-        hourly_features = pd.merge(hourly_awakenings_df, hourly_WASO_df, on="DateTime start")
+        hourly_features1 = pd.merge(hourly_awakenings_df, hourly_WASO_df, on="DateTime start")
+        hourly_features2 = pd.merge(hourly_features1, hourly_avg_awakening_df, on="DateTime start")
           
         # Export dataframes with actigraph features
         nightly_features.to_csv(os.path.join(in_dir, filename + "_features.csv"), index=False)
-        hourly_features.to_csv(os.path.join(in_dir, filename + "_hourly_features.csv"), index=False)
+        hourly_features2.to_csv(os.path.join(in_dir, filename + "_hourly_features.csv"), index=False)
         
         print(f"Processed features for {family}/{session}")
         

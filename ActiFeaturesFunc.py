@@ -70,6 +70,16 @@ def calc_WASO(data):
         
         return waso
 
+#%% Average awakening length
+        
+def calc_avg_awakening(data):
+    
+    waso = calc_WASO(data)
+    num_awakenings = calc_awakenings(data)
+    avg_awakening = waso/num_awakenings
+    
+    return avg_awakening
+
 #%% Total sleep time per night
 
 def calc_TST(data):
@@ -240,3 +250,26 @@ def hourly_WASO(data):
         h_WASO.append([datetime_start, WASO])
     
     return h_WASO
+
+#%% Houly average awakening length
+    
+def hourly_avg_awakening(data):
+    h_waso = hourly_WASO(data)
+    h_awakenings = hourly_awakenings(data)
+    
+    # Convert the lists to NumPy arrays
+    h_waso = np.array(h_waso)
+    h_awakenings = np.array(h_awakenings)
+    
+    # Extract the timestamps (first column) and values (second column) from h_waso and h_awakenings arrays
+    h_waso_timestamps = h_waso[:, 0]
+    h_awakenings_timestamps = h_awakenings[:, 0]
+    h_waso_values = h_waso[:, 1]
+    h_awakenings_values = h_awakenings[:, 1]
+    
+    # Perform element-wise division
+    division_result = np.divide(h_waso_values, h_awakenings_values)
+    
+    h_avg_awakening = [[timestamp, value] for timestamp, value in zip(h_waso_timestamps, division_result)]
+    
+    return h_avg_awakening
