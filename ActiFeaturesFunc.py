@@ -24,14 +24,13 @@ def calc_awakenings(data):
         data : Pandas Dataframe
         Requires a column called 'Sleep or Awake?' consisting of S and W to determine sleep or wake. 
         
-        
         Returns
         -------
         Int64
         Number of awakenings from in bed time to out of bed time.
         
-    
         """
+        
         # Calculate the number of awakenings
         awakenings = ((data['Sleep or Awake?'] == 'W') & (data['Sleep or Awake?'].shift(1) == 'S'))
         num_awakenings = awakenings.sum()
@@ -73,6 +72,21 @@ def calc_WASO(data):
 #%% Average awakening length
         
 def calc_avg_awakening(data):
+    """
+    Computes the average length of awakenings for one night.
+
+    Parameters
+    ----------
+    data : Pandas Dataframe
+        Requires a column called 'Sleep or Awake?' consisting of S and W to 
+        determine sleep or wake.
+
+    Returns
+    -------
+    avg_awakening : float64
+        The average length of awakening.
+
+    """
     
     waso = calc_WASO(data)
     num_awakenings = calc_awakenings(data)
@@ -254,6 +268,23 @@ def hourly_WASO(data):
 #%% Houly average awakening length
     
 def hourly_avg_awakening(data):
+    """
+    Computes the average length of awakenings per hour for one night.
+
+    Parameters
+    ----------
+    data : Pandas Dataframe
+        Requires a column called 'Sleep or Awake?' consisting of S and W to 
+        determine sleep or wake.
+
+    Returns
+    -------
+    avg_awakening : list
+        List of average length of awakening per hour (float64). Including the 
+        date and time as DateTime object. 
+
+    """
+    
     h_waso = hourly_WASO(data)
     h_awakenings = hourly_awakenings(data)
     
