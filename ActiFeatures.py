@@ -54,6 +54,7 @@ for family in families:
         hourly_awakenings_list = []
         hourly_waso_list = []
         hourly_avg_awakening_list = []
+        sleep_quality_list = []
         
         # Loop through all relevant nights
         for i in range(summed_data.shape[0]):
@@ -82,8 +83,12 @@ for family in families:
             # Total sleep time per night
             tst = calc_TST(night_data)
             
+            # Sleep quality per night
+            sleep_quality = calc_sleep_quality(summed_data.iloc[i])
+            
             # Append lists with calculated features
-            nightly_features_list.append([in_bed, out_bed, num_awakenings, waso, avg_awakening, tst])
+            nightly_features_list.append([in_bed, out_bed, num_awakenings, waso,
+                                          avg_awakening, tst, sleep_quality])
             
             for awakening in h_awakenings:
                 hourly_awakenings_list.append(awakening)
@@ -97,7 +102,8 @@ for family in families:
         nightly_features = pd.DataFrame(nightly_features_list, columns=['In Bed DateTime',
                                                                'Out Bed DateTime',
                                                                'Number of awakenings', 
-                                                               'WASO', 'Average awakening length', 'TST'])
+                                                               'WASO', 'Average awakening length',
+                                                               'TST', 'Sleep quality'])
         
         hourly_awakenings_df = pd.DataFrame(hourly_awakenings_list, columns=['DateTime start',
                                                                 'Number of awakenings'])

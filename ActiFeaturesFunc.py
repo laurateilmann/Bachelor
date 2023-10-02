@@ -180,7 +180,7 @@ def hourly_awakenings(data):
 
 def hourly_WASO(data):
     """
-    Calculate houly 'wake after sleep onset' of acthigraph data 
+    Calculate hourly 'wake after sleep onset' of acthigraph data 
         from in bed time to out of bed time.
 
     Parameters
@@ -273,3 +273,62 @@ def hourly_avg_awakening(data):
     h_avg_awakening = [[timestamp, value] for timestamp, value in zip(h_waso_timestamps, division_result)]
     
     return h_avg_awakening
+
+#%% Sleep quality 
+    
+def calc_sleep_quality(summed_data):
+    """
+    Computes the sleep quality of one night. The sleep quality measure is based
+    on three measurements: latency, efficiency and WASO. The criterias of these
+    measurements are from: https://doi.org/10.2188/jea.JE20120012 . The 
+    categories are in order from worst to best: Very bad sleep, Fairly bad sleep, 
+    Fairly good sleep and Very good sleep. If just one of the criterias are met, 
+    the sleep quality falls within this category. The sleep quality of the 
+    person is set as the worst category obtained (e.g. if the category is 
+    Fairly good sleep based on latency, but Fairly bad sleep based on WASO, 
+    then the overall sleep quality is Fairly bad sleep).
+
+    Parameters
+    ----------
+    summed_data : Pandas Dataframe
+        1xM dataframe with at least 3 columns called "Latency", "Efficiency" 
+        and "Wake After Sleep Onset (WASO)". Contains summed actigraph data
+        for one person from one night. 
+
+    Returns
+    -------
+    sleep_category : Str
+        A category describing the sleep quality of the night. The categories are
+        in order from worst to best: Very bad sleep, Fairly bad
+        sleep, Fairly good sleep and Very good sleep.         
+    
+    """
+    
+    criteria = {
+    "Very bad sleep": {"latency": (31, np.inf), "efficiency": (0, 80), "WASO": (31, np.inf)},
+    "Fairly bad sleep": {"latency": (21, 31), "efficiency": (80, 84), "WASO": (16, 30)},
+    "Fairly good sleep": {"latency": (15, 20), "efficiency": (85, 90), "WASO": (5, 15)},
+    "Very good sleep": {"latency": (0, 15), "efficiency": (90, 100), "WASO": (0, 5)},
+    }
+    
+    latency = summed_data["Latency"]
+    efficiency = summed_data["Efficiency"]
+    WASO = summed_data["Wake After Sleep Onset (WASO)"]
+    
+    # Initialize the sleep quality category as None
+    sleep_category = None
+
+    # Iterate through the defined sleep quality criteria
+    for category, criteria_values in criteria.items():
+        latency_range = criteria_values["latency"]
+        efficiency_range = criteria_values["efficiency"]
+        WASO_range = criteria_values["WASO"]
+        if (
+            (latency_range[0] <= latency <= latency_range[1]) or
+            (efficiency_range[0] <= efficiency <= efficiency_range[1]) or
+            (WASO_range[0] <= WASO <= WASO_range[1])
+            ):
+            sleep_category = category  # Set the sleep category if criteria are met
+            break  # Exit the loop once a category is assigned
+        
+    return sleep_category
