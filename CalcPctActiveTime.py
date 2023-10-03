@@ -31,6 +31,8 @@ def CalcPctActiveTime(data):
     
     if TotalTime > timedelta(minutes=0):
         PctActiveTime = ActiveTime/TotalTime*100
+    else:
+        PctActiveTime = None 
     
     
     return PctActiveTime, TotalTime
