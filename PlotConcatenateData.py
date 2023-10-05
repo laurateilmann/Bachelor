@@ -171,5 +171,40 @@ for i, cgm_feature in enumerate(cgm_features_plot):
     plt.show()
     
     # Save plot 
-    plt.savefig(f"{cgm_feature} vs. sleep features.png", format="png")   
+    plt.savefig(f"H:\GitHub\Bachelor\Plots\{cgm_feature} vs. sleep features.png", format="png")   
+    
+#%% 
+    
+plt.figure()
+plt.plot(cgm_feature_df['std'], epochs_feature_df['WASO'], 'o')
+plt.title("Standard deviation against WASO", fontsize=16)
+plt.xlabel("Std of IG (mmol/L)", fontsize=14)
+plt.ylabel("WASO", fontsize=14)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+# Save plot 
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Standard deviation against WASO.png", format="png")   
+
+plt.figure()
+plt.plot(cgm_feature_df['cv'], epochs_feature_df['WASO'], 'o')
+plt.title("Coefficient of variation against WASO", fontsize=16)
+plt.xlabel("CV of IG", fontsize=14)
+plt.ylabel("WASO", fontsize=14)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+# Save plot 
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Coefficient of variation against WASO.png", format="png")   
+
+plt.figure()
+plt.plot(cgm_feature_df['delta IG'], epochs_feature_df['WASO'], 'o')
+plt.title("Delta IG against WASO", fontsize=16)
+plt.xlabel("Delta IG of IG (mmol/L)", fontsize=14)
+plt.ylabel("WASO", fontsize=14)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+# Save plot 
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Delta IG against WASO.png", format="png")   
+
+
+
     
