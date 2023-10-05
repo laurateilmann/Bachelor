@@ -73,14 +73,20 @@ for family in families:
     for session in sessions:
         cgm_dir = os.path.join(base_dir, family, session)
 
+ 
+
         # List all CGM files (assuming they are all CSV files named "cgm_data.csv") in the current session
         cgm_files = [file for file in os.listdir(cgm_dir) if file == "cgm_data.csv"]
+
+ 
 
         # Loop through each CGM file in the session and process it
         for filename in cgm_files:
             # Import CGM data
             cgm_data = pd.read_csv(os.path.join(cgm_dir, filename),skiprows=2, parse_dates = [0], 
                       dayfirst=True, usecols = [0,1], names = ['DateTime','CGM'])
+
+ 
 
             # Sort by date and time
             cgm_data.sort_values(by = 'DateTime', inplace = True)
@@ -104,7 +110,6 @@ for family in families:
             cgm_data.to_csv(output_path, index=False)
             
             print(f"Processed {filename} and saved as {processed_filename} in {family}/{session}")
-            
 
 #%% Import summed actigraph data and export processed file
             
