@@ -93,12 +93,12 @@ for family in families:
                                                                'TIR (%)', 'TAR (%)',
                                                                'TBR (%)', 'mean', 'std',
                                                                'min', 'Q1', 'Q2', 'Q3', 
-                                                               'max','cv'])
+                                                               'max','cv', 'delta IG'])
         
         CGM_h_stats = pd.DataFrame(CGM_h_stats_list, columns=['DateTime start', 
                                                                 'mean', 'std',
                                                                 'min', 'Q1', 'Q2',
-                                                                'Q3', 'max','cv'])
+                                                                'Q3', 'max','cv', 'delta IG'])
         
         CGM_h_ranges = pd.DataFrame(CGM_h_ranges_list, columns=['DateTime start',
                                                                 'TIR (%)','TAR (%)',

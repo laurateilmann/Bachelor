@@ -63,7 +63,7 @@ for family in families:
             out_bed = summed_data.iloc[i]['Out Bed DateTime']
             
             # Extract one night's worth of actigraph epoch data
-            night_data = extract_one_night(in_bed, out_bed, epoch_data)
+             night_data = extract_one_night(in_bed, out_bed, epoch_data)
         
             # Number of awakenings per night
             num_awakenings = calc_awakenings(night_data)

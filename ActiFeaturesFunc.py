@@ -363,3 +363,7 @@ def calc_sleep_quality(summed_data):
             break  # Exit the loop once a category is assigned
         
     return sleep_category
+
+
+    
+    

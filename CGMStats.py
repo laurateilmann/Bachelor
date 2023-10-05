@@ -30,6 +30,8 @@ def calc_stats(CGM_data):
     # Calculate and include Coefficient of Variation (cv)
     cv = (CGM_stats['std'] / CGM_stats['mean']).values.tolist()
     CGM_stats['cv'] = cv
+    deltaIG = (CGM_stats['max'] - CGM_stats['min']).values.tolist()
+    CGM_stats['delta IG'] = deltaIG
     # Convert to list
     CGM_stats = CGM_stats.values.tolist()
     CGM_stats = [item for sublist in CGM_stats for item in sublist]
@@ -65,14 +67,15 @@ def hourly_stats(CGM_data_original):
     CGM_data_q2 = CGM_data.resample('H').quantile(0.50)
     CGM_data_q3 = CGM_data.resample('H').quantile(0.75)
     CGM_data_cv = CGM_data_std/CGM_data_mean
+    CGM_data_deltaIG = CGM_data_max-CGM_data_min
     
     # Create pandas dataframe with calculated hourly statistics
-    CGM_stats = pd.concat([CGM_data_mean, CGM_data_std, CGM_data_min, CGM_data_q1, CGM_data_q2, CGM_data_q3, CGM_data_max, CGM_data_cv], axis = 1)
-    CGM_stats.columns = ['mean', 'std','min', 'Q1', 'Q2', 'Q3', 'max','cv']
+    CGM_stats = pd.concat([CGM_data_mean, CGM_data_std, CGM_data_min, CGM_data_q1, CGM_data_q2, CGM_data_q3, CGM_data_max, CGM_data_cv, CGM_data_deltaIG], axis = 1)
+    CGM_stats.columns = ['mean', 'std','min', 'Q1', 'Q2', 'Q3', 'max','cv', 'delta IG']
     CGM_stats = CGM_stats.reset_index()
     
     # Convert to list
     CGM_stats = CGM_stats.values.tolist()
     
     return CGM_stats
-    
+
