@@ -33,8 +33,6 @@ families = ["Fam01", "Fam03", "Fam05", "Fam06", "Fam07", "Fam09"]
 # List of sessions for each family
 sessions = ["Baseline", "Second", "Third"]
 
-        
-
 #%% Initialize an empty list to store individual DataFrames
 dfs_cgm = []
 dfs_epochs = []
@@ -151,7 +149,6 @@ epoch_features_plot.replace('Very good sleep', 3, inplace=True)
 
 all_features = pd.concat([cgm_features_plot,epoch_features_plot],axis=1)
 
-M = cgm_features_plot.shape[1]
 N = epoch_features_plot.shape[1]
 
 for i, cgm_feature in enumerate(cgm_features_plot):
