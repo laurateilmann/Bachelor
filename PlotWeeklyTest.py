@@ -59,7 +59,7 @@ fig, axs = plt.subplots(nrows=nrows, ncols=4, sharey=True, figsize=[15, 6])
 # Limits 
 upper_lim = 10.0 
 lower_lim = 3.9 
-EPS = 0.01  # Set such that limit range covers correctly 
+EPS = 0.001  # Set such that limit range covers correctly 
 
 # Loop through all relevant nights 
 for i in range(summed_data.shape[0]): 
@@ -85,7 +85,7 @@ for i in range(summed_data.shape[0]):
     # Optionally, set the interval for x-axis ticks  
     axs[row,col].xaxis.set_major_locator(mdates.HourLocator(interval=2)) 
     # Set the fontsize of the x-axis tick labels 
-    axs[row, col].tick_params(axis='x', labelsize=34) 
+    axs[row, col].tick_params(axis='x', labelsize=34,) 
     axs[row, col].tick_params(axis='y', labelsize=34) 
 
     # Format x axis (assuming ts contains datetime objects) 
@@ -96,11 +96,11 @@ for i in range(summed_data.shape[0]):
 
 
     # Fill beyond limits 
-    axs[row, col].fill_between(ts, upper_lim, np.maximum(data, upper_lim), color='blue') 
-    axs[row, col].fill_between(ts, lower_lim, np.minimum(data, lower_lim), color='red') 
+    axs[row, col].fill_between(ts, upper_lim, np.maximum(data, upper_lim), color='orange', edgecolor='none') 
+    axs[row, col].fill_between(ts, lower_lim, np.minimum(data, lower_lim), color='red', edgecolor='none') 
 
     # Fill limits 
-    axs[row, col].fill_between(ts, upper_lim + EPS, lower_lim - EPS, color='green') 
+    axs[row, col].fill_between(ts, upper_lim + EPS, lower_lim - EPS, color='grey', alpha=0.2) 
 
 # Get space between subplots 
 fig.subplots_adjust(left=0.07, right=0.95, top=0.95, bottom=0.1, wspace=0.1, hspace=0.2) 
@@ -113,7 +113,7 @@ plt.get_current_fig_manager().full_screen_toggle()
 
 
 # Save plot 
-plt.savefig("weeklyCGMPlot.png", format="png")   
+plt.savefig("H:\GitHub\Bachelor\Plots\weeklyCGMPlot.png", format="png")   
 
 plt.show()  # Optional: Display the plot 
  
