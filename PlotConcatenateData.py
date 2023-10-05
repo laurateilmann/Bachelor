@@ -137,6 +137,8 @@ plt.yticks(fontsize=12, family='Times New Roman')
 
 #%% Pairwise scatterplot
 
+plt.close('all')
+
 cgm_features_plot = cgm_feature_df.iloc[:,[2,3,4,5,6,7,9,11,12,13]]
 epoch_features_plot = epochs_feature_df.iloc[:,2:]
 
@@ -149,17 +151,25 @@ epoch_features_plot.replace('Very good sleep', 3, inplace=True)
 
 all_features = pd.concat([cgm_features_plot,epoch_features_plot],axis=1)
 
-N = epoch_features_plot.shape[1]
-
 for i, cgm_feature in enumerate(cgm_features_plot):
     
     # Create subplots for each CGM feature
-    fig, axes = plt.subplots(1, N, figsize=(18, 3))
+    fig, axes = plt.subplots(2, 3, figsize=(17, 10))
     
     for j, epoch_feature in enumerate(epoch_features_plot):
-        sns.scatterplot(data=all_features, x=cgm_feature, y=epoch_feature,ax=axes[j])
-        axes[j].set_xlabel(cgm_feature)
-        axes[j].set_ylabel(epoch_feature)
+        ax = axes[j//3, j%3]
+        ax.scatter(cgm_features_plot[cgm_feature], epoch_features_plot[epoch_feature])
+        ax.set_xlabel(cgm_feature, fontsize=20)
+        ax.set_ylabel(epoch_feature, fontsize=20)
+        ax.tick_params(axis='x', labelsize=20)
+        ax.tick_params(axis='y', labelsize=20) 
 
+    # Remove excess axes 
+    axes[1, 2].set_axis_off() 
+    
     plt.tight_layout()
     plt.show()
+    
+    # Save plot 
+    plt.savefig(f"{cgm_feature} vs. sleep features.png", format="png")   
+    
