@@ -73,20 +73,31 @@ for family in families:
     for session in sessions:
         cgm_dir = os.path.join(base_dir, family, session)
 
- 
-
         # List all CGM files (assuming they are all CSV files named "cgm_data.csv") in the current session
-        cgm_files = [file for file in os.listdir(cgm_dir) if file == "cgm_data.csv"]
-
- 
+        cgm_files = [file for file in os.listdir(cgm_dir) if file in ["cgm_data.csv", "cgm_data_clarity.csv"]]
 
         # Loop through each CGM file in the session and process it
         for filename in cgm_files:
-            # Import CGM data
-            cgm_data = pd.read_csv(os.path.join(cgm_dir, filename),skiprows=2, parse_dates = [0], 
-                      dayfirst=True, usecols = [0,1], names = ['DateTime','CGM'])
-
- 
+            if filename == "cgm_data.csv":
+                # Import CGM data
+                cgm_data = pd.read_csv(os.path.join(cgm_dir, filename),skiprows=2, parse_dates = [0], 
+                          dayfirst=True, usecols = [0,1], names = ['DateTime','CGM'])
+            else:
+                # Import CGM data
+                cgm_data = pd.read_csv(os.path.join(cgm_dir, filename),skiprows=12, parse_dates = [0], 
+                          dayfirst=True, delimiter=';', usecols = [1,7], names = ['DateTime','CGM'])
+                
+                # Create a temporary dataframe where 'Lav' and 'Høj' are changed to None 
+                cgm_data_temp = cgm_data['CGM'].replace({'Lav':None, 'Høj':None})
+                # Change temp CGM values to float
+                cgm_data_temp = cgm_data_temp.astype(float)
+                # Find min and max
+                min_val = str(cgm_data_temp.min())
+                max_val = str(cgm_data_temp.max())
+                # Replace 'Lav' and 'Høj' with min and max, repsectively, in original CGM data. 
+                cgm_data['CGM'] = cgm_data['CGM'].replace({'Lav':min_val, 'Høj':max_val})
+                # Change CGM values to float
+                cgm_data['CGM'] = cgm_data['CGM'].astype(float)
 
             # Sort by date and time
             cgm_data.sort_values(by = 'DateTime', inplace = True)
@@ -104,9 +115,8 @@ for family in families:
             PctActiveTime, TotalTime = CalcPctActiveTime(cgm_data)
             
             # Export processed CGM data
-            processed_filename = os.path.splitext(filename)[0] + '_processed.csv'
-            output_dir = cgm_dir
-            output_path = os.path.join(output_dir, processed_filename)
+            processed_filename = "cgm_data_processed.csv"
+            output_path = os.path.join(cgm_dir, processed_filename)
             cgm_data.to_csv(output_path, index=False)
             
             print(f"Processed {filename} and saved as {processed_filename} in {family}/{session}")
