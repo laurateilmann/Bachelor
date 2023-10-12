@@ -74,7 +74,7 @@ for family in families:
         cgm_dir = os.path.join(base_dir, family, session)
 
         # List all CGM files (assuming they are all CSV files named "cgm_data.csv") in the current session
-        cgm_files = [file for file in os.listdir(cgm_dir) if file in ["cgm_data.csv", "cgm_data_clarity.csv"]]
+        cgm_files = [file for file in os.listdir(cgm_dir) if file in ["cgm_data.csv", "cgm_data_clarity.csv", "cgm_data_guardian.csv"]]
 
         # Loop through each CGM file in the session and process it
         for filename in cgm_files:
@@ -82,7 +82,7 @@ for family in families:
                 # Import CGM data
                 cgm_data = pd.read_csv(os.path.join(cgm_dir, filename),skiprows=2, parse_dates = [0], 
                           dayfirst=True, usecols = [0,1], names = ['DateTime','CGM'])
-            else:
+            elif filename == "cgm_data_clarity.csv":
                 # Import CGM data
                 cgm_data = pd.read_csv(os.path.join(cgm_dir, filename),skiprows=12, parse_dates = [0], 
                           dayfirst=True, delimiter=';', usecols = [1,7], names = ['DateTime','CGM'])
@@ -98,6 +98,39 @@ for family in families:
                 cgm_data['CGM'] = cgm_data['CGM'].replace({'Lav':min_val, 'Høj':max_val})
                 # Change CGM values to float
                 cgm_data['CGM'] = cgm_data['CGM'].astype(float)
+            else:
+                # Import CGM data
+                cgm_data = pd.read_csv(
+                    os.path.join(cgm_dir, filename), 
+                    delimiter=";",
+                    skiprows=7,
+                    usecols = [1,2,32], names = ['Date', 'Time' ,'CGM'],
+                    parse_dates = [0,1], dayfirst=True,
+                    low_memory=False)
+                
+                # Find the index just before the CGM values start
+                first_index = cgm_data[cgm_data['CGM'] == "Sensor Glucose (mmol/L)"].index[0]
+                # Use only the rows where the CGM values are
+                cgm_data = cgm_data.iloc[first_index+1:]
+                
+                # Convert dates and times to datetime
+                cgm_data['Date'] = pd.to_datetime(cgm_data['Date'])
+                cgm_data['Time'] = pd.to_datetime(cgm_data['Time']).dt.time
+                # Combine dates with times
+                cgm_data['DateTime'] = cgm_data.apply(lambda x: datetime.combine(x['Date'], x['Time']), axis=1) 
+                # Remove old Date and Time columns
+                cgm_data = cgm_data.drop(['Date', 'Time'], axis=1)
+                
+                # Remove all rows where DateTime is 00:00:00 (H:M:S) regardless of what the date is
+                mask = cgm_data['DateTime'].dt.strftime('%H:%M:%S') != '00:00:00'
+                cgm_data = cgm_data[mask]
+                # Remove seconds 
+                cgm_data['DateTime'] =cgm_data['DateTime'].dt.floor('T')
+        
+                # Replace commas with periods
+                cgm_data = cgm_data.replace(',','.',regex=True)
+                # Make CGM values float64
+                cgm_data['CGM'] = pd.to_numeric(cgm_data['CGM'], errors='coerce')
 
             # Sort by date and time
             cgm_data.sort_values(by = 'DateTime', inplace = True)
