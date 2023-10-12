@@ -19,6 +19,7 @@ import pandas as pd
 from datetime import datetime 
 from MarkMissingData import MarkMissingData
 from CalcPctActiveTime import *
+from PrepareLibreviewData import *
 
 #%% 
 
@@ -48,7 +49,12 @@ else:
 for family in families:
     # Loop through each session for the family
     for session in sessions:
-        in_dir = os.path.join(base_dir, family, session)
+        # Create path
+        if session==None:
+            in_dir = os.path.join(base_dir, family)
+        else:
+            in_dir = os.path.join(base_dir, family, session)
+
 
         # List all AGD files in the current session
         agd_files = [file for file in os.listdir(in_dir) if file.endswith(".agd")]
@@ -86,7 +92,7 @@ for family in families:
             cgm_dir = os.path.join(base_dir, family, session)
 
         # List all CGM files (assuming they are all CSV files named "cgm_data.csv") in the current session
-        cgm_files = [file for file in os.listdir(cgm_dir) if file in ["cgm_data.csv", "cgm_data_clarity.csv", "cgm_data_guardian.csv"]]
+        cgm_files = [file for file in os.listdir(cgm_dir) if file in ["cgm_data.csv", "cgm_data_clarity.csv", "cgm_data_guardian.csv", "cgm_data_libre.csv"]]
 
         # Loop through each CGM file in the session and process it
         for filename in cgm_files:
@@ -110,7 +116,7 @@ for family in families:
                 cgm_data['CGM'] = cgm_data['CGM'].replace({'Lav':min_val, 'Høj':max_val})
                 # Change CGM values to float
                 cgm_data['CGM'] = cgm_data['CGM'].astype(float)
-            else:
+            elif filename == "cgm_data_guardian.csv":
                 # Import CGM data
                 cgm_data = pd.read_csv(
                     os.path.join(cgm_dir, filename), 
@@ -143,14 +149,18 @@ for family in families:
                 cgm_data = cgm_data.replace(',','.',regex=True)
                 # Make CGM values float64
                 cgm_data['CGM'] = pd.to_numeric(cgm_data['CGM'], errors='coerce')
+            else:
+                file = os.path.join(cgm_dir, filename)
+                cgm_data = PrepareLibreviewData(file)
 
-            # Sort by date and time
-            cgm_data.sort_values(by = 'DateTime', inplace = True)
-            # Reset index, so first row is index 0
-            cgm_data = cgm_data.reset_index(drop = True)
-            # Find holes in data where data is missing and insert NaN
-            cgm_data = MarkMissingData(cgm_data)
-            
+            if filename != "cgm_data_libre.csv":
+                # Sort by date and time
+                cgm_data.sort_values(by = 'DateTime', inplace = True)
+                # Reset index, so first row is index 0
+                cgm_data = cgm_data.reset_index(drop = True)
+                # Find holes in data where data is missing and insert NaN
+                cgm_data = MarkMissingData(cgm_data)
+                
             # Filter away any blood glucose values above 40 mmol/L (artefacts)
             for i in range(0,len(cgm_data)):
                 if cgm_data.loc[i,'CGM'] > 40:
@@ -172,7 +182,11 @@ for family in families:
 for family in families:
     # Loop through each session for the family
     for session in sessions:
-        summed_data_dir = os.path.join(base_dir, family, session)
+        # Create path
+        if session==None:
+            summed_data_dir = os.path.join(base_dir, family)
+        else:
+            summed_data_dir = os.path.join(base_dir, family, session)
 
         # List all summed data files (assuming they are all CSV files with the same naming convention)
         summed_data_files = [file for file in os.listdir(summed_data_dir) if file.endswith("sum_fam.csv")]
@@ -213,7 +227,11 @@ for family in families:
             
 for family in families:
     for session in sessions:
-        epoch_dir = os.path.join(base_dir, family, session)
+        # Create path
+        if session==None:
+            epoch_dir = os.path.join(base_dir, family)
+        else:
+            epoch_dir = os.path.join(base_dir, family, session)
         
         # Define the path to the file to be checked
         filename = "sleep_epochs"
