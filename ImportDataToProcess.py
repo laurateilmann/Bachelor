@@ -208,8 +208,6 @@ for family in families:
         columns_to_keep = ['DateTime', 'Sleep or Awake?']
         df = df[columns_to_keep]
         
-        # Export
-        df.to_csv(base_dir+filename+'_processed.csv',index=False)
         
         # Export processed epoch data
         processed_filename = os.path.splitext(filename)[0] + '_processed.csv'

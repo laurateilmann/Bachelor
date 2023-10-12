@@ -90,7 +90,10 @@ def calc_avg_awakening(data):
     
     waso = calc_WASO(data)
     num_awakenings = calc_awakenings(data)
-    avg_awakening = waso/num_awakenings
+    if num_awakenings == 0:
+        avg_awakening = 0
+    else:
+        avg_awakening = waso/num_awakenings
     
     return avg_awakening
 
@@ -298,10 +301,14 @@ def hourly_avg_awakening(data):
     h_waso_values = h_waso[:, 1]
     h_awakenings_values = h_awakenings[:, 1]
     
-    # Perform element-wise division
-    division_result = np.divide(h_waso_values, h_awakenings_values)
+    # Create a mask for division by zero
+    division_mask = (h_awakenings_values == 0)
+    
+    # Perform element-wise division, setting 0 where the mask is True
+    division_result = np.divide(h_waso_values, h_awakenings_values, where=~division_mask)
     
     h_avg_awakening = [[timestamp, value] for timestamp, value in zip(h_waso_timestamps, division_result)]
+    
     
     return h_avg_awakening
 
