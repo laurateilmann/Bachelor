@@ -24,10 +24,10 @@ from PrepareLibreviewData import *
 #%% 
 
 # Choose what study to import and preprocess data from
-study = "MindYourDiabetes"
+#study = "MindYourDiabetes"
 #study = "Validationstudy_2020_2021_Cecilie"
 #study = "Sleep-1-child_2023_Cecilie"
-#study = "Kasper" 
+study = "Kasper" 
 
 # Base directory/path
 base_dir = os.path.join(r"L:\LovbeskyttetMapper01\StenoSleepQCGM", study)
@@ -92,7 +92,11 @@ for family in families:
             cgm_dir = os.path.join(base_dir, family, session)
 
         # List all CGM files (assuming they are all CSV files named "cgm_data.csv") in the current session
-        cgm_files = [file for file in os.listdir(cgm_dir) if file in ["cgm_data.csv", "cgm_data_clarity.csv", "cgm_data_guardian.csv", "cgm_data_libre.csv"]]
+        cgm_files = [file for file in os.listdir(cgm_dir) if file in ["cgm_data.csv", 
+                                                                      "cgm_data_clarity.csv", 
+                                                                      "cgm_data_guardian.csv", 
+                                                                      "cgm_data_libre.csv",
+                                                                      "cgm_data_xls.xls"]]
 
         # Loop through each CGM file in the session and process it
         for filename in cgm_files:
@@ -149,9 +153,11 @@ for family in families:
                 cgm_data = cgm_data.replace(',','.',regex=True)
                 # Make CGM values float64
                 cgm_data['CGM'] = pd.to_numeric(cgm_data['CGM'], errors='coerce')
+            elif filename == "cgm_data_libre.csv":
+                cgm_data = PrepareLibreviewData(os.path.join(cgm_dir, filename))
             else:
-                file = os.path.join(cgm_dir, filename)
-                cgm_data = PrepareLibreviewData(file)
+                cgm_data = pd.read_excel(os.path.join(cgm_dir, filename), sheet_name='CGM', 
+                                         skiprows=4, parse_dates = [0], usecols = [0,1], names = ['DateTime','CGM'])
 
             if filename != "cgm_data_libre.csv":
                 # Sort by date and time
