@@ -22,17 +22,25 @@ from CalcPctActiveTime import *
 
 #%% 
 
-# Set the base directory where files are located
-base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\MindYourDiabetes"
+# Choose what study to import and preprocess data from
+study = "MindYourDiabetes"
+#study = "Validationstudy_2020_2021_Cecilie"
+#study = "Sleep-1-child_2023_Cecilie"
+#study = "Kasper" 
+
+# Base directory/path
+base_dir = os.path.join(r"L:\LovbeskyttetMapper01\StenoSleepQCGM", study)
 
 # List of families
-families = ["Fam01", "Fam03", "Fam05", "Fam06", "Fam07", "Fam09"]
+families = [folder for folder in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, folder))]
 
-# List of sessions for each family
-sessions = ["Baseline", "Second", "Third"]
+# List of sessions
+if study == "Validationstudy_2020_2021_Cecilie" or study == "Sleep-1-child_2023_Cecilie":
+    sessions = [None]
+else:
+    folder_path = os.path.join(base_dir,families[0])
+    sessions = [folder for folder in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, folder))]
 
-# Settings for figures
-io.renderers.default = 'browser'  # Set to 'svg' to open in Spyder plot tab
 
 #%% Import all AGD files and export processed file as csv
 
@@ -71,7 +79,11 @@ for family in families:
 for family in families:
     # Loop through each session for the family
     for session in sessions:
-        cgm_dir = os.path.join(base_dir, family, session)
+        # Create path
+        if session==None:
+            cgm_dir = os.path.join(base_dir, family)
+        else:
+            cgm_dir = os.path.join(base_dir, family, session)
 
         # List all CGM files (assuming they are all CSV files named "cgm_data.csv") in the current session
         cgm_files = [file for file in os.listdir(cgm_dir) if file in ["cgm_data.csv", "cgm_data_clarity.csv", "cgm_data_guardian.csv"]]
