@@ -16,8 +16,8 @@ from CGMStats import calc_stats, hourly_stats
 
 # Choose what study to import and process data from
 #study = "MindYourDiabetes"
-#study = "Validationstudy_2020_2021_Cecilie"
-study = "Sleep-1-child_2023_Cecilie"
+study = "Validationstudy_2020_2021_Cecilie"
+#study = "Sleep-1-child_2023_Cecilie"
 #study = "Kasper" 
 
 # Base directory/path
