@@ -23,6 +23,10 @@ epoch_file_path = os.path.join(base_dir+epoch_file)
 # Read the cgm and epoch data
 cgm_data = pd.read_csv(cgm_file_path)
 epoch_data = pd.read_csv(epoch_file_path)
+epoch_data.replace('Very bad sleep', 0, inplace=True)
+epoch_data.replace('Fairly bad sleep', 1, inplace=True)
+epoch_data.replace('Fairly good sleep', 2, inplace=True)
+epoch_data.replace('Very good sleep', 3, inplace=True)
 
 data = pd.merge(cgm_data, epoch_data, on=["In Bed DateTime", "Out Bed DateTime"])
 
@@ -35,6 +39,6 @@ plt.get_current_fig_manager().full_screen_toggle()
 
 
 # Save plot 
-plt.savefig("H:\GitHub\Bachelor\Plots\corrMatrix_MYD.png", format="png")
+plt.savefig("H:\GitHub\Bachelor\Plots\corrMatrixMYD.png", format="png")
 
 plt.show()
