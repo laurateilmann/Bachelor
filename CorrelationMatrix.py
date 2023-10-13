@@ -9,8 +9,10 @@ Created on Thu Oct 12 13:19:52 2023
 import pandas as pd
 from datetime import datetime
 import os
+import seaborn as sn
+import matplotlib.pyplot as plt
 
-base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM"
+base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\MindYourDiabetes"
 cgm_file = "\concatenated_cgm.csv"
 epoch_file = "\concatenated_epochs.csv"
 
@@ -25,4 +27,14 @@ epoch_data = pd.read_csv(epoch_file_path)
 data = pd.merge(cgm_data, epoch_data, on=["In Bed DateTime", "Out Bed DateTime"])
 
 corrMatrix = data.corr()
-print(corrMatrix)
+
+plt.figure()
+sn.heatmap(corrMatrix, annot=True)
+
+plt.get_current_fig_manager().full_screen_toggle()   
+
+
+# Save plot 
+plt.savefig("H:\GitHub\Bachelor\Plots\corrMatrix_MYD.png", format="png")
+
+plt.show()
