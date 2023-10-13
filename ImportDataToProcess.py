@@ -26,8 +26,8 @@ from PrepareLibreviewData import *
 # Choose what study to import and preprocess data from
 #study = "MindYourDiabetes"
 #study = "Validationstudy_2020_2021_Cecilie"
-#study = "Sleep-1-child_2023_Cecilie"
-study = "Kasper" 
+study = "Sleep-1-child_2023_Cecilie"
+#study = "Kasper" 
 
 # Base directory/path
 base_dir = os.path.join(r"L:\LovbeskyttetMapper01\StenoSleepQCGM", study)
@@ -41,7 +41,6 @@ if study == "Validationstudy_2020_2021_Cecilie" or study == "Sleep-1-child_2023_
 else:
     folder_path = os.path.join(base_dir,families[0])
     sessions = [folder for folder in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, folder))]
-    
 
 
 #%% Import all AGD files and export processed file as csv
@@ -137,8 +136,20 @@ for family in families:
                 # Use only the rows where the CGM values are
                 cgm_data = cgm_data.iloc[first_index+1:]
                 
-                # Convert dates and times to datetime
-                cgm_data['Date'] = pd.to_datetime(cgm_data['Date'])
+                # Replace / with - in dates to make further processing possible
+                cgm_data = cgm_data.replace('/','-',regex=True)
+                # Possbile date formats
+                date_formats = ['%d-%m-%Y', '%Y-%m-%d']
+                # Try the different date formats
+                for date_format in date_formats:
+                    try:
+                        # Convert dates to datetime
+                        cgm_data['Date'] = pd.to_datetime(cgm_data['Date'], format=date_format)               
+                        break  # Exit the loop if successful parsing
+                    except ValueError:
+                        continue
+                
+                # Convert times to datetime
                 cgm_data['Time'] = pd.to_datetime(cgm_data['Time']).dt.time
                 # Combine dates with times
                 cgm_data['DateTime'] = cgm_data.apply(lambda x: datetime.combine(x['Date'], x['Time']), axis=1) 
@@ -155,6 +166,8 @@ for family in families:
                 cgm_data = cgm_data.replace(',','.',regex=True)
                 # Make CGM values float64
                 cgm_data['CGM'] = pd.to_numeric(cgm_data['CGM'], errors='coerce')
+                # Reorder columns
+                cgm_data = cgm_data[['DateTime', 'CGM']]
             elif filename == "cgm_data_libre.csv":
                 cgm_data = PrepareLibreviewData(os.path.join(cgm_dir, filename))
             elif filename == "cgm_data_xls.xls":
@@ -167,6 +180,8 @@ for family in families:
                 # Floor seconds and remove UTC offset
                 cgm_data['DateTime'] =cgm_data['DateTime'].dt.floor('T')
                 cgm_data['DateTime'] =cgm_data['DateTime'].dt.tz_localize(None)
+                # Reorder columns
+                cgm_data = cgm_data[['DateTime', 'CGM']]
 
             if filename != "cgm_data_libre.csv":
                 # Sort by date and time
@@ -204,7 +219,7 @@ for family in families:
             summed_data_dir = os.path.join(base_dir, family, session)
 
         # List all summed data files (assuming they are all CSV files with the same naming convention)
-        summed_data_files = [file for file in os.listdir(summed_data_dir) if file.endswith("sum_fam.csv")]
+        summed_data_files = [file for file in os.listdir(summed_data_dir) if file == "summed_sleep.csv"]
 
         # Loop through each summed data file in the session and process it
         for filename in summed_data_files:

@@ -13,19 +13,35 @@ from CGMRanges import calc_ranges, hourly_ranges
 from CGMStats import calc_stats, hourly_stats
 
 #%% Set the base directory where your files are located
-base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\MindYourDiabetes"
+
+# Choose what study to import and process data from
+#study = "MindYourDiabetes"
+#study = "Validationstudy_2020_2021_Cecilie"
+study = "Sleep-1-child_2023_Cecilie"
+#study = "Kasper" 
+
+# Base directory/path
+base_dir = os.path.join(r"L:\LovbeskyttetMapper01\StenoSleepQCGM", study)
 
 # List of families
-families = ["Fam01", "Fam03", "Fam05", "Fam06", "Fam07", "Fam09"]
+families = [folder for folder in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, folder))]
 
-# List of sessions for each family
-sessions = ["Baseline", "Second", "Third"]
+# List of sessions
+if study == "Validationstudy_2020_2021_Cecilie" or study == "Sleep-1-child_2023_Cecilie":
+    sessions = [None]
+else:
+    folder_path = os.path.join(base_dir,families[0])
+    sessions = [folder for folder in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, folder))]
 
 #%% Loop through each family
 for family in families:
     # Loop through each session for the family
     for session in sessions:
-        in_dir = os.path.join(base_dir, family, session)
+        # Create path
+        if session==None:
+            in_dir = os.path.join(base_dir, family)
+        else:
+            in_dir = os.path.join(base_dir, family, session)
         
         # Read CGM data
         CGM_filename = "cgm_data_processed"
@@ -39,7 +55,7 @@ for family in families:
             continue
 
         # Read summed actigraphy data
-        summed_filename = "sum_fam_processed"
+        summed_filename = "summed_sleep_processed"
         summed_file_path = os.path.join(in_dir, summed_filename + '.csv')
         
         # Check if the file exists before reading it
