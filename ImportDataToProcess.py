@@ -42,6 +42,7 @@ else:
     folder_path = os.path.join(base_dir,families[0])
     sessions = [folder for folder in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, folder))]
 
+families = ["CH1"]
 
 #%% Import all AGD files and export processed file as csv
 
@@ -227,11 +228,11 @@ for family in families:
             summed_data = pd.read_csv(os.path.join(summed_data_dir, filename), skiprows=5)
 
             # Convert dates and times to datetime
-            summed_data['In Bed Date'] = pd.to_datetime(summed_data['In Bed Date'])
+            summed_data['In Bed Date'] = pd.to_datetime(summed_data['In Bed Date'],format='%d-%m-%Y')
             summed_data['In Bed Time'] = pd.to_datetime(summed_data['In Bed Time']).dt.time
-            summed_data['Out Bed Date'] = pd.to_datetime(summed_data['Out Bed Date'])
+            summed_data['Out Bed Date'] = pd.to_datetime(summed_data['Out Bed Date'],format='%d-%m-%Y')
             summed_data['Out Bed Time'] = pd.to_datetime(summed_data['Out Bed Time']).dt.time
-            summed_data['Onset Date'] = pd.to_datetime(summed_data['Onset Date'])
+            summed_data['Onset Date'] = pd.to_datetime(summed_data['Onset Date'],format='%d-%m-%Y')
             summed_data['Onset Time'] = pd.to_datetime(summed_data['Onset Time']).dt.time
 
             # Combine dates with times
