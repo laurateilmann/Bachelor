@@ -41,6 +41,7 @@ if study == "Validationstudy_2020_2021_Cecilie" or study == "Sleep-1-child_2023_
 else:
     folder_path = os.path.join(base_dir,families[0])
     sessions = [folder for folder in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, folder))]
+    
 
 
 #%% Import all AGD files and export processed file as csv
@@ -96,7 +97,8 @@ for family in families:
                                                                       "cgm_data_clarity.csv", 
                                                                       "cgm_data_guardian.csv", 
                                                                       "cgm_data_libre.csv",
-                                                                      "cgm_data_xls.xls"]]
+                                                                      "cgm_data_xls.xls",
+                                                                      "cgm_data_switched.csv"]]
 
         # Loop through each CGM file in the session and process it
         for filename in cgm_files:
@@ -155,9 +157,16 @@ for family in families:
                 cgm_data['CGM'] = pd.to_numeric(cgm_data['CGM'], errors='coerce')
             elif filename == "cgm_data_libre.csv":
                 cgm_data = PrepareLibreviewData(os.path.join(cgm_dir, filename))
-            else:
+            elif filename == "cgm_data_xls.xls":
                 cgm_data = pd.read_excel(os.path.join(cgm_dir, filename), sheet_name='CGM', 
                                          skiprows=4, parse_dates = [0], usecols = [0,1], names = ['DateTime','CGM'])
+            else:
+                # Import CGM data
+                cgm_data = pd.read_csv(os.path.join(cgm_dir, filename),skiprows=2, parse_dates = [1], 
+                          dayfirst=True, usecols = [0,1], names = ['CGM','DateTime'])
+                # Floor seconds and remove UTC offset
+                cgm_data['DateTime'] =cgm_data['DateTime'].dt.floor('T')
+                cgm_data['DateTime'] =cgm_data['DateTime'].dt.tz_localize(None)
 
             if filename != "cgm_data_libre.csv":
                 # Sort by date and time
