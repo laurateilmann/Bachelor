@@ -10,7 +10,7 @@ import pandas as pd
 from datetime import datetime
 import os
 
-base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\MindYourDiabetes"
+base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM"
 cgm_file = "\concatenated_cgm.csv"
 epoch_file = "\concatenated_epochs.csv"
 
