@@ -42,7 +42,6 @@ else:
     folder_path = os.path.join(base_dir,families[0])
     sessions = [folder for folder in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, folder))]
 
-families = ["CH1"]
 
 #%% Import all AGD files and export processed file as csv
 
@@ -287,7 +286,7 @@ for family in families:
         df = df[mask]
 
         # Convert Date and Time columns to Datetime format and combine them
-        df['Date'] = pd.to_datetime(df['Date'])
+        df['Date'] = pd.to_datetime(df['Date'], format='%d-%m-%Y')
         df['Time'] = pd.to_datetime(df['Time']).dt.time
         df['DateTime'] = df.apply(lambda x: datetime.combine(x['Date'], x['Time']), axis=1)
         # Remove old Date and Time columns
