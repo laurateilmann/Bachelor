@@ -39,6 +39,6 @@ plt.get_current_fig_manager().full_screen_toggle()
 
 
 # Save plot 
-plt.savefig("H:\GitHub\Bachelor\Plots\corrMatrixMYD.png", format="png")
+plt.savefig("H:\GitHub\Bachelor\Plots\corrMatrix.png", format="png")
 
 plt.show()

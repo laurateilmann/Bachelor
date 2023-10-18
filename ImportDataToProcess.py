@@ -24,8 +24,8 @@ from PrepareLibreviewData import *
 #%% 
 
 # Choose what study to import and preprocess data from
-study = "MindYourDiabetes"
-# study = "Validationstudy_2020_2021_Cecilie"
+# study = "MindYourDiabetes"
+study = "Validationstudy_2020_2021_Cecilie"
 # study = "Sleep-1-child_2023_Cecilie"
 #study = "Kasper" 
 
@@ -172,7 +172,7 @@ for family in families:
                 cgm_data = PrepareLibreviewData(os.path.join(cgm_dir, filename))
             elif filename == "cgm_data_xls.xls":
                 cgm_data = pd.read_excel(os.path.join(cgm_dir, filename), sheet_name='CGM', 
-                                         skiprows=4, parse_dates = [0], usecols = [0,1], names = ['DateTime','CGM'])
+                                          skiprows=4, parse_dates = [0], usecols = [0,1], names = ['DateTime','CGM'])
             else:
                 # Import CGM data
                 cgm_data = pd.read_csv(os.path.join(cgm_dir, filename),skiprows=2, parse_dates = [1], 
@@ -224,7 +224,7 @@ for family in families:
         # Loop through each summed data file in the session and process it
         for filename in summed_data_files:
             # Import summed data
-            summed_data = pd.read_csv(os.path.join(summed_data_dir, filename), skiprows=5)
+            summed_data = pd.read_csv(os.path.join(summed_data_dir, filename), skiprows=5, encoding='cp850')
 
             # Convert dates and times to datetime
             summed_data['In Bed Date'] = pd.to_datetime(summed_data['In Bed Date'],format='%d-%m-%Y')
@@ -273,7 +273,7 @@ for family in families:
             continue  # Skip to the next iteration if the file does not exist
 
         # Import actigraphy data
-        df = pd.read_csv(file_path, skiprows=4)
+        df = pd.read_csv(file_path, skiprows=4, encoding='cp850')
 
         # Convert columns into actual columns and not index-columns
         df = df.reset_index()

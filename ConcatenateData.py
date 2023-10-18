@@ -28,7 +28,7 @@ import matplotlib.pyplot as plt
 # study = "Sleep-1-child_2023_Cecilie"
 #study = "Kasper" 
 
-studies = ["MindYourDiabetes", "Sleep-1-child_2023_Cecilie"]
+studies = ["MindYourDiabetes", "Sleep-1-child_2023_Cecilie", "Validationstudy_2020_2021_Cecilie"]
 
 
 #%% Initialize an empty list to store individual DataFrames
