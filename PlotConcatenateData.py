@@ -38,7 +38,7 @@ epoch_file_path = os.path.join(base_dir+epoch_file)
 cgm_feature_df = pd.read_csv(cgm_file_path)
 epochs_feature_df = pd.read_csv(epoch_file_path)
 
-data = pd.merge(cgm_data, epoch_data, on=["In Bed DateTime", "Out Bed DateTime"])
+#data = pd.merge(cgm_data, epoch_data, on=["In Bed DateTime", "Out Bed DateTime"])
 
 #%% Plot: std and WASO
 
@@ -111,25 +111,22 @@ plt.yticks(fontsize=12, family='Times New Roman')
 
 plt.close('all')
 
-cgm_features_plot = cgm_feature_df.iloc[:,[2,3,4,5,6,7,9,11,12,13]]
+cgm_features_plot = cgm_feature_df.iloc[:,2:]
 epoch_features_plot = epochs_feature_df.iloc[:,2:]
 
-# Change the feature 'Sleep quality' so 0='Very bad sleep', 1='Fairly bad sleep',
-# 2='Fairly good sleep', 3='Very bad sleep'
-epoch_features_plot.replace('Very bad sleep', 0, inplace=True)
-epoch_features_plot.replace('Fairly bad sleep', 1, inplace=True)
-epoch_features_plot.replace('Fairly good sleep', 2, inplace=True)
-epoch_features_plot.replace('Very good sleep', 3, inplace=True)
+# Change the feature 'Sleep quality' so 0='Bad', 1='Good'
+epoch_features_plot.replace('Bad', 0, inplace=True)
+epoch_features_plot.replace('Good', 1, inplace=True)
 
 all_features = pd.concat([cgm_features_plot,epoch_features_plot],axis=1)
 
 for i, cgm_feature in enumerate(cgm_features_plot):
     
     # Create subplots for each CGM feature
-    fig, axes = plt.subplots(2, 3, figsize=(17, 10))
+    fig, axes = plt.subplots(2, 4, figsize=(17, 10))
     
     for j, epoch_feature in enumerate(epoch_features_plot):
-        ax = axes[j//3, j%3]
+        ax = axes[j//4, j%4]
         ax.scatter(cgm_features_plot[cgm_feature], epoch_features_plot[epoch_feature])
         ax.set_xlabel(cgm_feature, fontsize=20)
         ax.set_ylabel(epoch_feature, fontsize=20)
@@ -137,7 +134,7 @@ for i, cgm_feature in enumerate(cgm_features_plot):
         ax.tick_params(axis='y', labelsize=20) 
 
     # Remove excess axes 
-    axes[1, 2].set_axis_off() 
+    axes[1, 3].set_axis_off() 
     
     plt.tight_layout()
     plt.show()

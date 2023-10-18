@@ -342,11 +342,14 @@ def calc_sleep_quality(summed_data):
     
     """
     
+    # Bad:
+    # latency > 30
+    # efficiency < 85
+    # WASO > 40
+    
     criteria = {
-    "Very bad sleep": {"latency": (31, np.inf), "efficiency": (0, 80), "WASO": (31, np.inf)},
-    "Fairly bad sleep": {"latency": (21, 31), "efficiency": (80, 84), "WASO": (16, 30)},
-    "Fairly good sleep": {"latency": (15, 20), "efficiency": (85, 90), "WASO": (5, 15)},
-    "Very good sleep": {"latency": (0, 15), "efficiency": (90, 100), "WASO": (0, 5)},
+    "Bad": {"latency": (31, np.inf), "efficiency": (0, 85), "WASO": (41, np.inf)},
+    "Good": {"latency": (0, 31), "efficiency": (85, 100), "WASO": (0, 41)},
     }
     
     latency = summed_data["Latency"]
