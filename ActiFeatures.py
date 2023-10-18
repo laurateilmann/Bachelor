@@ -16,9 +16,9 @@ from ActiFeaturesFunc import *
 #%% Set the base directory for the current family and session
 
 # Choose what study to import and preprocess data from
-#study = "MindYourDiabetes"
+study = "MindYourDiabetes"
 #study = "Validationstudy_2020_2021_Cecilie"
-study = "Sleep-1-child_2023_Cecilie"
+# study = "Sleep-1-child_2023_Cecilie"
 #study = "Kasper" 
 
 # Base directory/path
@@ -79,6 +79,9 @@ for family in families:
             in_bed = summed_data.iloc[i]['In Bed DateTime']
             out_bed = summed_data.iloc[i]['Out Bed DateTime']
             
+            latency = summed_data.iloc[i]['Latency']
+            efficiency = summed_data.iloc[i]['Efficiency']
+            
             # Extract one night's worth of actigraph epoch data
             night_data = extract_one_night(in_bed, out_bed, epoch_data)
         
@@ -105,7 +108,7 @@ for family in families:
             
             # Append lists with calculated features
             nightly_features_list.append([in_bed, out_bed, num_awakenings, waso,
-                                          avg_awakening, tst, sleep_quality])
+                                          avg_awakening, tst, latency, efficiency, sleep_quality])
             
             for awakening in h_awakenings:
                 hourly_awakenings_list.append(awakening)
@@ -120,7 +123,7 @@ for family in families:
                                                                'Out Bed DateTime',
                                                                'Number of awakenings', 
                                                                'WASO', 'Average awakening length',
-                                                               'TST', 'Sleep quality'])
+                                                               'TST', 'Latency', 'Efficiency', 'Sleep quality'])
         
         hourly_awakenings_df = pd.DataFrame(hourly_awakenings_list, columns=['DateTime start',
                                                                 'Number of awakenings'])
