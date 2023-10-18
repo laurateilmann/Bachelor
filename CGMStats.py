@@ -20,18 +20,22 @@ def calc_stats(CGM_data):
     -------
     CGM_stats : list consisting of 'mean', 'std', 'min', 'max', 'cv', 'Q1', 'Q2', 'Q3'.
 
-    """
+    """ 
     # Calculate statistics
     CGM_stats = CGM_data.describe().T
     # Drop 'count' column
-    CGM_stats = CGM_stats.iloc[:, 1:]
+    CGM_stats = CGM_stats.drop(['count', '25%', '75%'], axis=1)
     # Reset index 
     CGM_stats = CGM_stats.reset_index(drop=True)
+     # Rename the columns
+    CGM_stats.rename(columns={'50%': 'median'}, inplace=True)
     # Calculate and include Coefficient of Variation (cv)
     cv = (CGM_stats['std'] / CGM_stats['mean']).values.tolist()
     CGM_stats['cv'] = cv
     deltaIG = (CGM_stats['max'] - CGM_stats['min']).values.tolist()
     CGM_stats['delta IG'] = deltaIG
+    # Reordering columns
+    CGM_stats = CGM_stats[['mean', 'std', 'median', 'min', 'max', 'cv', 'delta IG']]
     # Convert to list
     CGM_stats = CGM_stats.values.tolist()
     CGM_stats = [item for sublist in CGM_stats for item in sublist]
@@ -63,15 +67,13 @@ def hourly_stats(CGM_data_original):
     CGM_data_std = CGM_data.resample('H').std()
     CGM_data_min = CGM_data.resample('H').min()
     CGM_data_max = CGM_data.resample('H').max()
-    CGM_data_q1 = CGM_data.resample('H').quantile(0.25)
-    CGM_data_q2 = CGM_data.resample('H').quantile(0.50)
-    CGM_data_q3 = CGM_data.resample('H').quantile(0.75)
+    CGM_data_median = CGM_data.resample('H').quantile(0.50)
     CGM_data_cv = CGM_data_std/CGM_data_mean
     CGM_data_deltaIG = CGM_data_max-CGM_data_min
     
     # Create pandas dataframe with calculated hourly statistics
-    CGM_stats = pd.concat([CGM_data_mean, CGM_data_std, CGM_data_min, CGM_data_q1, CGM_data_q2, CGM_data_q3, CGM_data_max, CGM_data_cv, CGM_data_deltaIG], axis = 1)
-    CGM_stats.columns = ['mean', 'std','min', 'Q1', 'Q2', 'Q3', 'max','cv', 'delta IG']
+    CGM_stats = pd.concat([CGM_data_mean, CGM_data_std, CGM_data_median, CGM_data_min, CGM_data_max, CGM_data_cv, CGM_data_deltaIG], axis = 1)
+    CGM_stats.columns = ['mean', 'std', 'median', 'min', 'max','cv', 'delta IG']
     CGM_stats = CGM_stats.reset_index()
     
     # Convert to list

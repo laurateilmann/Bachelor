@@ -15,9 +15,9 @@ from CGMStats import calc_stats, hourly_stats
 #%% Set the base directory where your files are located
 
 # Choose what study to import and process data from
-#study = "MindYourDiabetes"
-study = "Validationstudy_2020_2021_Cecilie"
-#study = "Sleep-1-child_2023_Cecilie"
+# study = "MindYourDiabetes"
+# study = "Validationstudy_2020_2021_Cecilie"
+study = "Sleep-1-child_2023_Cecilie"
 #study = "Kasper" 
 
 # Base directory/path
@@ -108,13 +108,13 @@ for family in families:
                                                                'Out Bed DateTime',
                                                                'TIR (%)', 'TAR (%)',
                                                                'TBR (%)', 'mean', 'std',
-                                                               'min', 'Q1', 'Q2', 'Q3', 
+                                                               'median', 'min',
                                                                'max','cv', 'delta IG'])
         
         CGM_h_stats = pd.DataFrame(CGM_h_stats_list, columns=['DateTime start', 
                                                                 'mean', 'std',
-                                                                'min', 'Q1', 'Q2',
-                                                                'Q3', 'max','cv', 'delta IG'])
+                                                               'median', 'min',
+                                                               'max','cv', 'delta IG'])
         
         CGM_h_ranges = pd.DataFrame(CGM_h_ranges_list, columns=['DateTime start',
                                                                 'TIR (%)','TAR (%)',
