@@ -107,6 +107,19 @@ plt.xticks(fontsize=12, family='Times New Roman')
 plt.yticks(fontsize=12, family='Times New Roman')
 #plt.grid()
 
+#%% Plot: Logaritmh TAR against WASO
+
+plt.figure()
+plt.plot(np.log(cgm_feature_df['TAR (%)']), (epochs_feature_df['WASO']), 'o')
+plt.title("Logarithm of TAR against Logarithm of WASO", fontsize=16)
+plt.xlabel("Logarithm of Time Above range (%)", fontsize=14)
+plt.ylabel("WASO (min)", fontsize=14)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+
+plt.show()
+
+
 #%% Pairwise scatterplot
 
 plt.close('all')
