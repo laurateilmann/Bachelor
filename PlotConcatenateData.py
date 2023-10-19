@@ -114,10 +114,6 @@ plt.close('all')
 cgm_features_plot = cgm_feature_df.iloc[:,2:]
 epoch_features_plot = epochs_feature_df.iloc[:,2:]
 
-# Change the feature 'Sleep quality' so 0='Bad', 1='Good'
-epoch_features_plot.replace('Bad', 0, inplace=True)
-epoch_features_plot.replace('Good', 1, inplace=True)
-
 all_features = pd.concat([cgm_features_plot,epoch_features_plot],axis=1)
 
 for i, cgm_feature in enumerate(cgm_features_plot):

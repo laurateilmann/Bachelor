@@ -24,8 +24,6 @@ epoch_file_path = os.path.join(base_dir+epoch_file)
 # Read the cgm and epoch data
 cgm_data = pd.read_csv(cgm_file_path)
 epoch_data = pd.read_csv(epoch_file_path)
-epoch_data.replace('Bad', 0, inplace=True)
-epoch_data.replace('Good', 1, inplace=True)
 
 data = pd.merge(cgm_data, epoch_data, on=["In Bed DateTime", "Out Bed DateTime"])
 
