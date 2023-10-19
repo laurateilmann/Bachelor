@@ -35,7 +35,7 @@ y = merged_data[['WASO']]
 y_stan = zscore(y, ddof=1)
 
 # Add a constant column to the independent variables
-x_stan = sm.add_constant(x_stan)
+# x_stan = sm.add_constant(x_stan)
 
 
 #%% Perform the multiple linear regression
@@ -43,6 +43,12 @@ model = sm.OLS(y_stan, x_stan).fit()
 
 # Print the summary of the regression
 print(model.summary())
+
+# # Save the summary table to a CSV file
+# summary_table = model.summary()
+# with open('H:\GitHub\Bachelor\Plots\summary_table.csv', 'w') as file:
+#     file.write(summary_table.as_csv())
+    
 
 
 #%% Linear Regression model 
