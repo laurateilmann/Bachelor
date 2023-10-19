@@ -16,7 +16,7 @@ from sklearn.preprocessing import StandardScaler
 
 base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM"
 
-# Load the data
+#%% Load the nightly data
 cgm_data = pd.read_csv(base_dir + '\concatenated_cgm.csv')
 epochs_data = pd.read_csv(base_dir + '\concatenated_epochs.csv')
 
@@ -34,24 +34,40 @@ x_stan = zscore(x, ddof=1)
 y = merged_data[['WASO']]
 y_stan = zscore(y, ddof=1)
 
-# Add a constant column to the independent variables
-# x_stan = sm.add_constant(x_stan)
 
 
-#%% Perform the multiple linear regression
-model = sm.OLS(y_stan, x_stan).fit()
 
-# Print the summary of the regression
-print(model.summary())
+#%% Load the hourly data
+cgm_hour = pd.read_csv(base_dir + '\concatenated_hourly_cgm.csv')
+epochs_hour = pd.read_csv(base_dir + '\concatenated_hourly_epochs.csv')
 
-# # Save the summary table to a CSV file
-# summary_table = model.summary()
-# with open('H:\GitHub\Bachelor\Plots\summary_table.csv', 'w') as file:
-#     file.write(summary_table.as_csv())
-    
+# Merge the two dataframes based on common columns
+merged_hour = pd.merge(cgm_hour, epochs_hour, on=['DateTime start'])
+
+# Handling missing and infinite values
+merged_hour.replace([np.inf, -np.inf], np.nan, inplace=True)
+merged_hour.dropna(inplace=True)
+
+# Define the independent and dependent variables
+xh = merged_hour.iloc[:, 2:12]
+
+xh_stan = zscore(xh, ddof=1)
+yh = merged_hour[['WASO']]
+yh_stan = zscore(yh, ddof=1)
 
 
-#%% Linear Regression model 
+#%% Perform the multiple linear regression 
+model_nightly = sm.OLS(y_stan, x_stan).fit()
+model_hourly = sm.OLS(yh_stan, xh_stan).fit()
+
+# Print the summary of the regression nightly
+print(model_nightly.summary())
+
+# Print the summary of the regression hourly
+print(model_hourly.summary())
+
+
+#%% Linear Regression model (in another way)
 
 model_lm = lm.LinearRegression()
 model_lm.fit(x_stan, y_stan)
