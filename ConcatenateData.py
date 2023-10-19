@@ -22,14 +22,13 @@ import matplotlib.pyplot as plt
 
 #%% Set the base directory for the current family and session
 
-# Choose what study to import and preprocess data from
-#study = "MindYourDiabetes"
-# study = "Validationstudy_2020_2021_Cecilie"
-# study = "Sleep-1-child_2023_Cecilie"
-#study = "Kasper" 
-
+# Choose what studies to concatenate
 studies = ["MindYourDiabetes", "Sleep-1-child_2023_Cecilie", "Validationstudy_2020_2021_Cecilie"]
+# studies = ["MindYourDiabetes"]
+# studies = ["Sleep-1-child_2023_Cecilie"]
+# studies = ["Validationstudy_2020_2021_Cecilie"]
 
+base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM"
 
 #%% Initialize an empty list to store individual DataFrames
 dfs_cgm = []
@@ -37,16 +36,16 @@ dfs_epochs = []
 
 for study in studies:
     # Base directory/path
-    base_dir = os.path.join(r"L:\LovbeskyttetMapper01\StenoSleepQCGM", study)
+    study_dir = os.path.join(base_dir, study)
     
     # List of families
-    families = [folder for folder in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, folder))]
+    families = [folder for folder in os.listdir(study_dir) if os.path.isdir(os.path.join(study_dir, folder))]
     
     # List of sessions
     if study == "Validationstudy_2020_2021_Cecilie" or study == "Sleep-1-child_2023_Cecilie":
         sessions = [None]
     else:
-        folder_path = os.path.join(base_dir,families[0])
+        folder_path = os.path.join(study_dir,families[0])
         sessions = [folder for folder in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, folder))]
     
     
@@ -55,14 +54,14 @@ for study in studies:
             # Create path
             if session==None:
                 # Construct the file path for the CSV data for the current family and session
-                cgm_path = os.path.join(base_dir, family, "cgm_data_processed_features.csv")
+                cgm_path = os.path.join(study_dir, family, "cgm_data_processed_features.csv")
                 # Construct the file path for the CSV data for the current family and session
-                epoch_path = os.path.join(base_dir, family, "sleep_epochs_processed_features.csv")
+                epoch_path = os.path.join(study_dir, family, "sleep_epochs_processed_features.csv")
             else:
                 # Construct the file path for the CSV data for the current family and session
-                cgm_path = os.path.join(base_dir, family, session, "cgm_data_processed_features.csv")
+                cgm_path = os.path.join(study_dir, family, session, "cgm_data_processed_features.csv")
                 # Construct the file path for the CSV data for the current family and session
-                epoch_path = os.path.join(base_dir, family, session, "sleep_epochs_processed_features.csv")
+                epoch_path = os.path.join(study_dir, family, session, "sleep_epochs_processed_features.csv")
              
             
              # Check if the file exists before reading it
@@ -87,10 +86,15 @@ cgm_concatenate = pd.concat(dfs_cgm, ignore_index=True)
 
 
 #%% Export concatenated data to directory
-epochs_output_file = os.path.join(r"L:\LovbeskyttetMapper01\StenoSleepQCGM", "concatenated_epochs.csv")
 
-# Specify the filename for the concatenated CGM data
-cgm_output_file = os.path.join(r"L:\LovbeskyttetMapper01\StenoSleepQCGM", "concatenated_cgm.csv")
+if len(studies)==1:
+    output_dir = study_dir 
+else:
+    output_dir = base_dir
+
+# Specify the filename for the concatenated sleep epoch and CGM data
+epochs_output_file = os.path.join(output_dir, "concatenated_epochs.csv")
+cgm_output_file = os.path.join(output_dir, "concatenated_cgm.csv")
 
 # Export concatenated data to the specified files
 epochs_concatenate.to_csv(epochs_output_file, index=False)
