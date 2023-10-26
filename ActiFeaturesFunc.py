@@ -40,7 +40,7 @@ def calc_awakenings(data):
 
 #%% WASO per night
 
-def calc_WASO(data):
+def calc_WASO(data, min_consecutive_w=1):
         """
         Calculate 'wake after onset sleep' of acthigraph data 
         from in bed time to out of bed time.
@@ -49,6 +49,10 @@ def calc_WASO(data):
         ----------
         data : Pandas Dataframe
         Requires a column called 'Sleep or Awake?' consisting of S and W to determine sleep or wake.
+        
+        min_consecutive_w: int
+        The number of minutes required to be awake before it is counted as an
+        awakening and thus contributing to the WASO.
     
         Returns
         -------
@@ -64,9 +68,17 @@ def calc_WASO(data):
         # Slice the DataFrame to include rows starting from the first 'S' occurrence
         WASO_data = data.iloc[first_s_index:]
         
-        # Calculate WASO
-        waso = (WASO_data['Sleep or Awake?'] == 'W').sum()
+        consecutive_w_count = 0
+        waso = 0
         
+        for value in WASO_data['Sleep or Awake?']:
+            if value == 'W':
+                consecutive_w_count += 1
+                if consecutive_w_count >= min_consecutive_w:
+                    waso += 1
+            else:
+                consecutive_w_count = 0
+    
         return waso
 
 #%% Average awakening length
