@@ -68,8 +68,8 @@ for i in range(summed_data.shape[0]):
     # Extract one night's worth of actigraph epoch data
     night_data = extract_one_night(in_bed, out_bed, epoch_data)
     
-    waso = calc_WASO(night_data,2)
-    waso_list.append(waso)
+    latency = calc_latency(night_data, in_bed)
+    waso_list.append(latency)
     
 
 

@@ -389,5 +389,27 @@ def calc_sleep_quality(summed_data):
     return sleep_category
 
 
+#%% Calculate latency 
     
+def calc_latency(data, in_bed, min_consecutive_s=5):
+
+    sleep_onset = None
+    consecutive_s_count = 0
+    
+    for j, value in enumerate(data['Sleep or Awake?']):
+        if value == 'S':
+            consecutive_s_count += 1
+            if consecutive_s_count >= min_consecutive_s:
+                sleep_onset = data.iloc[j - (min_consecutive_s-1)]['DateTime']
+                break
+        else:
+            consecutive_s_count = 0
+    
+    if sleep_onset:
+        latency = (sleep_onset - in_bed).total_seconds() / 60
+    else:
+        latency = None
+    
+    return latency 
+
     
