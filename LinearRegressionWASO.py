@@ -22,8 +22,18 @@ base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM"
 cgm_data = pd.read_csv(base_dir + '\concatenated_cgm.csv')
 epochs_data = pd.read_csv(base_dir + '\concatenated_epochs.csv')
 
-# Merge the two dataframes based on common columns
-merged_data = pd.merge(cgm_data, epochs_data, on=['In Bed DateTime', 'Out Bed DateTime'])
+# Reset index, to make sure they are continuous starting from 0
+cgm_data = cgm_data.reset_index(drop = True)
+epochs_data = epochs_data.reset_index(drop = True)
+
+# Merge the two dataframes based on index
+merged_data = cgm_data.merge(epochs_data, left_index=True, right_index=True, how='inner')
+
+# Rename DateTime columns
+merged_data = merged_data.rename(columns={'In Bed DateTime_x': 'In Bed DateTime', 'Out Bed DateTime_x': 'Out Bed DateTime'})
+
+# Remove duplicate DateTime columns
+merged_data = merged_data.drop(['In Bed DateTime_y', 'Out Bed DateTime_y'], axis=1)
 
 # Handling missing and infinite values
 merged_data.replace([np.inf, -np.inf], np.nan, inplace=True)
@@ -40,12 +50,23 @@ y_stan = zscore(y, ddof=1)
 # Include offset
 x_stan = sm.add_constant(x_stan)
 
+
 #%% Load the hourly data
 cgm_hour = pd.read_csv(base_dir + '\concatenated_hourly_cgm.csv')
 epochs_hour = pd.read_csv(base_dir + '\concatenated_hourly_epochs.csv')
 
-# Merge the two dataframes based on common columns
-merged_hour = pd.merge(cgm_hour, epochs_hour, on=['DateTime start'])
+# Reset index, to make sure they are continuous starting from 0
+cgm_hour = cgm_hour.reset_index(drop = True)
+epochs_hour = epochs_hour.reset_index(drop = True)
+
+# Merge the two dataframes based on index
+merged_hour = cgm_hour.merge(epochs_hour, left_index=True, right_index=True, how='inner')
+
+# Rename DateTime columns
+merged_hour = merged_hour.rename(columns={'DateTime start_x': 'DateTime start'})
+
+# Remove duplicate DateTime columns
+merged_hour = merged_hour.drop(['DateTime start_y'], axis=1)
 
 # Handling missing and infinite values
 merged_hour.replace([np.inf, -np.inf], np.nan, inplace=True)
@@ -61,6 +82,7 @@ yh_stan = zscore(yh, ddof=1)
 
 # Include offset
 xh_stan = sm.add_constant(xh_stan)
+
 
 #%% Perform the multiple linear regression 
 model_nightly = sm.OLS(y_stan, x_stan).fit()
