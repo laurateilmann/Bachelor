@@ -61,5 +61,10 @@ for i in range(summed_data.shape[0]):
     sleep_onset_list.append(sleep_onset)
 
 
+#%% Delta-latency: difference between calculated and given latency
+
+delta_latency = latency_list - summed_data.iloc[:]['Latency']
+
+
     
     

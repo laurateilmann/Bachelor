@@ -79,7 +79,6 @@ for family in families:
             in_bed = summed_data.iloc[i]['In Bed DateTime']
             out_bed = summed_data.iloc[i]['Out Bed DateTime']
             
-            # latency = summed_data.iloc[i]['Latency']
             efficiency = summed_data.iloc[i]['Efficiency']
             
             # Extract one night's worth of actigraph epoch data
