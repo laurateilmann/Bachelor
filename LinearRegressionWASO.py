@@ -266,6 +266,6 @@ for train_index, test_index in CV.split(X):
     k+=1
 
 # Estimate generalization errors
-est_gen_error = Error_test.mean() 
-est_gen_error_baseline = Error_test_baseline.mean()
+est_gen_error_hourly = Error_test.mean() 
+est_gen_error_hourly_baseline = Error_test_baseline.mean()
 
