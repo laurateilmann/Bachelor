@@ -21,8 +21,18 @@ base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM"
 cgm_data = pd.read_csv(base_dir + '\concatenated_cgm.csv')
 epochs_data = pd.read_csv(base_dir + '\concatenated_epochs.csv')
 
-# Merge the two dataframes based on common columns
-merged_data = pd.merge(cgm_data, epochs_data, on=['In Bed DateTime', 'Out Bed DateTime'])
+# Reset index, to make sure they are continuous starting from 0
+cgm_data = cgm_data.reset_index(drop = True)
+epochs_data = epochs_data.reset_index(drop = True)
+
+# Merge the two dataframes based on index
+merged_data = cgm_data.merge(epochs_data, left_index=True, right_index=True, how='inner')
+
+# Rename DateTime columns
+merged_data = merged_data.rename(columns={'In Bed DateTime_x': 'In Bed DateTime', 'Out Bed DateTime_x': 'Out Bed DateTime'})
+
+# Remove duplicate DateTime columns
+merged_data = merged_data.drop(['In Bed DateTime_y', 'Out Bed DateTime_y'], axis=1)
 
 # Handling missing and infinite values
 merged_data.replace([np.inf, -np.inf], np.nan, inplace=True)
