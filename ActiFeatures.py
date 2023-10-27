@@ -34,6 +34,12 @@ else:
     folder_path = os.path.join(base_dir,families[0])
     sessions = [folder for folder in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, folder))]
 
+families = ['Fam09']
+
+#%% Initializing 
+
+min_wake = 2
+min_sleep = 5
 
 #%% Outer loop for families
 for family in families:
@@ -85,17 +91,17 @@ for family in families:
             night_data = extract_one_night(in_bed, out_bed, epoch_data)
             
             # Calculated latency per night
-            latency = calc_latency(night_data, in_bed)
+            latency = calc_latency(night_data, in_bed, min_sleep)
         
             # Number of awakenings per night
-            num_awakenings = calc_awakenings(night_data,5)
+            num_awakenings = calc_awakenings(night_data, min_wake, min_sleep)
             # Number of awakenings per hour per night
             h_awakenings = hourly_awakenings(night_data)
         
             # WASO per night
-            waso = calc_WASO(night_data)
+            waso = calc_WASO(night_data, min_wake, min_sleep)
             # WASO per hour per night
-            h_waso = hourly_WASO(night_data)
+            h_waso = hourly_WASO(night_data, min_wake, min_sleep)
             
             # Average awakening length
             avg_awakening = calc_avg_awakening(night_data)
