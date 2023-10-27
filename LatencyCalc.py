@@ -66,5 +66,15 @@ for i in range(summed_data.shape[0]):
 delta_latency = latency_list - summed_data.iloc[:]['Latency']
 
 
+#%% Test for number of awakenings
+
+num_awakenings_list = []
+
+num_awakenings = calc_awakenings(epoch_data,5)
+
+num_awakenings_list.append(num_awakenings)
     
+
+awakenings = ((epoch_data['Sleep or Awake?'] == 'W') & (epoch_data['Sleep or Awake?'].shift(1) == 'S'))
+number_awakenings = awakenings.sum()
     

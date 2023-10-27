@@ -88,7 +88,7 @@ for family in families:
             latency = calc_latency(night_data, in_bed)
         
             # Number of awakenings per night
-            num_awakenings = calc_awakenings(night_data)
+            num_awakenings = calc_awakenings(night_data,5)
             # Number of awakenings per hour per night
             h_awakenings = hourly_awakenings(night_data)
         

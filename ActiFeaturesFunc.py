@@ -14,7 +14,7 @@ import datetime
 
 #%% Number of awakenings per night
 
-def calc_awakenings(data):
+def calc_awakenings(data, min_consecutive_w=1):
         """
         Calculate number of awakenings of acthigraph data 
         from in bed time to out of bed time.
@@ -30,13 +30,32 @@ def calc_awakenings(data):
         Number of awakenings from in bed time to out of bed time.
         
         """
-        
+        # Find the index of the first 'S' occurrence
+        first_s_index = data.index[data['Sleep or Awake?'] == 'S'].min()
+        first_s_index -= data.index[0]
+    
+        # Slice the DataFrame to include rows starting from the first 'S' occurrence
+        awakening_data = data.iloc[first_s_index:]
+                
         # Calculate the number of awakenings
-        awakenings = ((data['Sleep or Awake?'] == 'W') & (data['Sleep or Awake?'].shift(1) == 'S'))
-        num_awakenings = awakenings.sum()
-
         
-        return num_awakenings
+        consecutive_w_count = 0
+        awakenings = 0
+        sleep_start = False
+    
+        for value in data['Sleep or Awake?']:
+            if value == 'S':
+                sleep_start = True
+            elif value == 'W' and sleep_start:
+                consecutive_w_count += 1
+                if consecutive_w_count >= min_consecutive_w:
+                    awakenings += 1
+                    consecutive_w_count = 0
+                    sleep_start = False
+            else:
+                consecutive_w_count = 0
+    
+        return awakenings
 
 #%% WASO per night
 
