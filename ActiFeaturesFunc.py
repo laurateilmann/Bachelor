@@ -14,7 +14,7 @@ import datetime
 
 #%% Number of awakenings per night
 
-def calc_awakenings(data, min_consecutive_w=1):
+def calc_awakenings(data, min_consecutive_w=1, min_consecutive_s=1):
     """
     Calculate number of awakenings of acthigraph data 
     from in bed time to out of bed time.
@@ -30,8 +30,9 @@ def calc_awakenings(data, min_consecutive_w=1):
     Number of awakenings from in bed time to out of bed time.
     
     """
-    # Find the index of the first 'S' occurrence
-    first_s_index = data.index[data['Sleep or Awake?'] == 'S'].min()
+    # Find the index of the first consecutive sleep period   
+    sleep_onset = calc_SO(data, min_consecutive_s)
+    first_s_index = data[data['DateTime'] == sleep_onset].index[0]
     first_s_index -= data.index[0]
 
     # Slice the DataFrame to include rows starting from the first 'S' occurrence
@@ -59,7 +60,7 @@ def calc_awakenings(data, min_consecutive_w=1):
 
 #%% WASO per night
 
-def calc_WASO(data, min_consecutive_w=1):
+def calc_WASO(data, min_consecutive_w=1, min_consecutive_s=1):
     """
     Calculate 'wake after onset sleep' of acthigraph data 
     from in bed time to out of bed time.
@@ -80,8 +81,9 @@ def calc_WASO(data, min_consecutive_w=1):
 
     """
     
-    # Find the index of the first 'S' occurrence
-    first_s_index = data.index[data['Sleep or Awake?'] == 'S'].min()
+    # Find the index of the first consecutive sleep period   
+    sleep_onset = calc_SO(data, min_consecutive_s)
+    first_s_index = data[data['DateTime'] == sleep_onset].index[0]
     first_s_index -= data.index[0]
 
     # Slice the DataFrame to include rows starting from the first 'S' occurrence
@@ -99,7 +101,7 @@ def calc_WASO(data, min_consecutive_w=1):
             if consecutive_w_count >= min_consecutive_w:
                 waso += 1
                 if new_awakening:
-                    waso += 4
+                    waso += min_consecutive_w - 1
                     new_awakening = False
         else:
             consecutive_w_count = 0
@@ -234,7 +236,7 @@ def hourly_awakenings(data):
 
 #%% WASO per hour per night
 
-def hourly_WASO(data,min_consecutive_w=1):
+def hourly_WASO(data,min_consecutive_w=1, min_consecutive_s=1):
     """
     Calculate hourly 'wake after sleep onset' of acthigraph data 
         from in bed time to out of bed time.
@@ -254,13 +256,18 @@ def hourly_WASO(data,min_consecutive_w=1):
     h_WASO : list of minutes spent sleeping per hour. 
 
     """
-        
+       
     # Initialize lists to store hourly results
     h_WASO = []
     
     # Start and end datetime of night
     start = data.iloc[0]['DateTime']
     end = data.iloc[-1]['DateTime']
+    
+    tolerance = pd.Timedelta('1 minute')
+    
+    # Find the sleep onset
+    sleep_onset = calc_SO(data, min_consecutive_s)
     
     # Create list of hours
     if  start.date() == end.date():
@@ -293,16 +300,17 @@ def hourly_WASO(data,min_consecutive_w=1):
         
         # Check if it is the first hour of the night or if the preceding hour had WASO=0
         if hour == hours[0] or WASO_0:
-            # Find the index of the first 'S' occurrence
-            first_s_index = data_hour.index[data_hour['Sleep or Awake?'] == 'S'].min()
-            first_s_index -= data_hour.index[0]
+            
             # Check if there is an 'S' occurence at all
-            if np.isnan(first_s_index):
-                WASO_0 = True # WASO will be set to 0
-            else:
+            if any(abs(data_hour['DateTime']-sleep_onset)<=tolerance):
+                # Find the index of the first consecutive sleep period   
+                first_s_index = data_hour[data_hour['DateTime'] == sleep_onset].index[0]
+                first_s_index -= data_hour.index[0]
                 # Slice the DataFrame to include rows starting from the first 'S' occurrence
                 data_hour = data_hour.iloc[first_s_index:]
-                WASO_0 = False      
+                WASO_0 = False
+            else:
+                WASO_0 = True    
         
         # Count the number of 'W's in the preceding hour leading directly up to the current hour.
         # This should only be done for hours that are not the first hour of the night,
@@ -476,11 +484,10 @@ def calc_sleep_quality(summed_data):
         
     return sleep_category
 
-
-#%% Calculate latency 
+#%% Sleep onset 
     
-def calc_latency(data, in_bed, min_consecutive_s=5):
-
+def calc_SO(data, min_consecutive_s=1):
+    
     sleep_onset = None
     consecutive_s_count = 0
     
@@ -492,6 +499,14 @@ def calc_latency(data, in_bed, min_consecutive_s=5):
                 break
         else:
             consecutive_s_count = 0
+            
+    return sleep_onset
+
+#%% Calculate latency 
+    
+def calc_latency(data, in_bed, min_consecutive_s=1):
+    
+    sleep_onset = calc_SO(data, min_consecutive_s)
     
     if sleep_onset:
         latency = (sleep_onset - in_bed).total_seconds() / 60
