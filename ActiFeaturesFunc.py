@@ -140,7 +140,7 @@ def calc_avg_awakening(data):
 
 #%% Total sleep time per night
 
-def calc_TST(data):
+def calc_TST(data, min_consecutive_w=1, min_consecutive_s=1):
     """
     Calculate 'total sleep time' of acthigraph data 
     from in bed time to out of bed time.
@@ -149,6 +149,7 @@ def calc_TST(data):
     ----------
     data : Pandas Dataframe
     Requires a column called 'Sleep or Awake?' consisting of S and W to determine sleep or wake.
+    Must be from exactly In Bed to Out Bed. 
 
     Returns
     -------
@@ -156,9 +157,19 @@ def calc_TST(data):
     Minutes spent sleeping for the whole night. 
 
     """
+    # Calculate WASO (number of minutes awake after sleep onset)
+    waso = calc_WASO(data, min_consecutive_w, min_consecutive_s)
     
+    # Find sleep onset
+    sleep_onset = calc_SO(data, min_consecutive_s)
+    
+    # Slice data to after sleep onset
+    sleep_onset_index = data[data['DateTime'] == sleep_onset].index[0]
+    sleep_onset_index -= data.index[0]
+    data_tst = data.iloc[sleep_onset_index:]
+
     # Calculate TST
-    tst = (data['Sleep or Awake?'] == 'S').sum()
+    tst = data_tst.shape[0] - waso
     
     return tst
     
