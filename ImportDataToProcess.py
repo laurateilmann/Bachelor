@@ -20,14 +20,15 @@ from datetime import datetime
 from MarkMissingData import MarkMissingData
 from CalcPctActiveTime import *
 from PrepareLibreviewData import *
+import numpy as np
 
 #%% 
 
 # Choose what study to import and preprocess data from
-# study = "MindYourDiabetes"
-study = "Validationstudy_2020_2021_Cecilie"
+study = "MindYourDiabetes"
+# study = "Validationstudy_2020_2021_Cecilie"
 # study = "Sleep-1-child_2023_Cecilie"
-#study = "Kasper" 
+# study = "Kasper" 
 
 # Base directory/path
 base_dir = os.path.join(r"L:\LovbeskyttetMapper01\StenoSleepQCGM", study)
@@ -41,7 +42,7 @@ if study == "Validationstudy_2020_2021_Cecilie" or study == "Sleep-1-child_2023_
 else:
     folder_path = os.path.join(base_dir,families[0])
     sessions = [folder for folder in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, folder))]
-
+    
 
 #%% Import all AGD files and export processed file as csv
 
@@ -190,11 +191,12 @@ for family in families:
                 cgm_data = cgm_data.reset_index(drop = True)
                 # Find holes in data where data is missing and insert NaN
                 cgm_data = MarkMissingData(cgm_data)
-                
+            
+            # Replace values of 111.1 mmol/L with NaN, since these are a systemic error
+            cgm_data['CGM'] = cgm_data['CGM'].replace(111.1, np.nan)
+
             # Filter away any blood glucose values above 40 mmol/L (artefacts)
-            for i in range(0,len(cgm_data)):
-                if cgm_data.loc[i,'CGM'] > 40:
-                    cgm_data.loc[i,'CGM'] = float("nan") 
+            cgm_data['CGM'] = cgm_data['CGM'].where(cgm_data['CGM'] < 40, np.nan)
                     
             # Percent active CGM time. OBS: not used or exported at the moment
             PctActiveTime, TotalTime = CalcPctActiveTime(cgm_data)
