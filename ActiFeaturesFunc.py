@@ -38,24 +38,24 @@ def calc_awakenings(data, min_consecutive_w=1, min_consecutive_s=1):
     # Slice the DataFrame to include rows starting from the first 'S' occurrence
     awakening_data = data.iloc[first_s_index:]
             
-    # Calculate the number of awakenings
-    
+    # Initilize counts and booleans
     consecutive_w_count = 0
     awakenings = 0
-    sleep_start = False
+    new_awakening = True
 
-    for value in data['Sleep or Awake?']:
-        if value == 'S':
-            sleep_start = True
-        elif value == 'W' and sleep_start:
+    # Calculate the number of awakenings
+    for value in awakening_data['Sleep or Awake?']:
+        if value == 'W' and new_awakening:
+            # Increment the consecutive count by one
             consecutive_w_count += 1
+            # Increment num_awakenings by one if the consecutive count >= min_consecutive_w 
             if consecutive_w_count >= min_consecutive_w:
                 awakenings += 1
-                consecutive_w_count = 0
-                sleep_start = False
-        else:
+                new_awakening = False
+        elif value == 'S':
             consecutive_w_count = 0
-
+            new_awakening = True
+    
     return awakenings
 
 #%% WASO per night
@@ -164,7 +164,7 @@ def calc_TST(data):
     
 #%% Number of awakenings per hour per night
     
-def hourly_awakenings(data):
+def hourly_awakenings(data, min_consecutive_w=1, min_consecutive_s=1):
     """
     Calculates number of awakenings for each hour of acthigraph data 
         from in bed time to out of bed time.
@@ -184,6 +184,12 @@ def hourly_awakenings(data):
     # Initialize lists to store hourly results
     h_awakenings = []
     
+    # Find the sleep onset
+    sleep_onset = calc_SO(data, min_consecutive_s)
+    
+    # Tolerance for comparing timestamps to sleep onset (in seconds)
+    tolerance = pd.Timedelta('1 minute').total_seconds()
+    
     # Start and end datetime of night
     start = data.iloc[0]['DateTime']
     end = data.iloc[-1]['DateTime']
@@ -193,11 +199,18 @@ def hourly_awakenings(data):
         hours = range(start.hour, end.hour+1)
     else: 
         hours = list(range(start.hour, 24)) + list(range(0, end.hour+1))
-      
+    
+    # Initialise booleans
+    sleep_onset_occured = False
+    new_awakening = True
+    
     # Loop through each hour of the night
     for hour in hours:
         
-        num_awakenings = 0
+        # Inittialize counts and booleans 
+        num_awakenings = 0 # Count of awakenings each hour
+        consecutive_w_count = 0 # Count of consecutive 'W's 
+        subsequent_w = True
         
         # Calculate the start and end times for the current hour
         start_time = hour
@@ -207,22 +220,62 @@ def hourly_awakenings(data):
         if end_time !=0:
             mask = (data['DateTime'].dt.hour >= start_time) & (data['DateTime'].dt.hour < end_time) 
         else:
-            mask = (data['DateTime'].dt.hour >= start_time)
-            
+            mask = data['DateTime'].dt.hour >= start_time
         data_hour = data[mask]
     
-        # Calculate the number of awakenings
-        if hour is not hours[0]:
-            if data_hour.iloc[0]['Sleep or Awake?'] == 'W':
-                first_index =  data_hour.index[0]
-                first_value = data_hour.iloc[0]['Sleep or Awake?']
-                preceding_index = first_index-1 - data.index[0]
-                preceding_value = data.iloc[preceding_index]['Sleep or Awake?']
-                if (first_value == 'W') & (preceding_value == 'S'):
-                    num_awakenings += 1
+        # Check if sleep_onset has occured yet
+        if not sleep_onset_occured:
+            # The absolute difference between the timestamps in the current hour and the sleep onset (in seconds)
+            time_dif = abs((data_hour['DateTime'] - sleep_onset).dt.total_seconds())
+            # Check if the sleep onset is within the current hour
+            if any(time_dif <= tolerance):
+                # Find the index of the first consecutive sleep period   
+                first_s_index = data_hour[data_hour['DateTime'] == sleep_onset].index[0]
+                first_s_index -= data_hour.index[0]
+                # Slice the DataFrame to include rows starting from the first 'S' occurrence
+                data_hour = data_hour.iloc[first_s_index:] 
+                sleep_onset_occured = True
         
-        awakenings = ((data_hour['Sleep or Awake?'] == 'W') & (data_hour['Sleep or Awake?'].shift(1) == 'S'))
-        num_awakenings += awakenings.sum()
+        # Count number of awakenings
+        if sleep_onset_occured:
+            # Iterate through all values of the current hour
+            for value in data_hour['Sleep or Awake?']:
+                    if value == 'W' and new_awakening:
+                        # Increment the consecutive count by one
+                        consecutive_w_count += 1
+                        # Increment num_awakenings by one if the consecutive count >= min_consecutive_w 
+                        if consecutive_w_count >= min_consecutive_w:
+                            num_awakenings += 1
+                            new_awakening = False
+                    elif value == 'S':
+                        consecutive_w_count = 0
+                        new_awakening = True
+                        
+            # Check if an awakening overlapping with the next/subsequent hour
+            if new_awakening and data_hour.iloc[-1]['Sleep or Awake?'] == 'W':                              
+                # Calculate the start and end times for the subsequent hour
+                start_subsequent = hour+1 if hour<23 else 0
+                end_subsequent = start_subsequent+1 if start_subsequent<23 else 0
+                # Filter the data for the current hour
+                if end_subsequent !=0:
+                    mask = (data['DateTime'].dt.hour >= start_subsequent) & (data['DateTime'].dt.hour < end_subsequent) 
+                else:
+                    mask = data['DateTime'].dt.hour >= start_subsequent
+                subsequent_hour = data[mask]
+                # Count the number of consecutive 'W's and see if there is enough to increment number of awakenings
+                while subsequent_w:
+                    if value == 'W':
+                        # Increment the consecutive count by one
+                        consecutive_w_count += 1
+                        # Increment num_awakenings by one if the consecutive count >= min_consecutive_w 
+                        if consecutive_w_count >= min_consecutive_w:
+                            num_awakenings += 1
+                            new_awakening = False
+                            # Stop the loop (it is not neccessary to count further)
+                            subsequent_w = False 
+                    else:
+                        # Stop the loop
+                        subsequent_w = False 
         
         # The date and start hour as pandas datetime object
         datetime_start = data.loc[data['DateTime'].dt.hour == hour, 'DateTime'].values[0] 

@@ -8,9 +8,7 @@ Created on Thu Oct 26 14:31:13 2023
 import os
 import pandas as pd
 from ActiFeaturesFunc import *
-import numpy as np
 
-    
 #%%
 
 in_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\MindYourDiabetes\Fam01\Baseline"
@@ -22,19 +20,19 @@ summed_filename = "summed_sleep_processed.csv"
 summed_file_path = os.path.join(in_dir, summed_filename)
 summed_data = pd.read_csv(summed_file_path, parse_dates=[12, 13, 14], dayfirst=True)
 
-waso_list = []
+feature_list = []
 
 #summed_data.shape[0]
-for i in range(1):
+for i in range(1,2):
     in_bed = summed_data.iloc[i]['In Bed DateTime']
     out_bed = summed_data.iloc[i]['Out Bed DateTime']
     
     # Extract one night's worth of actigraph epoch data
     night_data = extract_one_night(in_bed, out_bed, epoch_data)
     
-    waso = calc_WASO(night_data,1, 5)
-    h_waso = hourly_WASO(night_data,1,5)
-    waso_list.append(waso)
+    feature = hourly_awakenings(night_data,1, 5)
+    feature2 = calc_awakenings(night_data,1, 5)
+    feature_list.append(feature)
     
 
 
