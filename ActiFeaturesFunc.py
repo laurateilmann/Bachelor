@@ -263,8 +263,9 @@ def hourly_WASO(data,min_consecutive_w=1, min_consecutive_s=1):
     # Start and end datetime of night
     start = data.iloc[0]['DateTime']
     end = data.iloc[-1]['DateTime']
-    
-    tolerance = pd.Timedelta('1 minute')
+
+    # Tolerance for comparing timestamps to sleep onset (in seconds)
+    tolerance = pd.Timedelta('1 minute').total_seconds()
     
     # Find the sleep onset
     sleep_onset = calc_SO(data, min_consecutive_s)
@@ -300,9 +301,10 @@ def hourly_WASO(data,min_consecutive_w=1, min_consecutive_s=1):
         
         # Check if it is the first hour of the night or if the preceding hour had WASO=0
         if hour == hours[0] or WASO_0:
-            
-            # Check if there is an 'S' occurence at all
-            if any(abs(data_hour['DateTime']-sleep_onset)<=tolerance):
+            # The absolute difference between the timestamps in the current hour and the sleep onset (in seconds)
+            time_dif = abs((data_hour['DateTime'] - sleep_onset).dt.total_seconds())
+            # Check if the sleep onset is within the current hour
+            if any(time_dif <= tolerance):
                 # Find the index of the first consecutive sleep period   
                 first_s_index = data_hour[data_hour['DateTime'] == sleep_onset].index[0]
                 first_s_index -= data_hour.index[0]
