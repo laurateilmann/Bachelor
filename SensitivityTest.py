@@ -24,16 +24,16 @@ summed_data = pd.read_csv(summed_file_path, parse_dates=[12, 13, 14], dayfirst=T
 feature_list = []
 
 #summed_data.shape[0]
-for i in range(1):
+for i in range(summed_data.shape[0]):
     in_bed = summed_data.iloc[i]['In Bed DateTime']
     out_bed = summed_data.iloc[i]['Out Bed DateTime']
     
     # Extract one night's worth of actigraph epoch data
     night_data = extract_one_night(in_bed, out_bed, epoch_data)
     
-    feature = calc_awakenings(night_data,1, 5)
-    feature2 = hourly_awakenings(night_data,1, 5)
-    feature_list.append(feature)
+    feature = calc_TST(night_data,1, 1)
+    feature2 = calc_efficiency(night_data,1, 5)
+    feature_list.append(feature2)
     
 
 

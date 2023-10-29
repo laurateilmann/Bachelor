@@ -568,7 +568,7 @@ def calc_SO(data, min_consecutive_s=1):
             
     return sleep_onset
 
-#%% Calculate latency 
+#%% Sleep onset latency 
     
 def calc_latency(data, in_bed, min_consecutive_s=1):
     
@@ -580,5 +580,37 @@ def calc_latency(data, in_bed, min_consecutive_s=1):
         latency = None
     
     return latency 
+
+#%% Sleep efficiency
+    
+def calc_efficiency(data, min_consecutive_w=1, min_consecutive_s=1):
+    """
+    Calculate sleep efficiency of acthigraph data from in bed time to out of bed time.
+
+    Parameters
+    ----------
+    data : Pandas Dataframe
+    Requires a column called 'Sleep or Awake?' consisting of S and W to determine sleep or wake.
+    Must be from exactly from In Bed to Out Bed. 
+
+    Returns
+    -------
+    Int64
+    Sleep efficency in percent. 
+
+    """
+    
+    # Total sleep time
+    tst = calc_TST(data, min_consecutive_w, min_consecutive_s)
+    # Total amount of time spend in bed
+    total_bed_time = data.shape[0]
+    
+    # Calculate efficiency
+    if total_bed_time != 0:
+        efficiency = (tst / total_bed_time) * 100
+    else:
+        efficiency = None
+    
+    return efficiency
 
     
