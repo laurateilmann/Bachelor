@@ -16,9 +16,9 @@ from ActiFeaturesFunc import *
 #%% Set the base directory for the current family and session
 
 # Choose what study to import and preprocess data from
-study = "MindYourDiabetes"
+# study = "MindYourDiabetes"
 # study = "Validationstudy_2020_2021_Cecilie"
-# study = "Sleep-1-child_2023_Cecilie"
+study = "Sleep-1-child_2023_Cecilie"
 #study = "Kasper" 
 
 # Base directory/path
@@ -112,7 +112,7 @@ for family in families:
             tst = calc_TST(night_data, min_wake, min_sleep)
             
             # Sleep quality per night
-            sleep_quality = calc_sleep_quality(night_data, min_wake, min_sleep)
+            sleep_quality = calc_sleep_quality(night_data, in_bed, min_wake, min_sleep)
             
             # Append lists with calculated features
             nightly_features_list.append([in_bed, out_bed, num_awakenings, waso,

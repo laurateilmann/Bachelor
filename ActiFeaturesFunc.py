@@ -528,7 +528,7 @@ def calc_sleep_quality(data, in_bed, min_consecutive_w=1, min_consecutive_s=1):
     1: {"latency": (0, 31), "efficiency": (85, 100), "WASO": (0, 41)},
     }
     
-    latency = calc_latency(data, in_bed, min_consecutive_s=1)
+    latency = calc_latency(data, in_bed, min_consecutive_s)
     efficiency = calc_efficiency(data, min_consecutive_w, min_consecutive_s)
     WASO = calc_WASO(data, min_consecutive_w, min_consecutive_s)
     
