@@ -13,7 +13,7 @@ import numpy as np
 
 #%% Calculate 'Time In Range' (TIR), 'Time Above Range' (TAR) and 'Time Below Range' (TBR)
 
-def calc_ranges(CGM_data):
+def calc_ranges(CGM_data_original):
     """
     Calculate 'Time In Range' (TIR), 'Time Above Range' (TAR) and 'Time Below Range' (TBR) by the definition:
     TIR: 3.9-10 mmol/L
@@ -32,6 +32,10 @@ def calc_ranges(CGM_data):
 
 
     """
+    
+    # Exclude 'id' column 
+    CGM_data = CGM_data_original[['DateTime', 'CGM']]
+    
     # Define glucose concentration thresholds
     TIR_threshold_low = 3.9  # mmol/L
     TIR_threshold_high = 10.0  # mmol/L
@@ -74,7 +78,7 @@ def calc_ranges(CGM_data):
 
 #%% Calculate hourly TIR, TAR and TBR
     
-def hourly_ranges(CGM_data):  
+def hourly_ranges(CGM_data_original):  
     """
     Calculate hourly 'Time In Range' (TIR), 'Time Above Range' (TAR) and 'Time Below Range' (TBR) by the definition:
     TIR: 3.9-10 mmol/L
@@ -92,6 +96,9 @@ def hourly_ranges(CGM_data):
     h_ranges : list of hourly TIR, TAR, TBR
 
     """
+    
+    # Exclude 'id' column 
+    CGM_data = CGM_data_original[['DateTime', 'CGM']]
     
     # Initialize lists to store hourly results
     h_ranges = []

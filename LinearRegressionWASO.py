@@ -9,6 +9,7 @@ Created on Thu Oct 19 09:55:11 2023
 import pandas as pd
 import numpy as np
 import statsmodels.api as sm
+import statsmodels.formula.api as smf
 import sklearn.linear_model as lm
 import matplotlib.pylab as plt
 from scipy.stats import zscore
@@ -93,6 +94,18 @@ print(model_nightly.summary())
 
 # Print the summary of the regression hourly
 print(model_hourly.summary())
+
+#%% Linear regression with id as random effect
+
+# Specify the multiple linear regression model with a random effect for "id"
+formula = "WASO ~ TIR + TAR + TBR"
+model = smf.mixedlm(formula, data=merged_data, groups=merged_data["id"])
+
+# Fit the model
+result = model.fit()
+
+# Print the summary of the model
+print(result.summary())
 
 
 #%% Linear Regression model (in another way) (nightly)

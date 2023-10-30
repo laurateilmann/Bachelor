@@ -6,7 +6,7 @@ Created on Thu Sep 21 10:24:40 2023
 """
 import pandas as pd
 
-def calc_stats(CGM_data):
+def calc_stats(CGM_data_original):
     """
     Calculates statistics of CGM data.
 
@@ -21,6 +21,9 @@ def calc_stats(CGM_data):
     CGM_stats : list consisting of 'mean', 'std', 'min', 'max', 'cv', 'Q1', 'Q2', 'Q3'.
 
     """ 
+   
+    # Exclude 'id' column 
+    CGM_data = CGM_data_original[['DateTime', 'CGM']]
     # Calculate statistics
     CGM_stats = CGM_data.describe().T
     # Drop 'count' column
@@ -58,8 +61,11 @@ def hourly_stats(CGM_data_original):
     CGM_stats : list consisting of hourly 'mean', 'std', 'min', 'max', 'cv', 'Q1', 'Q2', 'Q3'.
 
     """
+
+    # Exclude 'id' column
+    CGM_data = CGM_data_original[['DateTime', 'CGM']]
+    
     # Set 'DateTime' as the index
-    CGM_data = CGM_data_original.copy()
     CGM_data.set_index('DateTime', inplace=True)
     
     # Calculate hourly statistics

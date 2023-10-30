@@ -42,7 +42,30 @@ if study == "Validationstudy_2020_2021_Cecilie" or study == "Sleep-1-child_2023_
 else:
     folder_path = os.path.join(base_dir,families[0])
     sessions = [folder for folder in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, folder))]
+       
+#%% ID
+
+# All studies in the project
+all_studies = ["MindYourDiabetes", "Validationstudy_2020_2021_Cecilie", "Sleep-1-child_2023_Cecilie"]
+
+# Create a dictionary to store globally unique family IDs
+family_ids = {}
+
+# Loop through each family and assign a globally unique ID
+for s in all_studies:  # Add all your study names to this list
     
+    # Study directory
+    study_dir = os.path.join(r"L:\LovbeskyttetMapper01\StenoSleepQCGM", s)
+    
+    # List of families
+    fams = [folder for folder in os.listdir(study_dir) if os.path.isdir(os.path.join(study_dir, folder))]
+    
+    # Assign unique ID to each family
+    for fam in fams:
+        family_key = f"{s}_{fam}"
+        if family_key not in family_ids:
+            family_ids[family_key] = len(family_ids)
+            
 
 #%% Import all AGD files and export processed file as csv
 
@@ -56,7 +79,6 @@ for family in families:
         else:
             in_dir = os.path.join(base_dir, family, session)
 
-
         # List all AGD files in the current session
         agd_files = [file for file in os.listdir(in_dir) if file.endswith(".agd")]
 
@@ -67,7 +89,8 @@ for family in families:
             
             # Extract vector magnitude and timestamps from pyActigraphy dataframe
             timestamps = pd.to_datetime(raw.data.index)
-            data = pd.DataFrame({'DateTime': timestamps, 'Magnitude': raw.data}) 
+            family_key = f"{study}_{family}"
+            data = pd.DataFrame({'DateTime': timestamps, 'Magnitude': raw.data, 'id': family_ids[family_key]}) 
             data = data.reset_index(drop=True)
             
             # Export dataframe
@@ -197,6 +220,10 @@ for family in families:
 
             # Filter away any blood glucose values above 40 mmol/L (artefacts)
             cgm_data['CGM'] = cgm_data['CGM'].where(cgm_data['CGM'] < 40, np.nan)
+            
+            # Add family ID
+            family_key = f"{study}_{family}"
+            cgm_data['id'] = family_ids[family_key]
                     
             # Percent active CGM time. OBS: not used or exported at the moment
             PctActiveTime, TotalTime = CalcPctActiveTime(cgm_data)
@@ -246,6 +273,10 @@ for family in families:
 
             # Replace commas with periods
             summed_data = summed_data.replace(',','.',regex=True)
+            
+            # Add family ID
+            family_key = f"{study}_{family}"
+            summed_data['id'] = family_ids[family_key]
 
             # Export processed summed data
             processed_filename = os.path.splitext(filename)[0] + '_processed.csv'
@@ -303,6 +334,9 @@ for family in families:
         columns_to_keep = ['DateTime', 'Sleep or Awake?']
         df = df[columns_to_keep]
         
+        # Add family ID
+        family_key = f"{study}_{family}"
+        df['id'] = family_ids[family_key]
         
         # Export processed epoch data
         processed_filename = os.path.splitext(filename)[0] + '_processed.csv'

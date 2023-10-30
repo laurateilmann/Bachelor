@@ -145,6 +145,11 @@ for family in families:
         # Merge dataframes with hourly awakenings and waso to one dataframe
         hourly_features1 = pd.merge(hourly_awakenings_df, hourly_WASO_df, on="DateTime start")
         hourly_features2 = pd.merge(hourly_features1, hourly_avg_awakening_df, on="DateTime start")
+        
+        # Add ID
+        Id = epoch_data.iloc[0]['id']
+        hourly_features2['id'] = Id
+        nightly_features['id'] = Id
           
         # Export dataframes with actigraph features
         nightly_features.to_csv(os.path.join(in_dir, filename + "_features.csv"), index=False)
