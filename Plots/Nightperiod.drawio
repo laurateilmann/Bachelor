@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-10-30T12:01:28.717Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.60" etag="fwoceQZE6aiDX_Zgy79v" version="22.0.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-10-30T12:05:13.533Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.60" etag="mgDkOd8tm0hBi_jAzfQw" version="22.0.8" type="github">
   <diagram name="Side-1" id="C1oGiQ3anEXHUjQ1uSzQ">
     <mxGraphModel dx="1019" dy="566" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -22,8 +22,8 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="nResc2J95Kc2uAZXSNH7-1" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;One night&#39;s sleep period&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="360" y="100" width="230" height="40" as="geometry" />
+        <mxCell id="nResc2J95Kc2uAZXSNH7-1" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Time in bed&amp;nbsp;&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="415" y="100" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="nResc2J95Kc2uAZXSNH7-3" value="" style="line;strokeWidth=2;html=1;perimeter=backbonePerimeter;points=[];outlineConnect=0;" vertex="1" parent="1">
           <mxGeometry x="185" y="240" width="580" height="10" as="geometry" />
