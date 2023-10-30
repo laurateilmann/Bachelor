@@ -126,6 +126,7 @@ for family in families:
         # Add ID
         Id = CGM_data.iloc[0]['id']
         CGM_h_features['id'] = Id
+        CGM_features['id'] = Id
         
         # Export dataframes with CGM features
         CGM_features.to_csv(os.path.join(in_dir, "cgm_data_processed_features.csv"), index=False)
