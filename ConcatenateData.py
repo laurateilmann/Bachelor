@@ -82,7 +82,16 @@ for study in studies:
 epochs_concatenate = pd.concat(dfs_epochs, ignore_index=True)
 
 # Concatenate all the DataFrames in the list into one DataFrame
-cgm_concatenate = pd.concat(dfs_cgm, ignore_index=True)      
+cgm_concatenate = pd.concat(dfs_cgm, ignore_index=True)   
+
+# Merge the two dataframes based on index
+merged_data = cgm_concatenate.merge(epochs_concatenate, left_index=True, right_index=True, how='inner')
+
+# Rename DateTime and id columns
+merged_data = merged_data.rename(columns={'In Bed DateTime_x': 'In Bed DateTime', 'Out Bed DateTime_x': 'Out Bed DateTime', 'id_y': 'id'})
+
+# Remove duplicate DateTime and id columns
+merged_data = merged_data.drop(['In Bed DateTime_y', 'Out Bed DateTime_y', 'id_x'], axis=1)
 
 
 #%% Export concatenated data to directory
@@ -95,7 +104,9 @@ else:
 # Specify the filename for the concatenated sleep epoch and CGM data
 epochs_output_file = os.path.join(output_dir, "concatenated_epochs.csv")
 cgm_output_file = os.path.join(output_dir, "concatenated_cgm.csv")
+merged_output_file = os.path.join(output_dir, "concatenated_all.csv")
 
 # Export concatenated data to the specified files
 epochs_concatenate.to_csv(epochs_output_file, index=False)
 cgm_concatenate.to_csv(cgm_output_file, index=False)
+merged_data.to_csv(merged_output_file, index=False)

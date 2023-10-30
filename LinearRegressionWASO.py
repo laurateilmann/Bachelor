@@ -20,23 +20,7 @@ from sklearn import model_selection, linear_model
 base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM"
 
 #%% Load the nightly data
-cgm_data = pd.read_csv(base_dir + '\concatenated_cgm.csv')
-epochs_data = pd.read_csv(base_dir + '\concatenated_epochs.csv')
-
-# Reset index, to make sure they are continuous starting from 0
-cgm_data = cgm_data.reset_index(drop = True)
-epochs_data = epochs_data.reset_index(drop = True)
-
-# Merge the two dataframes based on index
-merged_data = cgm_data.merge(epochs_data, left_index=True, right_index=True, how='inner')
-
-# Rename DateTime and id columns
-merged_data = merged_data.rename(columns={'In Bed DateTime_x': 'In Bed DateTime', 'Out Bed DateTime_x': 'Out Bed DateTime'})
-merged_data = merged_data.rename(columns={'id_y': 'id'})
-
-# Remove duplicate DateTime and id columns
-merged_data = merged_data.drop(['In Bed DateTime_y', 'Out Bed DateTime_y'], axis=1)
-merged_data = merged_data.drop(['id_x'], axis=1)
+merged_data =  pd.read_csv(base_dir + '\concatenated_all.csv',  parse_dates = [0,1])
 
 # Handling missing and infinite values
 merged_data.replace([np.inf, -np.inf], np.nan, inplace=True)
@@ -58,21 +42,8 @@ Id =  merged_data[['id']]
 
 
 #%% Load the hourly data
-cgm_hour = pd.read_csv(base_dir + '\concatenated_hourly_cgm.csv')
-epochs_hour = pd.read_csv(base_dir + '\concatenated_hourly_epochs.csv')
 
-# Reset index, to make sure they are continuous starting from 0
-cgm_hour = cgm_hour.reset_index(drop = True)
-epochs_hour = epochs_hour.reset_index(drop = True)
-
-# Merge the two dataframes based on index
-merged_hour = cgm_hour.merge(epochs_hour, left_index=True, right_index=True, how='inner')
-
-# Rename DateTime columns
-merged_hour = merged_hour.rename(columns={'DateTime start_x': 'DateTime start'})
-
-# Remove duplicate DateTime columns
-merged_hour = merged_hour.drop(['DateTime start_y'], axis=1)
+merged_hour =  pd.read_csv(base_dir + '\concatenated_hourly_all.csv',  parse_dates = [0])
 
 # Handling missing and infinite values
 merged_hour.replace([np.inf, -np.inf], np.nan, inplace=True)
