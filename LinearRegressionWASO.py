@@ -30,11 +30,13 @@ epochs_data = epochs_data.reset_index(drop = True)
 # Merge the two dataframes based on index
 merged_data = cgm_data.merge(epochs_data, left_index=True, right_index=True, how='inner')
 
-# Rename DateTime columns
+# Rename DateTime and id columns
 merged_data = merged_data.rename(columns={'In Bed DateTime_x': 'In Bed DateTime', 'Out Bed DateTime_x': 'Out Bed DateTime'})
+merged_data = merged_data.rename(columns={'id_y': 'id'})
 
-# Remove duplicate DateTime columns
+# Remove duplicate DateTime and id columns
 merged_data = merged_data.drop(['In Bed DateTime_y', 'Out Bed DateTime_y'], axis=1)
+merged_data = merged_data.drop(['id_x'], axis=1)
 
 # Handling missing and infinite values
 merged_data.replace([np.inf, -np.inf], np.nan, inplace=True)
@@ -50,6 +52,9 @@ y_stan = zscore(y, ddof=1)
 
 # Include offset
 x_stan = sm.add_constant(x_stan)
+
+# Extract ID
+Id =  merged_data[['id']]
 
 
 #%% Load the hourly data
@@ -97,15 +102,24 @@ print(model_hourly.summary())
 
 #%% Linear regression with id as random effect
 
-# Specify the multiple linear regression model with a random effect for "id"
-formula = "WASO ~ TIR + TAR + TBR"
-model = smf.mixedlm(formula, data=merged_data, groups=merged_data["id"])
+# # Specify the multiple linear regression model with a random effect for "id"
+# model = sm.MixedLM(y_stan, x_stan[['TIR']], groups=Id)
+# result = model.fit(method='nm', reml=True)
 
-# Fit the model
-result = model.fit()
+# # Print the summary
+# print(result.summary())
 
-# Print the summary of the model
-print(result.summary())
+# #%% Linear regression with id as random effect (second method)
+
+# #Specify the multiple linear regression model with a random effect for "id"
+# formula = "WASO ~ TIR + TAR + TBR"
+# model = smf.mixedlm(formula, data=merged_data, groups=Id)
+
+# # Fit the model
+# result = model.fit()
+
+# # Print the summary of the model
+# print(result.summary())
 
 
 #%% Linear Regression model (in another way) (nightly)

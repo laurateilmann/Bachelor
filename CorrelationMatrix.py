@@ -27,13 +27,15 @@ epoch_data = pd.read_csv(epoch_file_path)
 
 data = pd.merge(cgm_data, epoch_data, on=["In Bed DateTime", "Out Bed DateTime"])
 
+data = data.rename(columns={'id_y': 'id'})
+data = data.drop(['id_x'], axis=1)
+
 corrMatrix = data.corr()
 
 plt.figure()
 sn.heatmap(corrMatrix, annot=True)
 
 plt.get_current_fig_manager().full_screen_toggle()   
-
 
 # Save plot 
 plt.savefig("H:\GitHub\Bachelor\Plots\corrMatrixy.png", format="png")

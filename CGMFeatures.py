@@ -15,10 +15,10 @@ from CGMStats import calc_stats, hourly_stats
 #%% Set the base directory where your files are located
 
 # Choose what study to import and process data from
-# study = "MindYourDiabetes"
+study = "MindYourDiabetes"
 # study = "Validationstudy_2020_2021_Cecilie"
-study = "Sleep-1-child_2023_Cecilie"
-#study = "Kasper" 
+# study = "Sleep-1-child_2023_Cecilie"
+# study = "Kasper" 
 
 # Base directory/path
 base_dir = os.path.join(r"L:\LovbeskyttetMapper01\StenoSleepQCGM", study)
@@ -106,8 +106,8 @@ for family in families:
         # Create a Pandas dataframes with calculated features
         CGM_features = pd.DataFrame(CGM_features_list, columns=['In Bed DateTime',
                                                                'Out Bed DateTime',
-                                                               'TIR (%)', 'TAR (%)',
-                                                               'TBR (%)', 'mean', 'std',
+                                                               'TIR', 'TAR',
+                                                               'TBR', 'mean', 'std',
                                                                'median', 'min',
                                                                'max','cv', 'delta IG'])
         
@@ -117,8 +117,8 @@ for family in families:
                                                                'max','cv', 'delta IG'])
         
         CGM_h_ranges = pd.DataFrame(CGM_h_ranges_list, columns=['DateTime start',
-                                                                'TIR (%)','TAR (%)',
-                                                                'TBR (%)'])
+                                                                'TIR','TAR',
+                                                                'TBR'])
         
         # Merge dataframes with hourly statistics and ranges to one dataframe
         CGM_h_features = pd.merge(CGM_h_ranges, CGM_h_stats, on="DateTime start")
