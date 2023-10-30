@@ -123,6 +123,10 @@ for family in families:
         # Merge dataframes with hourly statistics and ranges to one dataframe
         CGM_h_features = pd.merge(CGM_h_ranges, CGM_h_stats, on="DateTime start")
         
+        # Add ID
+        Id = CGM_data.iloc[0]['id']
+        CGM_h_features['id'] = Id
+        
         # Export dataframes with CGM features
         CGM_features.to_csv(os.path.join(in_dir, "cgm_data_processed_features.csv"), index=False)
         CGM_h_features.to_csv(os.path.join(in_dir, "cgm_data_processed_hourly_features.csv"), index=False)

@@ -112,7 +112,7 @@ for family in families:
             tst = calc_TST(night_data, min_wake, min_sleep)
             
             # Sleep quality per night
-            sleep_quality = calc_sleep_quality(night_data, min_wake, min_sleep)
+            sleep_quality = calc_sleep_quality(night_data, in_bed, min_wake, min_sleep)
             
             # Append lists with calculated features
             nightly_features_list.append([in_bed, out_bed, num_awakenings, waso,
@@ -145,6 +145,11 @@ for family in families:
         # Merge dataframes with hourly awakenings and waso to one dataframe
         hourly_features1 = pd.merge(hourly_awakenings_df, hourly_WASO_df, on="DateTime start")
         hourly_features2 = pd.merge(hourly_features1, hourly_avg_awakening_df, on="DateTime start")
+        
+        # Add ID
+        Id = epoch_data.iloc[0]['id']
+        hourly_features2['id'] = Id
+        nightly_features['id'] = Id
           
         # Export dataframes with actigraph features
         nightly_features.to_csv(os.path.join(in_dir, filename + "_features.csv"), index=False)
