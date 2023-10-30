@@ -82,19 +82,21 @@ for family in families:
             # Extract In Bed and Out Bed times
             in_bed = summed_data.iloc[i]['In Bed DateTime']
             out_bed = summed_data.iloc[i]['Out Bed DateTime']
-            
-            efficiency = summed_data.iloc[i]['Efficiency']
+        
             
             # Extract one night's worth of actigraph epoch data
             night_data = extract_one_night(in_bed, out_bed, epoch_data)
             
             # Calculated latency per night
             latency = calc_latency(night_data, in_bed, min_sleep)
+            
+            # Calculated efficency per night
+            efficiency = calc_efficiency(night_data, min_wake, min_sleep)
         
             # Number of awakenings per night
             num_awakenings = calc_awakenings(night_data, min_wake, min_sleep)
             # Number of awakenings per hour per night
-            h_awakenings = hourly_awakenings(night_data)
+            h_awakenings = hourly_awakenings(night_data, min_wake, min_sleep)
         
             # WASO per night
             waso = calc_WASO(night_data, min_wake, min_sleep)
@@ -107,10 +109,10 @@ for family in families:
             h_avg_awakening = hourly_avg_awakening(night_data)
 
             # Total sleep time per night
-            tst = calc_TST(night_data)
+            tst = calc_TST(night_data, min_wake, min_sleep)
             
             # Sleep quality per night
-            sleep_quality = calc_sleep_quality(summed_data.iloc[i])
+            sleep_quality = calc_sleep_quality(night_data, min_wake, min_sleep)
             
             # Append lists with calculated features
             nightly_features_list.append([in_bed, out_bed, num_awakenings, waso,

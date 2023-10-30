@@ -25,9 +25,9 @@ import numpy as np
 #%% 
 
 # Choose what study to import and preprocess data from
-study = "MindYourDiabetes"
+# study = "MindYourDiabetes"
 # study = "Validationstudy_2020_2021_Cecilie"
-# study = "Sleep-1-child_2023_Cecilie"
+study = "Sleep-1-child_2023_Cecilie"
 # study = "Kasper" 
 
 # Base directory/path

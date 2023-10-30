@@ -488,7 +488,7 @@ def hourly_avg_awakening(data):
 
 #%% Sleep quality 
     
-def calc_sleep_quality(summed_data):
+def calc_sleep_quality(data, in_bed, min_consecutive_w=1, min_consecutive_s=1):
     """
     Computes the sleep quality of one night. The sleep quality measure is based
     on three measurements: latency, efficiency and WASO. The criterias of these
@@ -528,9 +528,9 @@ def calc_sleep_quality(summed_data):
     1: {"latency": (0, 31), "efficiency": (85, 100), "WASO": (0, 41)},
     }
     
-    latency = summed_data["Latency"]
-    efficiency = summed_data["Efficiency"]
-    WASO = summed_data["Wake After Sleep Onset (WASO)"]
+    latency = calc_latency(data, in_bed, min_consecutive_s=1)
+    efficiency = calc_efficiency(data, min_consecutive_w, min_consecutive_s)
+    WASO = calc_WASO(data, min_consecutive_w, min_consecutive_s)
     
     # Initialize the sleep quality category as None
     sleep_category = None
