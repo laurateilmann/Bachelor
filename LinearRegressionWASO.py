@@ -62,6 +62,9 @@ xh_stan = sm.add_constant(xh_stan)
 
 
 #%% Perform the multiple linear regression 
+
+x_stan = x_stan[['const','TIR', 'TBR', 'std', 'min', 'cv']]
+
 model_nightly = sm.OLS(y_stan, x_stan).fit()
 model_hourly = sm.OLS(yh_stan, xh_stan).fit()
 
@@ -93,7 +96,7 @@ print(model_hourly.summary())
 # print(result.summary())
 
 
-#%% Linear Regression model (in another way) (nightly)
+#%% Linear Regression model (in another way with plots) (nightly)
 
 # Fit model
 model_lm = lm.LinearRegression()
@@ -145,7 +148,7 @@ plt.figure()
 plt.hist(residual_baseline, bins=30)
 plt.title(f"Histogram of the residual for {y.columns[0]} (baseline)")
 
-#%% Linear Regression model (in another way) (hourly)
+#%% Linear Regression model (in another way with plots) (hourly)
 
 # Fit model
 model_lm = lm.LinearRegression()

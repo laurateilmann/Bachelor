@@ -16,7 +16,7 @@ complete_dataset <- na.omit(complete_dataset)
 
 # Define the independent and dependent variables
 x <- complete_dataset %>% select(3:12)
-y <- complete_dataset %>% select(Efficiency)
+y <- complete_dataset %>% select(WASO)
 
 # Standardize data
 x_stan <- scale(x, center = TRUE, scale = TRUE)
@@ -32,7 +32,7 @@ Id <- complete_dataset %>% select(id)
 standardized_data <- data.frame(x_stan, y_stan, id=Id)
 
 # Model
-model <- lmer(Efficiency ~ TIR + TAR + cv + (1 | id), data = standardized_data)
+model <- lmer(WASO ~ TIR + TAR + TBR + min + delta.IG + (1 | id), data = standardized_data)
 summary(model)
 
 # p-value

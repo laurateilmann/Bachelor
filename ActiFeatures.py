@@ -36,7 +36,7 @@ else:
 
 #%% Initializing 
 
-min_wake = 1
+min_wake = 2
 min_sleep = 5
 
 #%% Outer loop for families
