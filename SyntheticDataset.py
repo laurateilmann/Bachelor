@@ -44,26 +44,52 @@ residual = y_est - y
 data_min = -3
 data_max = 4
 
+plt.rcParams["font.family"] = "Times New Roman"
+
 plt.figure()
 plt.plot(y, y_est, ".")
 plt.plot(y, y, "-", label='True Trend', color='r')
 plt.gca().set_aspect('equal')
-plt.xlabel("True")
-plt.ylabel("Estimated")
-plt.title(f"True against estimated y values")
+plt.xlabel("True", fontname="Times New Roman", fontsize=14)
+plt.ylabel("Estimated", fontname="Times New Roman", fontsize=14)
+plt.title(f"True against estimated y values", fontname="Times New Roman", fontsize=16)
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
+
+plt.figure()
+plt.plot(X['Feature_1'], y, ".", label='Data points')
+plt.plot(X['Feature_1'], X['Feature_1'] * coef[0], color='r', linestyle='-', label='True correlation') 
+plt.xlabel("Feature 1", fontname="Times New Roman", fontsize=14)
+plt.ylabel("y", fontname="Times New Roman", fontsize=14)
+plt.legend(fontsize=14)
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
 
 
 plt.figure()
-plt.plot(X['Feature_1'], y, ".")
-plt.plot(X['Feature_1'], X['Feature_1'] * coef[0], color='r', linestyle='-', label='First Coefficient')  
-plt.xlabel("Feature 1")
-plt.ylabel("y")
-plt.title(f"Feature 1 against y")
+plt.plot(X['Feature_2'], y, ".", label='Data points')
+plt.plot(X['Feature_2'], X['Feature_2'] * coef[1], color='r', linestyle='-', label='True correlation') 
+plt.xlabel("Feature 2", fontname="Times New Roman", fontsize=14)
+plt.ylabel("y", fontname="Times New Roman", fontsize=14)
+plt.legend(fontsize=14)
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
+
+plt.figure()
+plt.plot(X['Feature_3'], y, ".", label='Data points')
+plt.plot(X['Feature_3'], X['Feature_3'] * coef[2], color='r', linestyle='-', label='True correlation') 
+plt.xlabel("Feature 3", fontname="Times New Roman", fontsize=14)
+plt.ylabel("y", fontname="Times New Roman", fontsize=14)
+plt.legend(fontsize=14)
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
 
 # Histogram of residuals
 plt.figure()
 plt.hist(residual, bins=30)
-plt.title(f"Histogram of the residuals")
+plt.title(f"Histogram of the residuals", fontname="Times New Roman", fontsize=16)
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
 
 # Print the coefficients and intercept from the regression model
 print("Intercept from regression model:", model_lm.intercept_)
