@@ -4,6 +4,8 @@ library(dplyr)
 library(readr)
 library(zoo)
 library(lme4)
+library(stats)
+library(olsrr)
 
 # Set your base directory
 base_dir <- "L:/LovbeskyttetMapper01/StenoSleepQCGM"
@@ -32,11 +34,21 @@ Id <- complete_dataset %>% select(id)
 standardized_data <- data.frame(x_stan, y_stan, id=Id)
 
 # Model
-model <- lmer(WASO ~ TIR + TAR + TBR + min + delta.IG + (1 | id), data = standardized_data)
+model <- lmer(WASO ~ TIR + TAR + TBR + min + max + mean + median + std + cv + delta.IG + (1 | id), data = standardized_data)
 summary(model)
 
 # p-value
 p = round(2*pnorm(abs(coef(summary(model))[,3]), lower.tail = FALSE),3)
 print(p)
+
+#################
+
+# forward selection
+modelf <- lm(WASO ~ TIR + TAR + min + max + mean + std + delta.IG, data = standardized_data)
+final_model <- ols_step_all_possible(modelf)
+print(final_model)
+ 
+
+
 
 
