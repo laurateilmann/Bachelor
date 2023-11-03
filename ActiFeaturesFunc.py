@@ -24,6 +24,14 @@ def calc_awakenings(data, min_consecutive_w=1, min_consecutive_s=1):
     data : Pandas Dataframe
     Requires a column called 'Sleep or Awake?' consisting of S and W to determine sleep or wake. 
     
+    min_consecutive_w : int
+    The number of minutes required to be awake before it is counted as an
+    awakening and thus contributing to the WASO, automaticlly set to 1 minute. 
+    
+    min_consecutive_s : int 
+    The number of minutes required to be asleep before it is counted as a
+    sleeping periode and thus contributing to the latency, automaticlly set to 1 minute. 
+    
     Returns
     -------
     Int64
@@ -70,9 +78,13 @@ def calc_WASO(data, min_consecutive_w=1, min_consecutive_s=1):
     data : Pandas Dataframe
     Requires a column called 'Sleep or Awake?' consisting of S and W to determine sleep or wake.
     
-    min_consecutive_w: int
+    min_consecutive_w : int
     The number of minutes required to be awake before it is counted as an
-    awakening and thus contributing to the WASO.
+    awakening and thus contributing to the WASO, automaticlly set to 1 minute. 
+    
+    min_consecutive_s : int 
+    The number of minutes required to be asleep before it is counted as a
+    sleeping periode and thus contributing to the latency, automaticlly set to 1 minute. 
 
     Returns
     -------
@@ -150,6 +162,14 @@ def calc_TST(data, min_consecutive_w=1, min_consecutive_s=1):
     data : Pandas Dataframe
     Requires a column called 'Sleep or Awake?' consisting of S and W to determine sleep or wake.
     Must be from exactly In Bed to Out Bed. 
+    
+    min_consecutive_w : int
+    The number of minutes required to be awake before it is counted as an
+    awakening and thus contributing to the WASO, automaticlly set to 1 minute. 
+    
+    min_consecutive_s : int 
+    The number of minutes required to be asleep before it is counted as a
+    sleeping periode and thus contributing to the latency, automaticlly set to 1 minute. 
 
     Returns
     -------
@@ -185,6 +205,14 @@ def hourly_awakenings(data, min_consecutive_w=1, min_consecutive_s=1):
     data : Pandas Dataframe
     Nx2 dataframe with two columns: one with dates and times called 'DateTime',
     and one consisting of S and W to determine sleep or wake called 'Sleep or Awake?'.
+    
+    min_consecutive_w : int
+    The number of minutes required to be awake before it is counted as an
+    awakening and thus contributing to the WASO, automaticlly set to 1 minute. 
+    
+    min_consecutive_s : int 
+    The number of minutes required to be asleep before it is counted as a
+    sleeping periode and thus contributing to the latency, automaticlly set to 1 minute. 
 
     Returns
     -------
@@ -311,9 +339,13 @@ def hourly_WASO(data,min_consecutive_w=1, min_consecutive_s=1):
     Nx2 dataframe with two columns: one with dates and times called 'DateTime',
     and one consisting of S and W to determine sleep or wake called 'Sleep or Awake?'.
     
-    min_consecutive_w: int
+    min_consecutive_w : int
     The number of minutes required to be awake before it is counted as an
-    awakening and thus contributing to the WASO.
+    awakening and thus contributing to the WASO, automaticlly set to 1 minute. 
+    
+    min_consecutive_s : int 
+    The number of minutes required to be asleep before it is counted as a
+    sleeping periode and thus contributing to the latency, automaticlly set to 1 minute. 
 
     Returns
     -------
@@ -502,10 +534,18 @@ def calc_sleep_quality(data, in_bed, min_consecutive_w=1, min_consecutive_s=1):
 
     Parameters
     ----------
-    summed_data : Pandas Dataframe
+    data : Pandas Dataframe
         1xM dataframe with at least 3 columns called "Latency", "Efficiency" 
         and "Wake After Sleep Onset (WASO)". Contains summed actigraph data
         for one person from one night. 
+        
+    min_consecutive_w : int
+    The number of minutes required to be awake before it is counted as an
+    awakening and thus contributing to the WASO, automaticlly set to 1 minute. 
+    
+    min_consecutive_s : int 
+    The number of minutes required to be asleep before it is counted as a
+    sleeping periode and thus contributing to the latency, automaticlly set to 1 minute. 
 
     Returns
     -------
@@ -553,10 +593,31 @@ def calc_sleep_quality(data, in_bed, min_consecutive_w=1, min_consecutive_s=1):
 #%% Sleep onset 
     
 def calc_SO(data, min_consecutive_s=1):
+    """
+    Finds the datetime for when the person is considered as sleeping the first time. 
+
+    Parameters
+    ----------
+    data : Pandas Dataframe
+    Requires a column called 'Sleep or Awake?' consisting of S and W to 
+    determine sleep or wake.
+ 
+    min_consecutive_s : int 
+    The number of minutes required to be asleep before it is counted as a
+    sleeping periode and thus contributing to the latency, automaticlly set to 1 minute. 
+
+    Returns
+    -------
+    sleep_onset : datetime
+    When the person is considered as sleeping the first time.
+
+    """
     
+    # Setting sleep onset to zero
     sleep_onset = None
     consecutive_s_count = 0
     
+    # Find the first time the person is considered as sleeping
     for j, value in enumerate(data['Sleep or Awake?']):
         if value == 'S':
             consecutive_s_count += 1
@@ -571,9 +632,34 @@ def calc_SO(data, min_consecutive_s=1):
 #%% Sleep onset latency 
     
 def calc_latency(data, in_bed, min_consecutive_s=1):
+    """
+    Calculates the sleep onset latency:
+        The time it takes the person to fall asleep from turning off lights. 
+
+    Parameters
+    ----------
+    data : Pandas Dataframe
+    Requires a column called 'Sleep or Awake?' consisting of S and W to 
+    determine sleep or wake.
     
+    in_bed : datetime 
+    The time the person goes to sleep.
+    
+    min_consecutive_s : int 
+    The number of minutes required to be asleep before it is counted as a
+    sleeping periode and thus contributing to the latency, automaticlly set to 1 minute.
+
+    Returns
+    -------
+    latency : INT64
+    The minutes it takes the person to fall asleep the first time.
+
+    """
+    
+    # Sleep onset from the function calc_SO
     sleep_onset = calc_SO(data, min_consecutive_s)
     
+    # Calculate latency
     if sleep_onset:
         latency = (sleep_onset - in_bed).total_seconds() / 60
     else:
@@ -592,6 +678,14 @@ def calc_efficiency(data, min_consecutive_w=1, min_consecutive_s=1):
     data : Pandas Dataframe
     Requires a column called 'Sleep or Awake?' consisting of S and W to determine sleep or wake.
     Must be from exactly from In Bed to Out Bed. 
+    
+    min_consecutive_w : int
+    The number of minutes required to be awake before it is counted as an
+    awakening and thus contributing to the WASO, automaticlly set to 1 minute. 
+    
+    min_consecutive_s : int 
+    The number of minutes required to be asleep before it is counted as a
+    sleeping periode and thus contributing to the latency, automaticlly set to 1 minute. 
 
     Returns
     -------

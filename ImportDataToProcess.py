@@ -22,9 +22,8 @@ from CalcPctActiveTime import *
 from PrepareLibreviewData import *
 import numpy as np
 
-#%% 
+#%% Choose what study to import and preprocess data from
 
-# Choose what study to import and preprocess data from
 # study = "MindYourDiabetes"
 # study = "Validationstudy_2020_2021_Cecilie"
 study = "Sleep-1-child_2023_Cecilie"

@@ -24,8 +24,10 @@ epoch_file_path = os.path.join(base_dir+epoch_file)
 cgm_data = pd.read_csv(cgm_file_path)
 epoch_data = pd.read_csv(epoch_file_path)
 
+# Merge cgm and epoch data
 data = pd.merge(cgm_data, epoch_data, on=["In Bed DateTime", "Out Bed DateTime"])
 
+# Find mean, sd and ranges (min to max)
 mean = data.iloc[:, 2:].mean()
 sd = data.iloc[:, 2:].std()
 ran_min = data.iloc[:, 2:].min()

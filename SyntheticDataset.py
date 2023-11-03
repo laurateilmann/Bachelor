@@ -5,17 +5,19 @@ Created on Thu Nov  2 08:54:25 2023
 @author: LTEI0004
 """
 
-
+#%% Import packages
 import numpy as np
 from sklearn.datasets import make_regression
 from sklearn.linear_model import LinearRegression
 import pandas as pd
 import matplotlib.pylab as plt
 
-# Set random seed for reproducibility
+#%% Generate a random synthetic dataset 
+
+#Set random seed for reproducibility
 np.random.seed(0)
 
-# Generate a synthetic dataset
+# Generate a synthetic dataset: intialize number of samples, feature and noise ratio
 n_samples = 1000
 n_features = 3
 noise = 10
@@ -40,12 +42,13 @@ y_est = model_lm.predict(X)
 # Calculate residuals
 residual = y_est - y
 
-#Scatter plot
+# Settings for data
 data_min = -3
 data_max = 4
 
 plt.rcParams["font.family"] = "Times New Roman"
 
+#Scatter plot med trend line
 plt.figure()
 plt.plot(y, y_est, ".")
 plt.plot(y, y, "-", label='True Trend', color='r')
@@ -56,6 +59,7 @@ plt.title(f"True against estimated y values", fontname="Times New Roman", fontsi
 plt.xticks(fontsize=12, family='Times New Roman')
 plt.yticks(fontsize=12, family='Times New Roman')
 
+# Independent variable plotted and true correlation line
 plt.figure()
 plt.plot(X['Feature_1'], y, ".", label='Data points')
 plt.plot(X['Feature_1'], X['Feature_1'] * coef[0], color='r', linestyle='-', label='True correlation') 
@@ -64,7 +68,6 @@ plt.ylabel("y", fontname="Times New Roman", fontsize=14)
 plt.legend(fontsize=14)
 plt.xticks(fontsize=12, family='Times New Roman')
 plt.yticks(fontsize=12, family='Times New Roman')
-
 
 plt.figure()
 plt.plot(X['Feature_2'], y, ".", label='Data points')

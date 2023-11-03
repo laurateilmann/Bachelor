@@ -90,11 +90,13 @@ def extract_one_night(in_bed, out_bed, data):
 
     Parameters
     ----------
-    date : str.
-        A date (e.g. 2023-04-17).
+    in_bed : datetime 
+    The time the person turns off light. 
+    
+    out_bed : datetime 
+    The time the perosn is out of bed in the morning. 
+    
     data : Pandas dataframe
-        Nx2 dataframe with two columns: one with dates and times called 'DateTime'.
-    summed_data : Pandas dataframe
          Dataframe with a minimum of the columns called 'In Bed DateTime' and 
         'Out Bed DateTime'..
 
@@ -104,7 +106,9 @@ def extract_one_night(in_bed, out_bed, data):
         Dataframe with just one nights data from In Bed to Out Bed. It has the
         same columns as the parameter 'data'.
 
+
     """
+
 
     night_data = data.loc[(data['DateTime'] >= in_bed) & (data['DateTime'] <= out_bed)]
     

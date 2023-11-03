@@ -48,7 +48,7 @@ for study in studies:
         folder_path = os.path.join(study_dir,families[0])
         sessions = [folder for folder in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, folder))]
     
-    
+    # Run trough families
     for family in families:
          for session in sessions:
             # Create path

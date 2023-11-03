@@ -14,6 +14,7 @@ def CalcPctActiveTime(data):
     Calculate percentage of active CGM time. 
     This function assumes that the CGM value measured at time point i has been
     constant since time point i-1.
+    
 
     """
     

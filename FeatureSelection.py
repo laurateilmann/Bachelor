@@ -19,7 +19,6 @@ from sklearn.feature_selection import SequentialFeatureSelector
 #%% Load the nightly data
 
 base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM"
-
 merged_data =  pd.read_csv(base_dir + '\concatenated_all.csv',  parse_dates = [0,1])
 
 # Handling missing and infinite values

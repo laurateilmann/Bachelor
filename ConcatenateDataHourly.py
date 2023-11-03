@@ -6,14 +6,6 @@ Created on Wed Oct 18 14:55:54 2023
 """
 
 
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Oct 12 12:22:10 2023
-
-@author: ltei0004
-"""
-
-
 #%% Import packages
 import pandas as pd
 from datetime import datetime
@@ -56,7 +48,7 @@ for study in studies:
         folder_path = os.path.join(study_dir,families[0])
         sessions = [folder for folder in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, folder))]
     
-    
+    # Run trhough families
     for family in families:
          for session in sessions:
             # Create path
