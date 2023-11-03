@@ -16,10 +16,9 @@ from ActiFeaturesFunc import *
 #%% Set the base directory for the current family and session
 
 # Choose what study to import and preprocess data from
-# study = "MindYourDiabetes"
+study = "MindYourDiabetes"
 # study = "Validationstudy_2020_2021_Cecilie"
-study = "Sleep-1-child_2023_Cecilie"
-#study = "Kasper" 
+# study = "Sleep-1-child_2023_Cecilie"
 
 # Base directory/path
 base_dir = os.path.join(r"L:\LovbeskyttetMapper01\StenoSleepQCGM", study)
@@ -36,7 +35,7 @@ else:
 
 #%% Initializing minimum wake up length (minutes) and minimum length for startning sleep (minutes)
 
-min_wake = 2
+min_wake = 5
 min_sleep = 5
 
 #%% Outer loop for families

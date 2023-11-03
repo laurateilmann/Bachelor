@@ -15,10 +15,9 @@ from CGMStats import calc_stats, hourly_stats
 #%% Set the base directory where your files are located
 
 # Choose what study to import and process data from
-study = "MindYourDiabetes"
+# study = "MindYourDiabetes"
 # study = "Validationstudy_2020_2021_Cecilie"
-# study = "Sleep-1-child_2023_Cecilie"
-# study = "Kasper" 
+study = "Sleep-1-child_2023_Cecilie"
 
 # Base directory/path
 base_dir = os.path.join(r"L:\LovbeskyttetMapper01\StenoSleepQCGM", study)
