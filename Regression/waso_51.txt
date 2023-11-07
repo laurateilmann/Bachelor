@@ -1,0 +1,687 @@
+> source("H:/GitHub/Bachelor/LinearRegression.R", echo=TRUE)
+
+> # Load libraries
+> library(dplyr)
+
+> library(readr)
+
+> library(zoo)
+
+> library(lme4)
+
+> library(stats)
+
+> library(olsrr)
+
+> # Set your base directory
+> base_dir <- "L:/LovbeskyttetMapper01/StenoSleepQCGM/Concatenated data"
+
+> # Variable names
+> var_names <- list("TIR", "TAR", "TBR", "min", "max", "mean", "median", "std", "cv", "delta.IG")
+
+> ### Nightly
+> 
+> # Load the nightly data
+> complete_dataset <- read_csv(file.path(base_dir, 'concatenated_all_51.csv'), col_types = cols())
+                                                                                                                                                                                                        
+> # Handling missing and infinite values
+> complete_dataset <- na.omit(complete_dataset)
+
+> # Define the independent and dependent variables
+> x <- complete_dataset %>% select(3:12)
+
+> y <- complete_dataset %>% select(WASO)
+
+> # Standardize data
+> x_stan <- scale(x, center = TRUE, scale = TRUE)
+
+> y_stan <- scale(y, center = TRUE, scale = TRUE)
+
+> # Include offset
+> x_stan <- cbind(1, x_stan)
+
+> # Create a new data frame combining x_stan and y_stan
+> standardized_data <- data.frame(x_stan, y_stan, id=Id)
+
+> for (var in var_names) {
++   # Model
++   formula <- as.formula(paste("WASO ~", var, "+ (1 | id)"))
++   model <- lmer(formula, data = standardized_da .... [TRUNCATED] 
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ TIR + (1 | id)
+   Data: standardized_data
+
+REML criterion at convergence: 558.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.7844 -0.6260 -0.0894  0.4575  3.9215 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.1822   0.4268  
+ Residual             0.7549   0.8689  
+Number of obs: 207, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.07370    0.10995  -0.670
+TIR          0.06486    0.07201   0.901
+
+Correlation of Fixed Effects:
+    (Intr)
+TIR -0.013
+[1] "p-values:"
+(Intercept)         TIR 
+      0.503       0.368 
+Computing profile confidence intervals ...
+          2.5 %    97.5 %
+TIR -0.07747887 0.2100529
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ TAR + (1 | id)
+   Data: standardized_data
+
+REML criterion at convergence: 557.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.7550 -0.6356 -0.0894  0.4378  3.8730 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.1761   0.4197  
+ Residual             0.7536   0.8681  
+Number of obs: 207, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.06993    0.10870  -0.643
+TAR         -0.08975    0.06946  -1.292
+
+Correlation of Fixed Effects:
+    (Intr)
+TAR -0.015
+[1] "p-values:"
+(Intercept)         TAR 
+      0.520       0.196 
+Computing profile confidence intervals ...
+         2.5 %     97.5 %
+TAR -0.2297829 0.04730811
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ TBR + (1 | id)
+   Data: standardized_data
+
+REML criterion at convergence: 558.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.7638 -0.6263 -0.0957  0.4319  3.9434 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.1945   0.4410  
+ Residual             0.7504   0.8663  
+Number of obs: 207, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.06636    0.11250  -0.590
+TBR          0.06510    0.06610   0.985
+
+Correlation of Fixed Effects:
+    (Intr)
+TBR 0.063 
+[1] "p-values:"
+(Intercept)         TBR 
+      0.555       0.325 
+Computing profile confidence intervals ...
+          2.5 %    97.5 %
+TBR -0.06446786 0.1948686
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ min + (1 | id)
+   Data: standardized_data
+
+REML criterion at convergence: 553.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.6148 -0.6509 -0.1221  0.4585  3.8119 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.1640   0.4050  
+ Residual             0.7419   0.8613  
+Number of obs: 207, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.06240    0.10598  -0.589
+min         -0.15758    0.06531  -2.413
+
+Correlation of Fixed Effects:
+    (Intr)
+min -0.034
+[1] "p-values:"
+(Intercept)         min 
+      0.556       0.016 
+Computing profile confidence intervals ...
+         2.5 %      97.5 %
+min -0.2889698 -0.02927495
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ max + (1 | id)
+   Data: standardized_data
+
+REML criterion at convergence: 558.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.8349 -0.5856 -0.1011  0.4333  4.0939 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.2071   0.4550  
+ Residual             0.7470   0.8643  
+Number of obs: 207, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.07636    0.11465  -0.666
+max          0.06503    0.06749   0.963
+
+Correlation of Fixed Effects:
+    (Intr)
+max -0.019
+[1] "p-values:"
+(Intercept)         max 
+      0.505       0.335 
+Computing profile confidence intervals ...
+          2.5 %    97.5 %
+max -0.07002701 0.1974581
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ mean + (1 | id)
+   Data: standardized_data
+
+REML criterion at convergence: 557.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.7520 -0.6371 -0.1101  0.4458  3.8341 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.1792   0.4234  
+ Residual             0.7523   0.8673  
+Number of obs: 207, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.06855    0.10933  -0.627
+mean        -0.08902    0.06766  -1.316
+
+Correlation of Fixed Effects:
+     (Intr)
+mean -0.026
+[1] "p-values:"
+(Intercept)        mean 
+      0.531       0.188 
+Computing profile confidence intervals ...
+          2.5 %     97.5 %
+mean -0.2244402 0.04384155
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ median + (1 | id)
+   Data: standardized_data
+
+REML criterion at convergence: 557.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.7661 -0.6326 -0.1106  0.4257  3.8339 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.1782   0.4221  
+ Residual             0.7518   0.8671  
+Number of obs: 207, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.06870    0.10910  -0.630
+median      -0.09365    0.06733  -1.391
+
+Correlation of Fixed Effects:
+       (Intr)
+median -0.023
+[1] "p-values:"
+(Intercept)      median 
+      0.529       0.164 
+Computing profile confidence intervals ...
+            2.5 %     97.5 %
+median -0.2284799 0.03857614
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ std + (1 | id)
+   Data: standardized_data
+
+REML criterion at convergence: 554.1
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.8063 -0.6647 -0.0635  0.3807  4.1790 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.2002   0.4475  
+ Residual             0.7312   0.8551  
+Number of obs: 207, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.07349    0.11293  -0.651
+std          0.15064    0.06382   2.361
+
+Correlation of Fixed Effects:
+    (Intr)
+std 0.002 
+[1] "p-values:"
+(Intercept)         std 
+      0.515       0.018 
+Computing profile confidence intervals ...
+         2.5 %    97.5 %
+std 0.02501667 0.2755055
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ cv + (1 | id)
+   Data: standardized_data
+
+REML criterion at convergence: 552.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.7155 -0.6220 -0.0769  0.3851  4.0457 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.1812   0.4257  
+ Residual             0.7311   0.8551  
+Number of obs: 207, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.06499    0.10921  -0.595
+cv           0.16895    0.06344   2.663
+
+Correlation of Fixed Effects:
+   (Intr)
+cv 0.027 
+[1] "p-values:"
+(Intercept)          cv 
+      0.552       0.008 
+Computing profile confidence intervals ...
+       2.5 %    97.5 %
+cv 0.0448673 0.2941957
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ delta.IG + (1 | id)
+   Data: standardized_data
+
+REML criterion at convergence: 552.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.7392 -0.6578 -0.0867  0.4110  4.1471 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.1971   0.4440  
+ Residual             0.7265   0.8524  
+Number of obs: 207, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.07255    0.11221  -0.647
+delta.IG     0.17015    0.06404   2.657
+
+Correlation of Fixed Effects:
+         (Intr)
+delta.IG 0.005 
+[1] "p-values:"
+(Intercept)    delta.IG 
+      0.518       0.008 
+Computing profile confidence intervals ...
+              2.5 %    97.5 %
+delta.IG 0.04430089 0.2955042
+
+> ### Hourly
+> 
+> # Load the hourly data
+> complete_dataset_h <- read_csv(file.path(base_dir, 'concatenated_hourly_all_51.csv'), col_types = cols())
+                                                                                                                                                                                                        
+> # Handling missing and infinite values
+> complete_dataset_h <- na.omit(complete_dataset_h)
+
+> # Define the independent and dependent variables
+> x_h <- complete_dataset_h %>% select(2:11)
+
+> y_h <- complete_dataset_h %>% select(WASO)
+
+> # Standardize data
+> x_stan_h <- scale(x_h, center = TRUE, scale = TRUE)
+
+> y_stan_h <- scale(y_h, center = TRUE, scale = TRUE)
+
+> # Include offset
+> x_stan_h <- cbind(1, x_stan_h)
+
+> # Extract ID
+> Id_h <- complete_dataset_h %>% select(id)
+
+> # Create a new data frame combining x_stan and y_stan
+> standardized_data_h <- data.frame(x_stan_h, y_stan_h, id=Id_h)
+
+> for (var in var_names) {
++   # Model
++   formula <- as.formula(paste("WASO ~", var, "+ (1 | id)"))
++   model_h <- lmer(formula, data = standardized_ .... [TRUNCATED] 
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ TIR + (1 | id)
+   Data: standardized_data_h
+
+REML criterion at convergence: 4797
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.2127 -0.6252 -0.2870  0.3590  5.4418 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.04461  0.2112  
+ Residual             0.94519  0.9722  
+Number of obs: 1710, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.04134    0.05086  -0.813
+TIR         -0.00608    0.02512  -0.242
+
+Correlation of Fixed Effects:
+    (Intr)
+TIR 0.003 
+[1] "p-values:"
+(Intercept)         TIR 
+      0.416       0.809 
+Computing profile confidence intervals ...
+          2.5 %     97.5 %
+TIR -0.05522186 0.04379443
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ TAR + (1 | id)
+   Data: standardized_data_h
+
+REML criterion at convergence: 4796.7
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.2026 -0.6256 -0.2847  0.3505  5.4372 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.04306  0.2075  
+ Residual             0.94533  0.9723  
+Number of obs: 1710, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.04038    0.05019  -0.805
+TAR         -0.01552    0.02489  -0.624
+
+Correlation of Fixed Effects:
+    (Intr)
+TAR -0.022
+[1] "p-values:"
+(Intercept)         TAR 
+      0.421       0.533 
+Computing profile confidence intervals ...
+          2.5 %     97.5 %
+TAR -0.06491465 0.03316187
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ TBR + (1 | id)
+   Data: standardized_data_h
+
+REML criterion at convergence: 4793.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.4326 -0.6271 -0.2948  0.3612  5.2746 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.04414  0.2101  
+ Residual             0.94352  0.9714  
+Number of obs: 1710, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.03781    0.05068  -0.746
+TBR          0.04388    0.02449   1.792
+
+Correlation of Fixed Effects:
+    (Intr)
+TBR 0.038 
+[1] "p-values:"
+(Intercept)         TBR 
+      0.456       0.073 
+Computing profile confidence intervals ...
+           2.5 %     97.5 %
+TBR -0.004121036 0.09185802
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ min + (1 | id)
+   Data: standardized_data_h
+
+REML criterion at convergence: 4795.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.2548 -0.6424 -0.2823  0.3514  5.4081 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.04225  0.2056  
+ Residual             0.94507  0.9721  
+Number of obs: 1710, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.03917    0.04986  -0.786
+min         -0.02685    0.02479  -1.083
+
+Correlation of Fixed Effects:
+    (Intr)
+min -0.033
+[1] "p-values:"
+(Intercept)         min 
+      0.432       0.279 
+Computing profile confidence intervals ...
+          2.5 %     97.5 %
+min -0.07603797 0.02163583
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ max + (1 | id)
+   Data: standardized_data_h
+
+REML criterion at convergence: 4797
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.2134 -0.6265 -0.2911  0.3538  5.4345 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.04363  0.2089  
+ Residual             0.94533  0.9723  
+Number of obs: 1710, groups:  id, 23
+
+Fixed effects:
+             Estimate Std. Error t value
+(Intercept) -0.040610   0.050450  -0.805
+max         -0.009936   0.024530  -0.405
+
+Correlation of Fixed Effects:
+    (Intr)
+max -0.026
+[1] "p-values:"
+(Intercept)         max 
+      0.421       0.685 
+Computing profile confidence intervals ...
+          2.5 %     97.5 %
+max -0.05839153 0.03801174
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ mean + (1 | id)
+   Data: standardized_data_h
+
+REML criterion at convergence: 4796.4
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.2277 -0.6371 -0.2892  0.3497  5.4174 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.04292  0.2072  
+ Residual             0.94519  0.9722  
+Number of obs: 1710, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.03981    0.05014  -0.794
+mean        -0.02047    0.02466  -0.830
+
+Correlation of Fixed Effects:
+     (Intr)
+mean -0.030
+[1] "p-values:"
+(Intercept)        mean 
+      0.427       0.406 
+Computing profile confidence intervals ...
+           2.5 %     97.5 %
+mean -0.06926236 0.02772842
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ median + (1 | id)
+   Data: standardized_data_h
+
+REML criterion at convergence: 4796.3
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.2284 -0.6392 -0.2868  0.3490  5.4149 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.04285  0.2070  
+ Residual             0.94513  0.9722  
+Number of obs: 1710, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.03973    0.05011  -0.793
+median      -0.02230    0.02464  -0.905
+
+Correlation of Fixed Effects:
+       (Intr)
+median -0.029
+[1] "p-values:"
+(Intercept)      median 
+      0.428       0.365 
+Computing profile confidence intervals ...
+             2.5 %     97.5 %
+median -0.07103156 0.02586106
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ std + (1 | id)
+   Data: standardized_data_h
+
+REML criterion at convergence: 4795.2
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.4082 -0.6338 -0.2803  0.3583  5.4567 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.04334  0.2082  
+ Residual             0.94440  0.9718  
+Number of obs: 1710, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.04080    0.05030  -0.811
+std          0.03369    0.02419   1.393
+
+Correlation of Fixed Effects:
+    (Intr)
+std 0.004 
+[1] "p-values:"
+(Intercept)         std 
+      0.417       0.164 
+Computing profile confidence intervals ...
+          2.5 %     97.5 %
+std -0.01364101 0.08123695
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ cv + (1 | id)
+   Data: standardized_data_h
+
+REML criterion at convergence: 4788.1
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.6200 -0.6456 -0.2648  0.3550  5.4147 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.0409   0.2022  
+ Residual             0.9409   0.9700  
+Number of obs: 1710, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.03747    0.04921  -0.761
+cv           0.07345    0.02430   3.023
+
+Correlation of Fixed Effects:
+   (Intr)
+cv 0.022 
+[1] "p-values:"
+(Intercept)          cv 
+      0.446       0.003 
+Computing profile confidence intervals ...
+        2.5 %    97.5 %
+cv 0.02594728 0.1213811
+Linear mixed model fit by REML ['lmerMod']
+Formula: WASO ~ delta.IG + (1 | id)
+   Data: standardized_data_h
+
+REML criterion at convergence: 4794.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.3660 -0.6366 -0.2736  0.3624  5.4571 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 0.04261  0.2064  
+ Residual             0.94439  0.9718  
+Number of obs: 1710, groups:  id, 23
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -0.04023    0.04998  -0.805
+delta.IG     0.03640    0.02429   1.499
+
+Correlation of Fixed Effects:
+         (Intr)
+delta.IG 0.010 
+[1] "p-values:"
+(Intercept)    delta.IG 
+      0.421       0.134 
+Computing profile confidence intervals ...
+               2.5 %     97.5 %
+delta.IG -0.01108644 0.08429974
+
+> ####################
+> 
+> # Model
+> #model <- lmer(WASO ~  TIR + TAR + TBR + min + max + mean + median + std + cv + delta.IG +  (1 | id), data = sta .... [TRUNCATED] 
+> 

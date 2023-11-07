@@ -17,10 +17,10 @@ from sklearn.preprocessing import StandardScaler
 from sklearn import model_selection, linear_model
 
 
-base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM"
+base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\Concatenated data"
 
 #%% Load the nightly data
-merged_data =  pd.read_csv(base_dir + '\concatenated_all.csv',  parse_dates = [0,1])
+merged_data =  pd.read_csv(base_dir + '\concatenated_all_11.csv',  parse_dates = [0,1])
 
 # Handling missing and infinite values
 merged_data.replace([np.inf, -np.inf], np.nan, inplace=True)
@@ -40,10 +40,13 @@ x_stan = sm.add_constant(x_stan)
 # Extract ID
 Id =  merged_data[['id']]
 
+# Merge standardized data
+data_stan = pd.concat([x_stan,y_stan], axis=1)
+
 
 #%% Load the hourly data
 
-merged_hour =  pd.read_csv(base_dir + '\concatenated_hourly_all.csv',  parse_dates = [0])
+merged_hour =  pd.read_csv(base_dir + '\concatenated_hourly_all_11.csv',  parse_dates = [0])
 
 # Handling missing and infinite values
 merged_hour.replace([np.inf, -np.inf], np.nan, inplace=True)
@@ -61,9 +64,11 @@ yh_stan = zscore(yh, ddof=1)
 xh_stan = sm.add_constant(xh_stan)
 
 
+
+
 #%% Perform the multiple linear regression 
 
-x_stan = x_stan[['const','TIR', 'TBR', 'std', 'min', 'cv']]
+#x_stan = x_stan[['const','TIR', 'TBR', 'std', 'min', 'cv']]
 
 model_nightly = sm.OLS(y_stan, x_stan).fit()
 model_hourly = sm.OLS(yh_stan, xh_stan).fit()
@@ -76,24 +81,24 @@ print(model_hourly.summary())
 
 #%% Linear regression with id as random effect
 
-# # Specify the multiple linear regression model with a random effect for "id"
-# model = sm.MixedLM(y_stan, x_stan[['TIR']], groups=Id)
-# result = model.fit(method='nm', reml=True)
+# Specify the multiple linear regression model with a random effect for "id"
+model = sm.MixedLM(y_stan, x_stan[['TIR']], groups=Id)
+result = model.fit(method='nm', reml=True)
 
-# # Print the summary
-# print(result.summary())
+# Print the summary
+print(result.summary())
 
-# #%% Linear regression with id as random effect (second method)
+#%% Linear regression with id as random effect (second method)
 
-# #Specify the multiple linear regression model with a random effect for "id"
-# formula = "WASO ~ TIR + TAR + TBR"
-# model = smf.mixedlm(formula, data=merged_data, groups=Id)
+#Specify the multiple linear regression model with a random effect for "id"
+formula = "WASO ~ TIR"
+model = smf.mixedlm(formula, data=data_stan, groups=Id.values.ravel().tolist())
 
-# # Fit the model
-# result = model.fit()
+# Fit the model
+result = model.fit()
 
-# # Print the summary of the model
-# print(result.summary())
+# Print the summary of the model
+print(result.summary())
 
 
 #%% Linear Regression model (in another way with plots) (nightly)
