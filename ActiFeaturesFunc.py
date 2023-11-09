@@ -124,7 +124,7 @@ def calc_WASO(data, min_consecutive_w=1, min_consecutive_s=1):
 
 #%% Average awakening length
         
-def calc_avg_awakening(data):
+def calc_avg_awakening(data, min_consecutive_w=1, min_consecutive_s=1):
     """
     Computes the average length of awakenings for one night.
 
@@ -141,8 +141,8 @@ def calc_avg_awakening(data):
 
     """
     
-    waso = calc_WASO(data)
-    num_awakenings = calc_awakenings(data)
+    waso = calc_WASO(data, min_consecutive_w, min_consecutive_s)
+    num_awakenings = calc_awakenings(data, min_consecutive_w, min_consecutive_s)
     if num_awakenings == 0:
         avg_awakening = 0
     else:
@@ -476,7 +476,7 @@ def hourly_WASO(data,min_consecutive_w=1, min_consecutive_s=1):
 
 #%% Houly average awakening length
     
-def hourly_avg_awakening(data):
+def hourly_avg_awakening(data, min_consecutive_w=1, min_consecutive_s=1):
     """
     Computes the average length of awakenings per hour for one night.
 
@@ -494,8 +494,8 @@ def hourly_avg_awakening(data):
 
     """
     
-    h_waso = hourly_WASO(data)
-    h_awakenings = hourly_awakenings(data)
+    h_waso = hourly_WASO(data, min_consecutive_w, min_consecutive_s)
+    h_awakenings = hourly_awakenings(data, min_consecutive_w, min_consecutive_s)
     
     # Convert the lists to NumPy arrays
     h_waso = np.array(h_waso)

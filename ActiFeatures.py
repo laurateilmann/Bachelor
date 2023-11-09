@@ -36,7 +36,7 @@ else:
 #%% Initializing minimum wake up length (minutes) and minimum length for startning sleep (minutes)
 
 min_wake = 5
-min_sleep = 5
+min_sleep = 1
 
 #%% Outer loop for families
 for family in families:
@@ -103,9 +103,9 @@ for family in families:
             h_waso = hourly_WASO(night_data, min_wake, min_sleep)
             
             # Average awakening length
-            avg_awakening = calc_avg_awakening(night_data)
+            avg_awakening = calc_avg_awakening(night_data, min_wake, min_sleep)
             # Hourly average awakening length
-            h_avg_awakening = hourly_avg_awakening(night_data)
+            h_avg_awakening = hourly_avg_awakening(night_data, min_wake, min_sleep)
 
             # Total sleep time per night
             tst = calc_TST(night_data, min_wake, min_sleep)

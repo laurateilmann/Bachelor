@@ -99,12 +99,12 @@ merged_data = merged_data.drop(['In Bed DateTime_y', 'Out Bed DateTime_y', 'id_x
 if len(studies)==1:
     output_dir = study_dir 
 else:
-    output_dir = base_dir
+    output_dir = base_dir  + '\Concatenated data' 
 
 # Specify the filename for the concatenated sleep epoch and CGM data
-epochs_output_file = os.path.join(output_dir, "concatenated_epochs.csv")
-cgm_output_file = os.path.join(output_dir, "concatenated_cgm.csv")
-merged_output_file = os.path.join(output_dir, "concatenated_all.csv")
+epochs_output_file = os.path.join(output_dir, "concatenated_epochs_51.csv")
+cgm_output_file = os.path.join(output_dir, "concatenated_cgm_51.csv")
+merged_output_file = os.path.join(output_dir, "concatenated_all_51.csv")
 
 # Export concatenated data to the specified files
 epochs_concatenate.to_csv(epochs_output_file, index=False)
