@@ -119,7 +119,59 @@ for (k in 1:K) {
 
 
 # Compute confidence interval and p-value for the differences between models
-t.test(z, alternative = "two.sided", alpha = 0.05)
+t.test(r, alternative = "two.sided", alpha = 0.05)
+
+#################################################3
+
+# ## K-fold cross-validation
+# 
+# J = 10
+# K = 5
+# 
+# r <- matrix(NA, 0, 1)
+# p_values_list <- vector("list", K)
+# estimates_list <- vector("list", K)
+# 
+# for (j in 1:J) {
+#   
+#   CV <- list()
+#   CV$which <- createFolds(1:N, k = K, list = F)
+#   
+#   for (k in 1:K) {
+#     
+#     # Extract training and test set
+#     X_train <- X[CV$which != k, ]
+#     X_test <- X[CV$which == k, ]
+#     
+#     model <- lmer("WASO ~ cv + (1 | id)", data = X_train)
+#     
+#     y_est_model <- predict(model, X_test)
+#     
+#     mean_value <- mean(X_test$WASO)
+#     y_est_baseline <- data.frame(y_est_baseline = rep(mean_value, nrow(X_test)))
+#     
+#     y_test <- X_test[12]
+#     
+#     zA <- abs(y_test - y_est_model)**2
+#     zB <- abs(y_test - y_est_baseline)**2
+#     z <- zA - zB
+#     
+#     r <- rbind(r, z)
+#   }
+#   
+#   # Compute confidence interval and p-value for the differences between models
+#   t_test_result <- t.test(r, alternative = "two.sided", alpha = 0.05)
+#   
+#   p_values_list[[j]] <- t_test_result$p.value
+#   estimates_list[[j]] <- t_test_result$estimate
+#   
+# }
+# 
+# # Print result
+# for (j in 1:J) {
+#   cat("Iteration", j, ":", "p-value:", p_values_list[[j]], ", estimate:", estimates_list[[j]], "\n")
+# }
+
 
 
 

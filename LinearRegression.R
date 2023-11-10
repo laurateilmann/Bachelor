@@ -25,7 +25,7 @@ complete_dataset <- na.omit(complete_dataset)
 
 # Define the independent and dependent variables
 x <- complete_dataset %>% select(3:12)
-y <- complete_dataset %>% select(WASO)
+y <- complete_dataset %>% select(Latency)
 
 # Standardize data
 x_stan <- scale(x, center = TRUE, scale = TRUE)
@@ -41,7 +41,7 @@ standardized_data <- data.frame(x_stan, y, id=Id)
 
 for (var in var_names) {
   # Model
-  formula <- as.formula(paste("WASO ~", var, "+ (1 | id)"))
+  formula <- as.formula(paste("Latency ~", var, "+ (1 | id)"))
   model <- lmer(formula, data = standardized_data)
   print(summary(model))
   
