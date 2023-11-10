@@ -23,7 +23,7 @@ var_names <- list("TIR", "TAR", "TBR", "min", "max", "mean", "median", "std", "c
 ### Nightly
 
 # Load the nightly data
-complete_dataset <- read_csv(file.path(base_dir, 'concatenated_hourly_51.csv'), col_types = cols())
+complete_dataset <- read_csv(file.path(base_dir, 'concatenated_all_11.csv'), col_types = cols())
 complete_dataset <- complete_dataset %>% rename(`SleepQ` = `Sleep quality`)
 
 # Handling missing and infinite values
@@ -53,7 +53,7 @@ X <- data.frame(x_stan, y, id=Id)
 ## Hold-out cross-validation
 
 ## Set the seed to make your partition reproducible
-set.seed(123)
+#set.seed(4321)
 train_ind <- createDataPartition(y = X$WASO, p = 0.5, list = FALSE, groups = length(unique(X$id)))
 
 X_train <- X[train_ind, ]
@@ -66,10 +66,6 @@ mean_value <- mean(X_test$WASO)
 y_est_baseline <- data.frame(y_est_baseline = rep(mean_value, nrow(X_test)))
 
 y_test <- X_test[12]
-
-# --------------------------------------------
-# Perform statistical comparison of the models
-# --------------------------------------------
 
 # Compute z with squared error.
 zA <- abs(y_test - y_est_model)**2

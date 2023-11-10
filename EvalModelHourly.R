@@ -23,7 +23,7 @@ var_names <- list("TIR", "TAR", "TBR", "min", "max", "mean", "median", "std", "c
 ### Nightly
 
 # Load the nightly data
-complete_dataset <- read_csv(file.path(base_dir, 'concatenated_hourly_all_15.csv'), col_types = cols())
+complete_dataset <- read_csv(file.path(base_dir, 'concatenated_hourly_all_11.csv'), col_types = cols())
 
 # Handling missing and infinite values
 complete_dataset <- na.omit(complete_dataset)
@@ -66,9 +66,6 @@ y_est_baseline <- data.frame(y_est_baseline = rep(mean_value, nrow(X_test)))
 
 y_test <- X_test[12]
 
-# --------------------------------------------
-# Perform statistical comparison of the models
-# --------------------------------------------
 
 # Compute z with squared error.
 zA <- abs(y_test - y_est_model)**2
@@ -123,7 +120,6 @@ for (k in 1:K) {
 
 # Compute confidence interval and p-value for the differences between models
 t.test(z, alternative = "two.sided", alpha = 0.05)
-#print((CI_diff <- c(res_diff$conf.int[1], res_diff$conf.int[2])))
-#print(p_diff <- res_diff$p.value)
+
 
 
