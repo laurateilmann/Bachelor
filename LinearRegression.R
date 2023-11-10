@@ -25,21 +25,23 @@ complete_dataset <- na.omit(complete_dataset)
 
 # Define the independent and dependent variables
 x <- complete_dataset %>% select(3:12)
-y <- complete_dataset %>% select(`SleepQ`)
+y <- complete_dataset %>% select(WASO)
 
 # Standardize data
 x_stan <- scale(x, center = TRUE, scale = TRUE)
-y_stan <- scale(y, center = TRUE, scale = TRUE)
 
 # Include offset
 x_stan <- cbind(1, x_stan)
 
+# Extract ID
+Id <- complete_dataset %>% select(id)
+
 # Create a new data frame combining x_stan and y_stan
-standardized_data <- data.frame(x_stan, y_stan, id=Id)
+standardized_data <- data.frame(x_stan, y, id=Id)
 
 for (var in var_names) {
   # Model
-  formula <- as.formula(paste("SleepQ ~", var, "+ (1 | id)"))
+  formula <- as.formula(paste("WASO ~", var, "+ (1 | id)"))
   model <- lmer(formula, data = standardized_data)
   print(summary(model))
   
@@ -49,7 +51,7 @@ for (var in var_names) {
   print(p)
   
   # CI
-  conf_interval <- confint(model, var, level = 0.95)
+  conf_interval <- confint(model, level = 0.95)
   print(conf_interval)
 }
 
@@ -57,7 +59,7 @@ for (var in var_names) {
 ### Hourly
 
 # Load the hourly data
-complete_dataset_h <- read_csv(file.path(base_dir, 'concatenated_hourly_all_51.csv'), col_types = cols())
+complete_dataset_h <- read_csv(file.path(base_dir, 'concatenated_hourly_all_11.csv'), col_types = cols())
 
 # Handling missing and infinite values
 complete_dataset_h <- na.omit(complete_dataset_h)
@@ -68,7 +70,6 @@ y_h <- complete_dataset_h %>% select(WASO)
 
 # Standardize data
 x_stan_h <- scale(x_h, center = TRUE, scale = TRUE)
-y_stan_h <- scale(y_h, center = TRUE, scale = TRUE)
 
 # Include offset
 x_stan_h <- cbind(1, x_stan_h)
@@ -77,7 +78,7 @@ x_stan_h <- cbind(1, x_stan_h)
 Id_h <- complete_dataset_h %>% select(id)
 
 # Create a new data frame combining x_stan and y_stan
-standardized_data_h <- data.frame(x_stan_h, y_stan_h, id=Id_h)
+standardized_data_h <- data.frame(x_stan_h, y_h, id=Id_h)
 
 for (var in var_names) {
   # Model
@@ -91,7 +92,7 @@ for (var in var_names) {
   print(p)
   
   # CI
-  conf_interval <- confint(model_h, var, level = 0.95)
+  conf_interval <- confint(model_h, level = 0.95)
   print(conf_interval)
 }
 

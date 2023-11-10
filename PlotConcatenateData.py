@@ -57,9 +57,9 @@ y_pred = 88.627 + 7.525 * x
 plt.figure()
 plt.plot(cgm_feature_df['cv_standardized'], epochs_feature_df['WASO'], 'o', label='Data Points')
 plt.plot(x, y_pred, '-', label='Prediction Line', color='red', linewidth=2)
-plt.title("CV against WASO$_{1min}$", fontsize=16, family='Times New Roman', fontweight='bold')
-plt.xlabel("Coefficient of variation", fontsize=14, family='Times New Roman')
-plt.ylabel("WASO (min)", fontsize=14, family='Times New Roman')
+plt.title("CV against WASO", fontsize=16, family='Times New Roman', fontweight='bold')
+plt.xlabel("Coefficient of variation", fontsize=16, family='Times New Roman')
+plt.ylabel("WASO (min)", fontsize=16, family='Times New Roman')
 plt.xticks(fontsize=12, family='Times New Roman')
 plt.yticks(fontsize=12, family='Times New Roman')
 legend_font = {'family': 'Times New Roman', 'size': 12}
@@ -68,138 +68,116 @@ plt.show()
 
 plt.savefig(f"H:\GitHub\Bachelor\Plots\CV vs. WASO11.png", format="png")
 
-#%%
 
-# #%% Plot: TIR and WASO
-
-# plt.figure()
-# plt.plot(cgm_feature_df['TIR'], epochs_feature_df['WASO'], 'o')
-# plt.title("TIR against WASO", fontsize=16, family='Times New Roman', fontweight='bold')
-# plt.xlabel("Time in range (%)", fontsize=14, family='Times New Roman')
-# plt.ylabel("WASO (min)", fontsize=14, family='Times New Roman')
-# plt.xticks(fontsize=12, family='Times New Roman')
-# plt.yticks(fontsize=12, family='Times New Roman')
-# #plt.grid()
-
-# #%% Plot: max IG and WASO
-
-# plt.figure()
-# plt.plot(cgm_feature_df['max'], epochs_feature_df['WASO'], 'o')
-# plt.title("Max IG against WASO", fontsize=16, family='Times New Roman', fontweight='bold')
-# plt.xlabel("Max intestinal glucose (mmol/L)", fontsize=14, family='Times New Roman')
-# plt.ylabel("WASO (min)",fontsize=14, family='Times New Roman')
-# plt.xticks(fontsize=12, family='Times New Roman')
-# plt.yticks(fontsize=12, family='Times New Roman')
-# #plt.grid()
-
-# #%% Plot: min IG and WASO
-
-# plt.figure()
-# plt.plot(cgm_feature_df['min'], epochs_feature_df['WASO'], 'o')
-# plt.title("Min. IG against WASO", fontsize=16, family='Times New Roman', fontweight='bold')
-# plt.xlabel("Min. intestinal glucose (mmol/L)", fontsize=14, family='Times New Roman')
-# plt.ylabel("WASO (min)", fontsize=14, family='Times New Roman')
-# plt.xticks(fontsize=12, family='Times New Roman')
-# plt.yticks(fontsize=12, family='Times New Roman')
-# #plt.grid()
-
-# #%% Plot: mean and TST
-
-# plt.figure()
-# plt.plot(cgm_feature_df['mean'], epochs_feature_df['TST'], 'o')
-# plt.title("Mean against TST", fontsize=16, family='Times New Roman', fontweight='bold')
-# plt.xlabel("Mean intestinal glucose (mmol/L)", fontsize=14, family='Times New Roman')
-# plt.ylabel("Total sleep time (min)", fontsize=14, family='Times New Roman')
-# plt.xticks(fontsize=12, family='Times New Roman')
-# plt.yticks(fontsize=12, family='Times New Roman')
-# #plt.grid()
-
-# #%% Plot: mean and number of awakenings
-
-# plt.figure()
-# plt.plot(cgm_feature_df['mean'], epochs_feature_df['Number of awakenings'], 'o')
-# plt.title("Mean against number of awakenings", fontsize=16, family='Times New Roman', fontweight='bold')
-# plt.xlabel("Mean intestinal glucose (mmol/L)", fontsize=14, family='Times New Roman')
-# plt.ylabel("Number of awakenings", fontsize=14, family='Times New Roman')
-# plt.xticks(fontsize=12, family='Times New Roman')
-# plt.yticks(fontsize=12, family='Times New Roman')
-# #plt.grid()
-
-# #%% Plot: Logaritmh TAR against WASO
-
-# plt.figure()
-# plt.plot(np.log(cgm_feature_df['TAR']), (epochs_feature_df['WASO']), 'o')
-# plt.title("Logarithm of TAR against Logarithm of WASO", fontsize=16)
-# plt.xlabel("Logarithm of Time Above range (%)", fontsize=14)
-# plt.ylabel("WASO (min)", fontsize=14)
-# plt.xticks(fontsize=12)
-# plt.yticks(fontsize=12)
-
-# plt.show()
-
-
-# #%% Pairwise scatterplot
-
-# plt.close('all')
-
-# cgm_features_plot = cgm_feature_df.iloc[:,2:]
-# epoch_features_plot = epochs_feature_df.iloc[:,2:]
-
-# all_features = pd.concat([cgm_features_plot,epoch_features_plot],axis=1)
-
-# for i, cgm_feature in enumerate(cgm_features_plot):
-    
-#     # Create subplots for each CGM feature
-#     fig, axes = plt.subplots(2, 4, figsize=(17, 10))
-    
-#     for j, epoch_feature in enumerate(epoch_features_plot):
-#         ax = axes[j//4, j%4]
-#         ax.scatter(cgm_features_plot[cgm_feature], epoch_features_plot[epoch_feature])
-#         ax.set_xlabel(cgm_feature, fontsize=20)
-#         ax.set_ylabel(epoch_feature, fontsize=20)
-#         ax.tick_params(axis='x', labelsize=20)
-#         ax.tick_params(axis='y', labelsize=20) 
-
-#     # Remove excess axes 
-#     axes[1, 3].set_axis_off() 
-    
-#     plt.tight_layout()
-#     plt.show()
-    
-#     # Save plot 
-#     plt.savefig(f"H:\GitHub\Bachelor\Plots\{cgm_feature} vs. sleep features.png", format="png")   
-    
-#%% 
-    
-plt.figure()
-plt.plot(cgm_feature_df['std'], epochs_feature_df['WASO'], 'o')
-plt.title("Standard deviation against WASO", fontsize=16)
-plt.xlabel("Std of IG (mmol/L)", fontsize=14)
-plt.ylabel("WASO", fontsize=14)
-plt.xticks(fontsize=12)
-plt.yticks(fontsize=12)
-# Save plot 
-plt.savefig(f"H:\GitHub\Bachelor\Plots\Standard deviation against WASO.png", format="png")   
+#%% Plot: TIR and WASO
 
 plt.figure()
-plt.plot(cgm_feature_df['cv'], epochs_feature_df['WASO'], 'o')
-plt.title("Coefficient of variation against WASO", fontsize=16)
-plt.xlabel("CV of IG", fontsize=14)
-plt.ylabel("WASO", fontsize=14)
-plt.xticks(fontsize=12)
-plt.yticks(fontsize=12)
-# Save plot 
-plt.savefig(f"H:\GitHub\Bachelor\Plots\Coefficient of variation against WASO.png", format="png")   
+plt.plot(cgm_feature_df['TIR'], epochs_feature_df['WASO'], 'o')
+plt.title("TIR against WASO", fontsize=16, family='Times New Roman', fontweight='bold')
+plt.xlabel("Time in range (%)", fontsize=16, family='Times New Roman')
+plt.ylabel("WASO (min)", fontsize=16, family='Times New Roman')
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
+#plt.grid()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\TIR against WASO.png", format="png")   
+
+#%% Plot: TAR and WASO
 
 plt.figure()
-plt.plot(cgm_feature_df['delta IG'], epochs_feature_df['WASO'], 'o')
-plt.title("Delta IG against WASO", fontsize=16)
-plt.xlabel("Delta IG of IG (mmol/L)", fontsize=14)
-plt.ylabel("WASO", fontsize=14)
+plt.plot(cgm_feature_df['TAR'], epochs_feature_df['WASO'], 'o')
+plt.title("TAR against WASO", fontsize=16, family='Times New Roman', fontweight='bold')
+plt.xlabel("Time above range (%)", fontsize=16, family='Times New Roman')
+plt.ylabel("WASO (min)", fontsize=16, family='Times New Roman')
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
+#plt.grid()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\TAR against WASO.png", format="png") 
+
+#%% Plot: TBR and WASO
+
+plt.figure()
+plt.plot(cgm_feature_df['TBR'], epochs_feature_df['WASO'], 'o')
+plt.title("TBR against WASO", fontsize=16, family='Times New Roman', fontweight='bold')
+plt.xlabel("Time below range (%)", fontsize=16, family='Times New Roman')
+plt.ylabel("WASO (min)", fontsize=16, family='Times New Roman')
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
+#plt.grid()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\TBR against WASO.png", format="png") 
+
+#%% Plot: max IG and WASO
+
+plt.figure()
+plt.plot(cgm_feature_df['max'], epochs_feature_df['WASO'], 'o')
+plt.title("Max IG against WASO", fontsize=16, family='Times New Roman', fontweight='bold')
+plt.xlabel("Max interstitial glucose (mmol/L)", fontsize=16, family='Times New Roman')
+plt.ylabel("WASO (min)",fontsize=16, family='Times New Roman')
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
+#plt.grid()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Max against WASO.png", format="png")   
+
+#%% Plot: min IG and WASO
+
+plt.figure()
+plt.plot(cgm_feature_df['min'], epochs_feature_df['WASO'], 'o')
+plt.title("Min. IG against WASO", fontsize=16, family='Times New Roman', fontweight='bold')
+plt.xlabel("Min. interstitial glucose (mmol/L)", fontsize=16, family='Times New Roman')
+plt.ylabel("WASO (min)", fontsize=16, family='Times New Roman')
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
+#plt.grid()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Min against WASO.png", format="png")   
+
+#%% Mean and WASO
+
+plt.figure()
+plt.plot(cgm_feature_df['mean'], epochs_feature_df['WASO'], 'o')
+plt.title("Mean against WASO", fontsize=16, family='Times New Roman', fontweight='bold')
+plt.xlabel("Mean interstitial glucose (mmol/L)", fontsize=16, family='Times New Roman')
+plt.ylabel("WASO (min)", fontsize=16, family='Times New Roman')
+plt.xticks(fontsize=12, family='Times New Roman')
+plt.yticks(fontsize=12, family='Times New Roman')
+#plt.grid()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Mean against WASO.png", format="png") 
+
+
+#%% Plot: Logaritmh TAR against WASO
+
+plt.figure()
+plt.plot(np.log(cgm_feature_df['TAR']), (epochs_feature_df['WASO']), 'o')
+plt.title("LogTAR against WASO", fontsize=16)
+plt.xlabel("Logarithm of Time above range (%)", fontsize=16)
+plt.ylabel("WASO (min)", fontsize=16)
 plt.xticks(fontsize=12)
 plt.yticks(fontsize=12)
-# Save plot 
-plt.savefig(f"H:\GitHub\Bachelor\Plots\Delta IG against WASO.png", format="png")   
+plt.show()
+
+#%% Plot: Logaritmh TIR against WASO
+
+plt.figure()
+plt.plot(np.log(cgm_feature_df['TIR']), (epochs_feature_df['WASO']), 'o')
+plt.title("LogTIR against WASO", fontsize=16)
+plt.xlabel("Logarithm of Time in range (%)", fontsize=16)
+plt.ylabel("WASO (min)", fontsize=16)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+plt.show()
+
+
+#%% Plot: Logaritmh TBR against WASO
+
+plt.figure()
+plt.plot(np.log(cgm_feature_df['TBR']), (epochs_feature_df['WASO']), 'o')
+plt.title("LogTBR against WASO", fontsize=16)
+plt.xlabel("Logarithm of Time below range (%)", fontsize=16)
+plt.ylabel("WASO (min)", fontsize=16)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+plt.show()
+
+
+
 
 
 
