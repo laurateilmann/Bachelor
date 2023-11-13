@@ -30,9 +30,6 @@ y <- complete_dataset %>% select(WASO)
 # Standardize data
 x_stan <- scale(x, center = TRUE, scale = TRUE)
 
-# Include offset
-x_stan <- cbind(1, x_stan)
-
 # Id
 Id <- complete_dataset %>% select(id)
 
@@ -70,9 +67,6 @@ y_h <- complete_dataset_h %>% select(WASO)
 
 # Standardize data
 x_stan_h <- scale(x_h, center = TRUE, scale = TRUE)
-
-# Include offset
-x_stan_h <- cbind(1, x_stan_h)
 
 # Extract ID
 Id_h <- complete_dataset_h %>% select(id)

@@ -13,7 +13,8 @@ base_dir <- "L:/LovbeskyttetMapper01/StenoSleepQCGM/Concatenated data"
 # Variable names
 var_names <- list("TIR", "TAR", "TBR", "min", "max", "mean", "median", "std", "cv", "delta.IG")
 
-### Nightly
+################################
+## Nightly
 
 # Load the nightly data
 complete_dataset <- read_csv(file.path(base_dir, 'concatenated_all_11.csv'), col_types = cols())
@@ -25,13 +26,10 @@ complete_dataset <- na.omit(complete_dataset)
 
 # Define the independent and dependent variables
 x <- complete_dataset %>% select(3:12)
-y <- complete_dataset %>% select(Latency)
+y <- complete_dataset %>% select(WASO)
 
 # Standardize data
 x_stan <- scale(x, center = TRUE, scale = TRUE)
-
-# Include offset
-x_stan <- cbind(1, x_stan)
 
 # Extract ID
 Id <- complete_dataset %>% select(id)
@@ -56,7 +54,8 @@ for (var in var_names) {
 }
 
 
-### Hourly
+#############################
+## Hourly
 
 # Load the hourly data
 complete_dataset_h <- read_csv(file.path(base_dir, 'concatenated_hourly_all_11.csv'), col_types = cols())
@@ -70,9 +69,6 @@ y_h <- complete_dataset_h %>% select(WASO)
 
 # Standardize data
 x_stan_h <- scale(x_h, center = TRUE, scale = TRUE)
-
-# Include offset
-x_stan_h <- cbind(1, x_stan_h)
 
 # Extract ID
 Id_h <- complete_dataset_h %>% select(id)
@@ -96,26 +92,11 @@ for (var in var_names) {
   print(conf_interval)
 }
 
-####################
 
-# Model
-#model <- lmer(WASO ~  TIR + TAR + TBR + min + max + mean + median + std + cv + delta.IG +  (1 | id), data = standardized_data)
-#summary(model)
 
-# p-value
-#p = round(2*pnorm(abs(coef(summary(model))[,3]), lower.tail = FALSE),3)
-#print(p)
-
-####################
+###################
 
 #plot(standardized_data)
-
-#################
-
-# forward selection
-#modelf <- lm(WASO ~ TIR + TAR + min + max + mean + std + delta.IG, data = standardized_data)
-#final_model <- ols_step_all_possible(modelf)
-#print(final_model)
 
 #################
 
