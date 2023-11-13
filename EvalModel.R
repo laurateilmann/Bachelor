@@ -51,17 +51,14 @@ X <- data.frame(x_stan, y, id=Id)
 ## K-fold cross-validation
 
 # Set seed for reproducibility. 
-set.seed(7645)
+#set.seed(7645)
 
 # Number of times cross-validation is performed
-J = 1
+J = 20
 # Number of folds in K-fold cross-validation
 K = 5
 
-# Initialize lists and vectors
-y_true <- c()
-y_model <- c()
-y_baseline <- c()
+# Initialize
 p_values_list <- vector("list", K)
 estimates_list <- vector("list", K)
 CI_list <- vector("list",K)
@@ -69,6 +66,11 @@ CI_list <- vector("list",K)
 
 # Outer loop - number of times cross-validation and t-test is performed
 for (j in 1:J) {
+  
+  # Initialize
+  y_true <- c()
+  y_model <- c()
+  y_baseline <- c()
   
   # Create folds
   CV <- list()
