@@ -39,7 +39,7 @@ standardized_data <- data.frame(x_stan, y, id=Id)
 
 for (var in var_names) {
   # Model
-  formula <- as.formula(paste("Latency ~", var, "+ (1 | id)"))
+  formula <- as.formula(paste("WASO ~", var, "+ (1 | id)"))
   model <- lmer(formula, data = standardized_data)
   print(summary(model))
   
