@@ -6,6 +6,7 @@ library(zoo)
 library(lme4)
 library(stats)
 library(olsrr)
+library(ggplot2)
 
 # Set your base directory
 base_dir <- "L:/LovbeskyttetMapper01/StenoSleepQCGM/Concatenated data"
@@ -111,7 +112,6 @@ for (var in var_names) {
 # Cluster matrix med fx pairwise p-værdier 
 
 # Enten machine learning eller statistik vej
-
 
 
 
