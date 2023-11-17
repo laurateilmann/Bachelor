@@ -73,7 +73,7 @@ for i in range(2):
 # Set weekday titles
 weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 for i in range(7):
-    axs[0, i].set_title(weekdays[i], fontsize=25)
+    axs[0, i].set_title(weekdays[i], fontsize=38)
 
 # Limits
 upper_lim = 10.0
@@ -123,18 +123,18 @@ for session_index, session in enumerate(sessions):
         data = extract_one_night(in_bed, out_bed, CGM_data_list[session_index])['CGM']
 
 
-        # Insert dates 
-        date_start = in_bed.strftime('%d/%m') 
-        date_end = out_bed.strftime('-%d/%m') 
-        axs[row, col].text(.4, .95, str(date_start + date_end), ha='left', va='top', transform=axs[row, col].transAxes, fontsize=20)   
+        # # Insert dates 
+        # date_start = in_bed.strftime('%d/%m') 
+        # date_end = out_bed.strftime('-%d/%m') 
+        # axs[row, col].text(.4, .95, str(date_start + date_end), ha='left', va='top', transform=axs[row, col].transAxes, fontsize=24)   
     
         # Format the x-axis ticks  
         axs[row,col].xaxis.set_major_formatter(mdates.DateFormatter('%H'))  
         # Set the interval for x-axis ticks  
         axs[row,col].xaxis.set_major_locator(mdates.HourLocator(interval=3)) 
         # Set the fontsize of the x- and y-axis ticks 
-        axs[row, col].tick_params(axis='x', labelsize=20,) 
-        axs[row, col].tick_params(axis='y', labelsize=20) 
+        axs[row, col].tick_params(axis='x', labelsize=30) 
+        axs[row, col].tick_params(axis='y', labelsize=3) 
     
         # Plot CGM_data 
         axs[row, col].plot(ts, data, color='k') 
@@ -161,8 +161,8 @@ for session_index, session in enumerate(sessions):
 fig.subplots_adjust(left=0.07, right=0.95, top=0.95, bottom=0.1, wspace=0.1, hspace=0.2) 
 
 # Add figure-level labels with adjusted coordinates 
-fig.text(0.5, 0.01, 'Time (hour)', ha='center', fontsize=25)   
-fig.text(0.006, 0.5, 'IG (mmol/L)', va='center', fontsize=25, rotation=90)   
+fig.text(0.5, 0.01, 'Time (hour)', ha='center', fontsize=40)   
+fig.text(0.006, 0.5, 'IG (mmol/L)', va='center', fontsize=40, rotation=90)   
 
 # Necessary for getting a good saved image
 plt.get_current_fig_manager().full_screen_toggle()   
