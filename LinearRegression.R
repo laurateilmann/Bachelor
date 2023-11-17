@@ -6,7 +6,6 @@ library(zoo)
 library(lme4)
 library(stats)
 library(olsrr)
-library(ggplot2)
 
 # Set your base directory
 base_dir <- "L:/LovbeskyttetMapper01/StenoSleepQCGM/Concatenated data"
@@ -27,7 +26,7 @@ complete_dataset <- na.omit(complete_dataset)
 
 # Define the independent and dependent variables
 x <- complete_dataset %>% select(3:12)
-y <- complete_dataset %>% select(WASO)
+y <- complete_dataset %>% select(Efficiency)
 
 # Standardize data
 x_stan <- scale(x, center = TRUE, scale = TRUE)
@@ -40,7 +39,7 @@ standardized_data <- data.frame(x_stan, y, id=Id)
 
 for (var in var_names) {
   # Model
-  formula <- as.formula(paste("WASO ~", var, "+ (1 | id)"))
+  formula <- as.formula(paste("Efficiency ~", var, "+ (1 | id)"))
   model <- lmer(formula, data = standardized_data)
   print(summary(model))
   
@@ -66,7 +65,7 @@ complete_dataset_h <- na.omit(complete_dataset_h)
 
 # Define the independent and dependent variables
 x_h <- complete_dataset_h %>% select(2:11)
-y_h <- complete_dataset_h %>% select(WASO)
+y_h <- complete_dataset_h %>% select(Efficiency)
 
 # Standardize data
 x_stan_h <- scale(x_h, center = TRUE, scale = TRUE)
@@ -79,7 +78,7 @@ standardized_data_h <- data.frame(x_stan_h, y_h, id=Id_h)
 
 for (var in var_names) {
   # Model
-  formula <- as.formula(paste("WASO ~", var, "+ (1 | id)"))
+  formula <- as.formula(paste("Efficiency ~", var, "+ (1 | id)"))
   model_h <- lmer(formula, data = standardized_data_h)
   print(summary(model_h))
   
