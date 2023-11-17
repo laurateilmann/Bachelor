@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-11-17T15:31:31.051Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0" etag="4p1ruAWZIRqVABOC31_Q" version="22.1.3" type="github">
+<mxfile host="app.diagrams.net" modified="2023-11-17T15:33:20.737Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0" etag="gDmyw3iEC2_9OFB0dFSp" version="22.1.3" type="github">
   <diagram name="Side-1" id="8uSLxqYtJGwNJn5mJIMu">
     <mxGraphModel dx="2253" dy="793" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -63,7 +63,7 @@
           <mxGeometry x="-621.5" y="290" width="200" height="150" as="geometry" />
         </mxCell>
         <mxCell id="4Cdd__MP1ncVrc0N2WNh-14" value="&lt;font face=&quot;Times New Roman&quot;&gt;Time in range (TIR)&lt;br&gt;Time above range (TAR)&lt;br&gt;Time below range (TBR)&lt;br&gt;Mean BG&lt;br&gt;Min BG&lt;br&gt;Max BG&amp;nbsp;&lt;br&gt;Coefficent of variation (CV)&lt;/font&gt;&lt;font face=&quot;Times New Roman&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-327.5" y="290" width="189" height="130" as="geometry" />
+          <mxGeometry x="-327.5" y="290" width="189" height="150" as="geometry" />
         </mxCell>
         <mxCell id="4Cdd__MP1ncVrc0N2WNh-21" value="" style="endArrow=none;dashed=1;html=1;rounded=1;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
