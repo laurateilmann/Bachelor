@@ -13,28 +13,32 @@ import seaborn as sn
 import matplotlib.pyplot as plt
 
 base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\Concatenated data"
-file11 = "\concatenated_all_11.csv"
-file51 = "\concatenated_all_51.csv"
+file_n = "\concatenated_all_11.csv"
+file_h = "\concatenated_hourly_all_11.csv"
 
 # Construct the full file paths
-file11_path = os.path.join(base_dir+file11)
-file51_path = os.path.join(base_dir+file51)
+file_n_path = os.path.join(base_dir+file_n)
+file_h_path = os.path.join(base_dir+file_h)
 
 # Read the concatenated data
-data11 = pd.read_csv(file11_path)
-data51 = pd.read_csv(file51_path)
+data_n = pd.read_csv(file_n_path)
+data_h = pd.read_csv(file_h_path)
 
-# Find mean, sd and ranges (min to max)
-mean11 = data11.iloc[:, 2:].mean()
-sd11 = data11.iloc[:, 2:].std()
-ran_min11 = data11.iloc[:, 2:].min()
-ran_max11 = data11.iloc[:, 2:].max()
+# Find mean, sd and ranges (min to max) nightly
+mean_n = data_n.iloc[:, 2:].mean()
+sd_n = data_n.iloc[:, 2:].std()
+ran_min_n = data_n.iloc[:, 2:].min()
+ran_max_n = data_n.iloc[:, 2:].max()
 
-# Find mean, sd and ranges (min to max)
-mean51 = data51.iloc[:, 2:].mean()
-sd51 = data51.iloc[:, 2:].std()
-ran_min51 = data51.iloc[:, 2:].min()
-ran_max51 = data51.iloc[:, 2:].max()
+# Find mean, sd and ranges (min to max) hourly
+mean_h = data_h.iloc[:, 1:].mean()
+sd_h = data_h.iloc[:, 1:].std()
+ran_min_h = data_h.iloc[:, 1:].min()
+ran_max_h = data_h.iloc[:, 1:].max()
 
-# merged = pd.concat([mean, sd, ], axis=1)
-# merged.columns = ["Mean", "SD"]
+#%%
+
+in_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\MindYourDiabetes\Fam01\Third"
+file = "\cgm_data_processed.csv"
+file_path = os.path.join(in_dir+file)
+cgm = pd.read_csv(file_path)
