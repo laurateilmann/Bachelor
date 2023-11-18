@@ -28,8 +28,8 @@ plt.close('all')
 
 base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\Concatenated data"
 
-cgm_file = "\concatenated_cgm.csv"
-epoch_file = "\concatenated_epochs.csv"
+cgm_file = "\concatenated_cgm_11.csv"
+epoch_file = "\concatenated_epochs_11.csv"
 
 # Construct the full file paths
 cgm_file_path = os.path.join(base_dir+cgm_file)
@@ -62,6 +62,7 @@ plt.xticks(fontsize=12, family='Times New Roman')
 plt.yticks(fontsize=12, family='Times New Roman')
 legend_font = {'family': 'Times New Roman', 'size': 12}
 plt.legend(prop=legend_font)
+plt.tight_layout()
 plt.show()
 
 plt.savefig(f"H:\GitHub\Bachelor\Plots\CV vs. Sleep Efficiency with trend.png", format="png")
