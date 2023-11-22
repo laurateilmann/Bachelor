@@ -42,7 +42,7 @@ print(t_test_result2)
 # Extract columns of interest
 TIR <- complete_dataset %>% select(TIR)
 
-# Recommended TIR >
+# Recommended
 recommended <- 70
 
 # Conducting the one-sample t-test
@@ -59,7 +59,7 @@ print(t_test_result)
 # Extract columns of interest
 TAR <- complete_dataset %>% select(TAR)
 
-# Recommended TIR >
+# Recommended
 recommended <- 25
 
 # Conducting the one-sample t-test
@@ -76,7 +76,7 @@ print(t_test_result)
 # Extract columns of interest
 TBR <- complete_dataset %>% select(TBR)
 
-# Recommended TIR >
+# Recommended
 recommended <- 4
 
 # Conducting the one-sample t-test
@@ -94,7 +94,7 @@ print(t_test_result)
 # Extract columns of interest
 WASO <- complete_dataset %>% select(WASO)
 
-# Recommended TIR >
+# Recommended
 recommended <- 40
 
 # Conducting the one-sample t-test
@@ -111,7 +111,7 @@ print(t_test_result)
 # Extract columns of interest
 SOL <- complete_dataset %>% select(Latency)
 
-# Recommended TIR >
+# Recommended
 recommended <- 30
 
 # Conducting the one-sample t-test
@@ -128,7 +128,7 @@ print(t_test_result)
 # Extract columns of interest
 Efficiency <- complete_dataset %>% select(Efficiency)
 
-# Recommended TIR >
+# Recommended
 recommended <- 85
 
 # Conducting the one-sample t-test
@@ -137,6 +137,23 @@ t_test_result <- t.test(x = Efficiency, mu = recommended, alternative = "two.sid
 
 # Displaying the t-test results
 cat("Results for t-test comparing Efficiency with 85%:\n")
+print(t_test_result)
+
+#####################################
+## CV
+
+# Extract columns of interest
+CV <- complete_dataset %>% select(cv)
+
+# Recommended
+recommended <- 0.36
+
+# Conducting the one-sample t-test
+t_test_result <- t.test(x = CV, mu = recommended, alternative = "two.sided", 
+                        conf.level = 0.95)
+
+# Displaying the t-test results
+cat("Results for t-test comparing CV with 36%:\n")
 print(t_test_result)
 
 
