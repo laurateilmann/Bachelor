@@ -37,6 +37,9 @@ Id <- complete_dataset %>% select(id)
 # Create a new data frame combining x_stan and y_stan
 standardized_data <- data.frame(x_stan, y, id=Id)
 
+# Number of observations
+N = nrow(standardized_data)
+
 for (var in var_names) {
   # Model
   formula <- as.formula(paste("Efficiency ~", var, "+ (1 | id)"))
@@ -44,7 +47,7 @@ for (var in var_names) {
   print(summary(model))
   
   # p-value
-  p = round(2*pnorm(abs(coef(summary(model))[,3]), lower.tail = FALSE),3)
+  p <- round(2*pt(q=abs(coef(summary(model))[,3]), df=N-1, lower.tail=FALSE),3)
   print('p-values:')
   print(p)
   
@@ -76,6 +79,9 @@ Id_h <- complete_dataset_h %>% select(id)
 # Create a new data frame combining x_stan and y_stan
 standardized_data_h <- data.frame(x_stan_h, y_h, id=Id_h)
 
+# Number of observations
+N_h = nrow(standardized_data)
+
 for (var in var_names) {
   # Model
   formula <- as.formula(paste("Efficiency ~", var, "+ (1 | id)"))
@@ -83,7 +89,7 @@ for (var in var_names) {
   print(summary(model_h))
   
   # p-value
-  p = round(2*pnorm(abs(coef(summary(model_h))[,3]), lower.tail = FALSE),3)
+  p <- round(2*pt(q=abs(coef(summary(model))[,3]), df=N_h-1, lower.tail=FALSE),3)
   print('p-values:')
   print(p)
   

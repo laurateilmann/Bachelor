@@ -73,6 +73,9 @@ Id_h <- complete_dataset_h %>% select(id)
 # Create a new data frame combining x_stan and y_stan
 standardized_data_h <- data.frame(x_stan_h, y_h, id=Id_h)
 
+# Number of observations
+N = nrow(standardized_data)
+
 for (var in var_names) {
   # Model
   formula <- as.formula(paste("WASO ~", var, "+ cv + (1 | id)"))
@@ -80,7 +83,7 @@ for (var in var_names) {
   print(summary(model))
   
   # p-value
-  p = round(2*pnorm(abs(coef(summary(model))[,3]), lower.tail = FALSE),3)
+  p <- round(2*pt(q=abs(coef(summary(model))[,3]), df=N-1, lower.tail=FALSE),3)
   print('p-values:')
   print(p)
   
