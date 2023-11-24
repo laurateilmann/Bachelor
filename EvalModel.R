@@ -85,6 +85,7 @@ for (j in 1:J) {
     
     # Train model
     model <- lmer("WASO ~ cv + (1 | id)", data = X_train)
+    #model <- lm("WASO ~ cv ", data = X_train)
 
     # Model predictions
     y_est_model <- predict(model, X_test)
