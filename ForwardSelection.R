@@ -24,7 +24,7 @@ complete_dataset <- na.omit(complete_dataset)
 
 # Define the independent and dependent variables
 x <- complete_dataset %>% select(3:12)
-y <- complete_dataset %>% select(Efficiency)
+y <- complete_dataset %>% select(WASO)
 
 # Standardize data
 x_stan <- scale(x, center = TRUE, scale = TRUE)
@@ -35,15 +35,17 @@ Id <- complete_dataset %>% select(id)
 # Create a new data frame combining x_stan and y_stan
 standardized_data <- data.frame(x_stan, y, id=Id)
 
+# Number of observations
+N = nrow(standardized_data)
 
 for (var in var_names) {
   # Model
-  formula <- as.formula(paste("Efficiency ~", var, "+ max + (1 | id)"))
+  formula <- as.formula(paste("WASO ~", var, " + cv + (1 | id)"))
   model <- lmer(formula, data = standardized_data)
   print(summary(model))
   
   # p-value
-  p = round(2*pnorm(abs(coef(summary(model))[,3]), lower.tail = FALSE),3)
+  p <- round(2*pt(q=abs(coef(summary(model))[,3]), df=N-1, lower.tail=FALSE),3)
   print('p-values:')
   print(p)
   
@@ -74,7 +76,7 @@ Id_h <- complete_dataset_h %>% select(id)
 standardized_data_h <- data.frame(x_stan_h, y_h, id=Id_h)
 
 # Number of observations
-N = nrow(standardized_data)
+N_h = nrow(standardized_data_h)
 
 for (var in var_names) {
   # Model
@@ -83,7 +85,7 @@ for (var in var_names) {
   print(summary(model))
   
   # p-value
-  p <- round(2*pt(q=abs(coef(summary(model))[,3]), df=N-1, lower.tail=FALSE),3)
+  p <- round(2*pt(q=abs(coef(summary(model))[,3]), df=N_h-1, lower.tail=FALSE),3)
   print('p-values:')
   print(p)
   

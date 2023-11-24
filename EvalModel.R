@@ -85,13 +85,15 @@ for (j in 1:J) {
     
     # Train model
     model <- lmer("WASO ~ cv + (1 | id)", data = X_train)
-  
+
     # Model predictions
     y_est_model <- predict(model, X_test)
   
     # Baseline model predictions
     mean_value <- mean(X_test$WASO)
     y_est_baseline <- data.frame(y_est_baseline = rep(mean_value, nrow(X_test)))
+    #model2 <- lmer("WASO ~ + (1 | id)", data = X_train)
+    #y_est_baseline <- predict(model2, X_test)
   
     # The true output values
     y_test <- X_test[11]
@@ -134,6 +136,7 @@ for (j in 1:J) {
     "\n"
   )
 }
+
 
 #########################################################
 
