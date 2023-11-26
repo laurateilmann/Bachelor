@@ -24,7 +24,7 @@ complete_dataset <- na.omit(complete_dataset)
 
 # Define the independent and dependent variables
 x <- complete_dataset %>% select(3:12)
-y <- complete_dataset %>% select(WASO)
+y <- complete_dataset %>% select(Efficiency)
 
 # Standardize data
 x_stan <- scale(x, center = TRUE, scale = TRUE)
@@ -40,7 +40,7 @@ N = nrow(standardized_data)
 
 for (var in var_names) {
   # Model
-  formula <- as.formula(paste("WASO ~", var, " + cv + (1 | id)"))
+  formula <- as.formula(paste("Efficiency ~", var, " + min + max + (1 | id)"))
   model <- lmer(formula, data = standardized_data)
   print(summary(model))
   
@@ -50,7 +50,7 @@ for (var in var_names) {
   print(p)
   
   # CI
-  conf_interval <- confint(model, level = 0.95)
+  conf_interval <- confint(model, level = 0.90)
   print(conf_interval)
 }
 
@@ -90,7 +90,7 @@ for (var in var_names) {
   print(p)
   
   # CI
-  conf_interval <- confint(model, level = 0.95)
+  conf_interval <- confint(model, level = 0.90)
   print(conf_interval)
 }
 

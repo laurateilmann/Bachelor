@@ -16,6 +16,7 @@ complete_dataset <- complete_dataset %>% rename(`SleepQ` = `Sleep quality`)
 # Handling missing and infinite values
 complete_dataset <- na.omit(complete_dataset)
 
+
 ################################
 ## WASO vs. CV - Nightly
 
@@ -45,13 +46,13 @@ residuals <- y_est - y
 library(ggplot2)
 ggplot(residuals, aes(x = WASO)) +
   geom_histogram(fill = "skyblue", color = "black", bins = 20) +
-  ggtitle("Histogram of WASO Residuals") +
+  ggtitle("Histogram of WASO nightly Residuals") +
   xlab("Residual Value") +
   ylab("Frequency")
 
 # Save residuals to a CSV file
 output_folder <- file.path(base_dir, "Residuals")
-residuals_file <- file.path(output_folder, "residuals_WASO_CV.csv")
+residuals_file <- file.path(output_folder, "residuals_Model_WN.csv")
 
 write.csv(residuals, file = residuals_file, row.names = FALSE)
 
@@ -102,7 +103,7 @@ Id <- complete_dataset %>% select(id)
 standardized_data <- data.frame(x_stan, y, id=Id)
 
 # Model
-model <- lmer("Efficiency ~ cv + (1 | id)", data = standardized_data)
+model <- lmer("Efficiency ~ min + max + (1 | id)", data = standardized_data)
 
 # Predictions
 y_est <- predict(model, standardized_data)
@@ -120,7 +121,51 @@ ggplot(residuals, aes(x = Efficiency)) +
 
 # Save residuals to a CSV file
 output_folder <- file.path(base_dir, "Residuals")
-residuals_file <- file.path(output_folder, "residuals_Efficiency_CV.csv")
+residuals_file <- file.path(output_folder, "residuals_Model_SE.csv")
 
 write.csv(residuals, file = residuals_file, row.names = FALSE)
 
+################################
+## WASO vs. CV - Hourly
+
+# Load hourly data
+complete_dataset_h <- read_csv(file.path(base_dir, 'concatenated_hourly_all_11.csv'), col_types = cols())
+
+# Handling missing and infinite values
+complete_dataset_h <- na.omit(complete_dataset_h)
+
+# Define the independent and dependent variables
+x <- complete_dataset_h %>% select(3:12)
+y <- complete_dataset_h %>% select(WASO)
+
+# Standardize data
+x_stan <- scale(x, center = TRUE, scale = TRUE)
+
+# Extract ID
+Id <- complete_dataset_h %>% select(id)
+
+# Create a new data frame combining x_stan and y_stan
+standardized_data <- data.frame(x_stan, y, id=Id)
+
+# Model
+model <- lmer("WASO ~ cv + (1 | id)", data = standardized_data)
+
+# Predictions
+y_est <- predict(model, standardized_data)
+
+# Residuals
+residuals <- y_est - y
+
+# Plot histogram of residuals
+library(ggplot2)
+ggplot(residuals, aes(x = WASO)) +
+  geom_histogram(fill = "skyblue", color = "black", bins = 20) +
+  ggtitle("Histogram of WASO hourly Residuals") +
+  xlab("Residual Value") +
+  ylab("Frequency")
+
+# Save residuals to a CSV file
+output_folder <- file.path(base_dir, "Residuals")
+residuals_file <- file.path(output_folder, "residuals_Model_WH.csv")
+
+write.csv(residuals, file = residuals_file, row.names = FALSE)
