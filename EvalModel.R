@@ -31,7 +31,7 @@ complete_dataset <- na.omit(complete_dataset)
 
 # Define the independent and dependent variables
 x <- complete_dataset %>% select(3:12)
-y <- complete_dataset %>% select(WASO)
+y <- complete_dataset %>% select(Efficiency)
 
 N <- nrow(x)
 M <- ncol(x)
@@ -51,10 +51,10 @@ X <- data.frame(x_stan, y, id=Id)
 ## K-fold cross-validation
 
 # Set seed for reproducibility. 
-#set.seed(7645)
+set.seed(7645)
 
 # Number of times cross-validation is performed
-J = 20
+J = 1
 # Number of folds in K-fold cross-validation
 K = 5
 
@@ -84,17 +84,17 @@ for (j in 1:J) {
     X_test <- X[CV$which == k, ]
     
     # Train model
-    model <- lmer("WASO ~ cv + (1 | id)", data = X_train)
+    model <- lmer("Efficiency ~ min + max + (1 | id)", data = X_train)
     #model <- lm("WASO ~ cv ", data = X_train)
 
     # Model predictions
     y_est_model <- predict(model, X_test)
   
     # Baseline model predictions
-    mean_value <- mean(X_test$WASO)
-    y_est_baseline <- data.frame(y_est_baseline = rep(mean_value, nrow(X_test)))
-    #model2 <- lmer("WASO ~ + (1 | id)", data = X_train)
-    #y_est_baseline <- predict(model2, X_test)
+    #mean_value <- mean(X_test$WASO)
+    #y_est_baseline <- data.frame(y_est_baseline = rep(mean_value, nrow(X_test)))
+    model2 <- lmer("WASO ~ + (1 | id)", data = X_train)
+    y_est_baseline <- predict(model2, X_test)
   
     # The true output values
     y_test <- X_test[11]

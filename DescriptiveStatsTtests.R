@@ -156,4 +156,15 @@ t_test_result <- t.test(x = CV, mu = recommended, alternative = "two.sided",
 cat("Results for t-test comparing CV with 36%:\n")
 print(t_test_result)
 
+###################################
+
+# Mean of TST for each individual
+mean_TST_per_individual <- complete_dataset %>%
+  group_by(id) %>%
+  summarize(mean_TST = mean(TST))
+
+# Output the mean TST for each individual
+print(mean_TST_per_individual, n=23)
+
+
 
