@@ -151,3 +151,61 @@ plt.xticks(fontsize=12, family='Times New Roman')
 plt.yticks(fontsize=12, family='Times New Roman')
 #plt.grid()
 plt.savefig(f"H:\GitHub\Bachelor\Plots\Mean against Sleep Efficiency.png", format="png") 
+
+#%% 3D plot with Min and Max BG
+
+import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+
+# Assuming you have data in cgm_feature_df and epochs_feature_df DataFrames
+
+# Extracting data
+max_bg = cgm_feature_df['max']
+min_bg = cgm_feature_df['min']
+sleep_efficiency = epochs_feature_df['Efficiency']
+
+# Creating a 3D plot
+fig = plt.figure(figsize=(12, 10))
+ax = fig.add_subplot(111, projection='3d')
+
+# Scatter plot points
+ax.scatter(max_bg, min_bg, sleep_efficiency, marker='o', alpha=0.9)
+
+# Prediction plane equation parameters
+Zu = 0  # Assuming Zu value
+# Creating a meshgrid for the prediction plane
+max_bg_range = np.linspace(min(max_bg), max(max_bg), 100)
+min_bg_range = np.linspace(min(min_bg), max(min_bg), 100)
+X, Y = np.meshgrid(max_bg_range, min_bg_range)
+Z = 81.05 - 1.62 * X + 0.99 * Y + Zu  # Prediction plane equation
+
+# Plotting the prediction plane
+ax.plot_surface(X, Y, Z, alpha=0.5, color='red')
+
+# Set labels and title with specified font and font size
+label_font = {'fontsize': 24, 'family': 'Times New Roman'}
+title_font = {'fontsize': 25, 'family': 'Times New Roman'}
+
+ax.set_xlabel('Max BG (mmol/L)', fontdict=label_font, labelpad = 15)
+ax.set_ylabel('Min BG (mmol/L)', fontdict=label_font, labelpad = 15)
+ax.set_zlabel('Sleep Efficiency (%)', fontdict=label_font, labelpad = 15)
+
+# Adjusting tick label font and size
+for tick in ax.xaxis.get_major_ticks():
+    tick.label.set_fontsize(20)
+    tick.label.set_fontname('Times New Roman')
+
+for tick in ax.yaxis.get_major_ticks():
+    tick.label.set_fontsize(20)
+    tick.label.set_fontname('Times New Roman')
+
+for tick in ax.zaxis.get_major_ticks():
+    tick.label.set_fontsize(20)
+    tick.label.set_fontname('Times New Roman')
+    
+
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Plot 3D Efficiency.png", format="png") 
+plt.show()
+

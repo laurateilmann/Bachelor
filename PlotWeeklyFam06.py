@@ -188,7 +188,7 @@ fig.subplots_adjust(left=0.07, right=0.95, top=0.95, bottom=0.1, wspace=0.1, hsp
 
 # Add figure-level labels with adjusted coordinates 
 fig.text(0.5, 0.01, 'Time (hour)', ha='center', fontsize=40, fontname='Times New Roman')   
-fig.text(0.006, 0.5, 'IG (mmol/L)', va='center', fontsize=40, fontname='Times New Roman', rotation=90)   
+fig.text(0.006, 0.5, 'BG (mmol/L)', va='center', fontsize=40, fontname='Times New Roman', rotation=90)   
 
 # Necessary for getting a good saved image
 plt.get_current_fig_manager().full_screen_toggle()   
