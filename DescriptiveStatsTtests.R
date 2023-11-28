@@ -36,6 +36,10 @@ print(t_test_result1)
 cat("Results for t-test comparing TST with 9 hours:\n")
 print(t_test_result2)
 
+#hist(TST$TST)
+#qqnorm(TST$TST, pch = 1, frame = FALSE)
+#qqline(TST$TST, col = "steelblue", lwd = 2)
+
 ##########################
 ## TIR
 

@@ -39,6 +39,15 @@ model <- lmer("WASO ~ cv + (1 | id)", data = standardized_data)
 # Predictions
 y_est <- predict(model, standardized_data)
 
+# Plot y against y_est
+y_plot <- data.frame(y = y, y_est = y_est)
+min_val <- min(min(y), min(y_est))
+max_val <- max(max(y), max(y_est))
+# Creating a plot with equal axes
+plot(y_plot, xlim = c(min_val, max_val), ylim = c(min_val, max_val),
+     xlab = "y", ylab = "y_est", main = "Scatterplot of y and y_est")
+abline(a = 0, b = 1, col = "red")
+
 # Residuals
 residuals <- y_est - y
 
@@ -108,6 +117,15 @@ model <- lmer("Efficiency ~ min + max + (1 | id)", data = standardized_data)
 # Predictions
 y_est <- predict(model, standardized_data)
 
+# Plot y against y_est
+y_plot <- data.frame(y = y, y_est = y_est)
+min_val <- min(min(y), min(y_est))
+max_val <- max(max(y), max(y_est))
+# Creating a plot with equal axes
+plot(y_plot, xlim = c(min_val, max_val), ylim = c(min_val, max_val),
+     xlab = "y", ylab = "y_est", main = "Scatterplot of y and y_est")
+abline(a = 0, b = 1, col = "red")
+
 # Residuals
 residuals <- y_est - y
 
@@ -152,6 +170,15 @@ model <- lmer("WASO ~ cv + (1 | id)", data = standardized_data)
 
 # Predictions
 y_est <- predict(model, standardized_data)
+
+# Plot y against y_est
+y_plot <- data.frame(y = y, y_est = y_est)
+min_val <- min(min(y), min(y_est))
+max_val <- max(max(y), max(y_est))
+# Creating a plot with equal axes
+plot(y_plot, xlim = c(min_val, max_val), ylim = c(min_val, max_val),
+     xlab = "y", ylab = "y_est", main = "Scatterplot of y and y_est")
+abline(a = 0, b = 1, col = "red")
 
 # Residuals
 residuals <- y_est - y

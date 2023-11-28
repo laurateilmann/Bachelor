@@ -51,10 +51,10 @@ X <- data.frame(x_stan, y, id=Id)
 ## K-fold cross-validation
 
 # Set seed for reproducibility. 
-set.seed(7645)
+#set.seed(7645)
 
 # Number of times cross-validation is performed
-J = 1
+J = 20
 # Number of folds in K-fold cross-validation
 K = 5
 
@@ -85,7 +85,6 @@ for (j in 1:J) {
     
     # Train model
     model <- lmer("Efficiency ~ min + max + (1 | id)", data = X_train)
-    #model <- lm("WASO ~ cv ", data = X_train)
 
     # Model predictions
     y_est_model <- predict(model, X_test)
@@ -93,7 +92,7 @@ for (j in 1:J) {
     # Baseline model predictions
     #mean_value <- mean(X_test$WASO)
     #y_est_baseline <- data.frame(y_est_baseline = rep(mean_value, nrow(X_test)))
-    model2 <- lmer("WASO ~ + (1 | id)", data = X_train)
+    model2 <- lmer("Efficiency ~ + (1 | id)", data = X_train)
     y_est_baseline <- predict(model2, X_test)
   
     # The true output values
@@ -138,67 +137,6 @@ for (j in 1:J) {
   )
 }
 
-
-#########################################################
-
-## Hold-out cross-validation
-# 
-# K = 50
-# 
-# seeds <- sample(1:1000, K, replace=FALSE)
-# 
-# # Initialize empty matrix and lists to store results
-# r <- matrix(NA, 0, 1)
-# p_values_list <- vector("list", K)
-# estimates_list <- vector("list", K)
-# 
-# for (k in 1:K) {
-#   
-#   # Set seed to make sure we don't have the same partition twice
-#   # set.seed(seeds[k])
-#   
-#   train_ind <- createDataPartition(y = X$WASO, p = 0.7, list = FALSE, groups = length(unique(X$id)))
-#   
-#   X_train <- X[train_ind, ]
-#   X_test <- X[-train_ind, ]
-#   
-#   model <- lmer("WASO ~ cv + (1 | id)", data = X_train)
-#   
-#   y_est_model <- predict(model, X_test)
-#   mean_value <- mean(X_test$WASO)
-#   y_est_baseline <- data.frame(y_est_baseline = rep(mean_value, nrow(X_test)))
-#   
-#   y_test <- X_test[12]
-#   
-#   # Compute z with squared error.
-#   zA <- abs(y_test - y_est_model)**2
-#   zB <- abs(y_test - y_est_baseline)**2
-#   z <- zA - zB
-#   
-#   r <- rbind(r, z)
-#   
-#   # Extract the p-value and estimate
-#   p_values_list[[k]] <- t_test_result$p.value
-#   estimates_list[[k]] <- t_test_result$estimate
-# 
-# }
-# 
-# # Confidence interval for model A (model)
-# res <- t.test(zA, alternative = "two.sided", alpha = 0.05)
-# (CIA <- c(res$conf.int[1], res$conf.int[2]))
-# 
-# # Confidence interval for model B (baseline)
-# res <- t.test(zB, alternative = "two.sided", alpha = 0.05)
-# (CIA <- c(res$conf.int[1], res$conf.int[2]))
-# 
-# # Perform the t-test
-# t_test_result <- t.test(z, alternative = "two.sided", alpha = 0.05)
-# 
-# # Print p-values
-# cat("p-values:\n")
-# for (k in 1:K) {
-#   cat("Iteration", k, ":", "p-value:", p_values_list[[k]], ", estimate:", estimates_list[[k]], "\n")
-# }
 
 
 

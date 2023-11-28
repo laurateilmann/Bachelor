@@ -51,10 +51,10 @@ X <- data.frame(x_stan, y, id=Id)
 ## K-fold cross-validation
 
 # Set seed for reproducibility 
-set.seed(7645)
+#set.seed(7645)
 
 # Number of times cross-validation is performed
-J = 1
+J = 20
 # Number of folds in K-fold cross-validation
 K = 5
 
