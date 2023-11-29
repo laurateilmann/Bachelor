@@ -107,12 +107,12 @@ acti_interval1 = extract_one_night(in_bed, out_bed, acti_data)
 # plot_acti(acti_interval1)
 
 plt.figure()
-plt.plot(acti_interval1['DateTime'], acti_interval1['Magnitude'], '-') 
+plt.plot(acti_interval1['DateTime'], acti_interval1['Magnitude'], '-', label='Activity') 
 plt.title("Actigraph data for one night", fontsize=36, family='Times New Roman', pad=20)
 plt.xlabel("Time (hour)", fontsize=36, family='Times New Roman', labelpad=20)
 plt.ylabel("Counts", fontsize=36, family='Times New Roman', labelpad=20)
-plt.xticks(fontsize=32, family='Times New Roman')
-plt.yticks(fontsize=32, family='Times New Roman')
+plt.xticks(fontsize=36, family='Times New Roman')
+plt.yticks(fontsize=36, family='Times New Roman')
 
 # Set x-axis ticks to display only time
 plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H'))
@@ -122,7 +122,7 @@ plt.gcf().autofmt_xdate()
 vertical_time = pd.to_datetime('2023-04-17 21:21:00')
 plt.axvline(x=pd.to_datetime(vertical_time), color='red', linestyle='--', label='Sleep Onset', linewidth=2.5)
 
-legend_font = {'family': 'Times New Roman', 'size': 30}
+legend_font = {'family': 'Times New Roman', 'size': 36}
 plt.legend(prop=legend_font)  # Place the legend at upper right
 
 
