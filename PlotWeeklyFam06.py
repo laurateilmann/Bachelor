@@ -75,7 +75,7 @@ for i in range(2):
 # Set weekday titles
 weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 for i in range(7):
-    axs[0, i].set_title(weekdays[i], fontsize=38, fontname='Times New Roman')
+    axs[0, i].set_title(weekdays[i], fontsize=45, fontname='Times New Roman')
 
 # Limits
 upper_lim = 10.0
@@ -136,17 +136,17 @@ for session_index, session in enumerate(sessions):
         # Format the x-axis ticks  
         axs[row,col].xaxis.set_major_formatter(mdates.DateFormatter('%H'))  
         # Set the interval for x-axis ticks  
-        axs[row,col].xaxis.set_major_locator(mdates.HourLocator(interval=3)) 
+        axs[row,col].xaxis.set_major_locator(mdates.HourLocator(interval=4)) 
         # Set the fontsize of the x- and y-axis ticks 
         # axs[row, col].tick_params(axis='x', labelsize=30) 
         for label in axs[row, col].get_xticklabels():
             label.set_fontname('Times New Roman')
-            label.set_fontsize(30)
+            label.set_fontsize(40)
                             
         # Set the font family and fontsize for the y-axis ticks
         for label in axs[row, col].get_yticklabels():
             label.set_fontname('Times New Roman')
-            label.set_fontsize(30)
+            label.set_fontsize(40)
             
         # Set the specific ticks for the y-axis
         specific_ticks = [5, 10, 15, 20]
@@ -184,11 +184,10 @@ for session_index, session in enumerate(sessions):
 # Get space between subplots 
 fig.subplots_adjust(left=0.07, right=0.95, top=0.95, bottom=0.1, wspace=0.1, hspace=0.2) 
 
-
-
 # Add figure-level labels with adjusted coordinates 
-fig.text(0.5, 0.01, 'Time (hour)', ha='center', fontsize=40, fontname='Times New Roman')   
-fig.text(0.006, 0.5, 'BG (mmol/L)', va='center', fontsize=40, fontname='Times New Roman', rotation=90)   
+fig.text(0.5, 0.01, 'Time (hour)', ha='center', fontsize=45, fontname='Times New Roman')   
+fig.text(0.006, 0.5, 'BG (mmol/L)', va='center', fontsize=45, fontname='Times New Roman', rotation=90) 
+ 
 
 # Necessary for getting a good saved image
 plt.get_current_fig_manager().full_screen_toggle()   
