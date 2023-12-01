@@ -32,11 +32,11 @@ noise = 10
 X, y, coef = make_regression(n_samples=n_samples, n_features=n_features, noise=noise, coef=True)
 
 # Create a pandas DataFrame
-df = pd.DataFrame(X, columns=['Feature_1', 'Feature_2', 'Feature_3'])
+df = pd.DataFrame(X, columns=['x1', 'x2', 'x3'])
 df['Target'] = y
 
 # Perform multiple linear regression
-X = df[['Feature_1', 'Feature_2', 'Feature_3']]
+X = df[['x1', 'x2', 'x3']]
 y = df['Target']
 
 # Create and fit the linear regression model
@@ -53,13 +53,23 @@ y_est = model_lm.predict(X)
 # Calculate residuals
 residual = y_est - y
 
-# Settings for data
+# Min and max values for plotting
+min_val_x = min(X['x1'])-0.5
+max_val_x = max(X['x1'])+0.5
+min_val_y = min(y)-50
+max_val_y = max(y)+50
+# x-values and y-values for plotting lines
+x_line = np.linspace(min_val_x, max_val_x, 1000)
+y_line = np.linspace(min_val_y, max_val_y, 1000)
+
+# Font in plots
 plt.rcParams["font.family"] = "Times New Roman"
 
-# True vs. estimated response values
+#%% True vs. estimated response values
+
 plt.figure(figsize=(10,10))
 plt.plot(y, y_est, ".", label='Data points', alpha=0.5, markersize=30)
-plt.plot(y, y, "-", label='Perfect fit', color='r', linewidth=5)
+plt.plot(y_line, y_line, "-", label='Perfect fit', color='r', linewidth=5)
 plt.gca().set_aspect('equal')
 plt.xlabel("True", fontname="Times New Roman", fontsize=45)
 plt.ylabel("Estimated", fontname="Times New Roman", fontsize=45)
@@ -67,49 +77,58 @@ plt.title(f"Estimated against true y values", fontname="Times New Roman", fontsi
 plt.xticks(fontsize=40, family='Times New Roman')
 plt.yticks(fontsize=40, family='Times New Roman')
 plt.legend(fontsize=40)
+plt.xlim(min_val_y, max_val_y)
+plt.ylim(min_val_y, max_val_y)
 plt.tight_layout()
 # Save fig
 out_path = os.path.join(out_dir, 'Synthetic_true_vs_estimated.png')
 plt.savefig(out_path)
 
-# Response against Feature 1 as well as true correlation line
+
+#%% Response against x1 as well as true correlation line
+
 plt.figure(figsize=(15,10))
-plt.plot(X['Feature_1'], y, ".", label='Data points', alpha=0.5, markersize=30)
-plt.plot(X['Feature_1'], X['Feature_1'] * coef[0], color='r', linestyle='-', label='True correlation', linewidth=5) 
-plt.xlabel("Feature 1", fontname="Times New Roman", fontsize=45)
+plt.plot(X['x1'], y, ".", label='Data points', alpha=0.5, markersize=30)
+plt.plot(x_line, x_line * coef[0], color='r', linestyle='-', label='True correlation', linewidth=5) 
+plt.xlabel("x1", fontname="Times New Roman", fontsize=45)
 plt.ylabel("y", fontname="Times New Roman", fontsize=45)
-plt.title(f"y against Feature 1", fontname="Times New Roman", fontsize=47)
+plt.title(f"y against x1", fontname="Times New Roman", fontsize=47)
 plt.legend(fontsize=38)
 plt.xticks(fontsize=38, family='Times New Roman')
 plt.yticks(fontsize=38, family='Times New Roman')
+plt.xlim(min_val_x, max_val_x)
+plt.ylim(min_val_y, max_val_y)
 plt.tight_layout()
 # Save fig
 out_path = os.path.join(out_dir, 'Synthetic_Feature1.png')
 plt.savefig(out_path)
 
-# Response against Feature 2 as well as true correlation line
+#%% Response against x2 as well as true correlation line
+
 plt.figure()
-plt.plot(X['Feature_2'], y, ".", label='Data points', alpha=0.5)
-plt.plot(X['Feature_2'], X['Feature_2'] * coef[1], color='r', linestyle='-', label='True correlation') 
-plt.xlabel("Feature 2", fontname="Times New Roman", fontsize=14)
+plt.plot(X['x2'], y, ".", label='Data points', alpha=0.5)
+plt.plot(X['x2'], X['x2'] * coef[1], color='r', linestyle='-', label='True correlation') 
+plt.xlabel("x2 2", fontname="Times New Roman", fontsize=14)
 plt.ylabel("y", fontname="Times New Roman", fontsize=14)
 plt.legend(fontsize=14)
 plt.xticks(fontsize=12, family='Times New Roman')
 plt.yticks(fontsize=12, family='Times New Roman')
 plt.tight_layout()
 
-# Response against Feature 3 as well as true correlation line
+#%% Response against x3 as well as true correlation line
+
 plt.figure()
-plt.plot(X['Feature_3'], y, ".", label='Data points', alpha=0.5)
-plt.plot(X['Feature_3'], X['Feature_3'] * coef[2], color='r', linestyle='-', label='True correlation') 
-plt.xlabel("Feature 3", fontname="Times New Roman", fontsize=14)
+plt.plot(X['x3'], y, ".", label='Data points', alpha=0.5)
+plt.plot(X['x3'], X['x3'] * coef[2], color='r', linestyle='-', label='True correlation') 
+plt.xlabel("x3 3", fontname="Times New Roman", fontsize=14)
 plt.ylabel("y", fontname="Times New Roman", fontsize=14)
 plt.legend(fontsize=14)
 plt.xticks(fontsize=12, family='Times New Roman')
 plt.yticks(fontsize=12, family='Times New Roman')
 plt.tight_layout()
 
-# Histogram of residuals
+#%% Histogram of residuals
+
 plt.figure(figsize=(12,10))
 plt.hist(residual, bins=30)
 plt.title(f"Histogram of the residuals", fontname="Times New Roman", fontsize=47)
