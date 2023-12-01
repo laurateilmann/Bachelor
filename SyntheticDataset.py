@@ -84,7 +84,7 @@ plt.xticks(fontsize=38, family='Times New Roman')
 plt.yticks(fontsize=38, family='Times New Roman')
 plt.tight_layout()
 # Save fig
-out_path = os.path.join(out_dir, 'Synthetic_Feature1.png.png')
+out_path = os.path.join(out_dir, 'Synthetic_Feature1.png')
 plt.savefig(out_path)
 
 # Response against Feature 2 as well as true correlation line
