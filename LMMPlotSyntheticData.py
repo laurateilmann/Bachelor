@@ -50,10 +50,10 @@ coef_2 = model_2.params
 
 
 # Min and max values for plotting
-min_val_x = min(min(x_1),min(x_2))-0.5
-max_val_x = max(max(x_1),max(x_2))+0.5
-min_val_y = min(min(y_1),min(y_2))-1
-max_val_y = max(max(y_1),max(y_2))+1
+min_val_x = min(min(x_1),min(x_2))-1
+max_val_x = max(max(x_1),max(x_2))+1
+min_val_y = min(min(y_1),min(y_2))-7
+max_val_y = max(max(y_1),max(y_2))+2
 # x-values for plotting prediction lines
 x = np.linspace(min_val_x, max_val_x, 1000)
 
@@ -69,9 +69,9 @@ plt.plot(x, coef_2[0] + coef_2[1]*x, label='Prediction individual 2', color='m',
 # Plot settings
 plt.xlabel('x', fontname="Times New Roman", fontsize=40)
 plt.ylabel('y', fontname="Times New Roman", fontsize=40)
-plt.legend(fontsize=30)
-plt.xticks(fontsize=30, family='Times New Roman')
-plt.yticks(fontsize=30, family='Times New Roman')
+plt.legend(fontsize=33)
+plt.xticks(fontsize=33, family='Times New Roman')
+plt.yticks(fontsize=33, family='Times New Roman')
 plt.xlim(min_val_x, max_val_x)
 plt.ylim(min_val_y, max_val_y)
 plt.tight_layout()
@@ -97,9 +97,9 @@ plt.plot(x, coef_combined[0] + coef_combined[1]*x, label='Prediction line for co
 # Figure settings
 plt.xlabel('x', fontname="Times New Roman", fontsize=40)
 plt.ylabel('y', fontname="Times New Roman", fontsize=40)
-plt.legend(fontsize=30)
-plt.xticks(fontsize=30, family='Times New Roman')
-plt.yticks(fontsize=30, family='Times New Roman')
+plt.legend(fontsize=33)
+plt.xticks(fontsize=33, family='Times New Roman')
+plt.yticks(fontsize=33, family='Times New Roman')
 plt.xlim(min_val_x, max_val_x)
 plt.ylim(min_val_y, max_val_y)
 plt.tight_layout()
