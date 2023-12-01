@@ -21,6 +21,7 @@ import plotly.io as io
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.stats import zscore
+from mpl_toolkits.mplot3d import Axes3D
 
 plt.close('all')
 
@@ -28,49 +29,19 @@ plt.close('all')
 
 base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\Concatenated data"
 
-cgm_file = "\concatenated_cgm_11.csv"
-epoch_file = "\concatenated_epochs_11.csv"
+# File name
+file = "\concatenated_all_11.csv"
 
 # Construct the full file paths
-cgm_file_path = os.path.join(base_dir+cgm_file)
-epoch_file_path = os.path.join(base_dir+epoch_file)
+file_path = os.path.join(base_dir+file)
 
 # Read the cgm and epoch data
-cgm_feature_df = pd.read_csv(cgm_file_path)
-epochs_feature_df = pd.read_csv(epoch_file_path)
-
-
-#%% Plot: CV and Sleep Efficiency with trend
-
-# Standardizing the data
-cv_mean = cgm_feature_df['cv'].mean()
-cv_std = cgm_feature_df['cv'].std()
-cgm_feature_df['cv_standardized'] = (cgm_feature_df['cv'] - cv_mean) / cv_std
-
-# Using the standardized column for the prediction
-x = np.linspace(min(cgm_feature_df['cv_standardized']), max(cgm_feature_df['cv_standardized']), 1000)
-y_pred = 80.9312 - 1.0440 * x
-
-# Plotting the data
-plt.figure()
-plt.plot(cgm_feature_df['cv_standardized'], epochs_feature_df['Efficiency'], 'o', label='Data Points', alpha=0.5)
-plt.plot(x, y_pred, '-', label='Prediction Line', color='red', linewidth=2)
-plt.title("Sleep Efficiency against CV", fontsize=16, family='Times New Roman')
-plt.xlabel("CV", fontsize=16, family='Times New Roman')
-plt.ylabel("Sleep Efficiency (%)", fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-legend_font = {'family': 'Times New Roman', 'size': 12}
-plt.legend(prop=legend_font)
-plt.tight_layout()
-plt.show()
-
-plt.savefig(f"H:\GitHub\Bachelor\Plots\CV vs. Sleep Efficiency with trend.png", format="png")
+feature_df = pd.read_csv(file_path)
 
 #%% CV and Sleep Efficiency
 
 plt.figure()
-plt.plot(cgm_feature_df['cv_standardized'], epochs_feature_df['Efficiency'], 'o', label='Data Points', alpha=0.5)
+plt.plot(feature_df['cv'], feature_df['Efficiency'], 'o', label='Data Points', alpha=0.5)
 plt.title("Sleep Efficiency against CV", fontsize=16, family='Times New Roman')
 plt.xlabel("CV", fontsize=16, family='Times New Roman')
 plt.ylabel("Sleep Efficiency (%)", fontsize=16, family='Times New Roman')
@@ -83,7 +54,7 @@ plt.savefig(f"H:\GitHub\Bachelor\Plots\CV against Sleep Efficiency.png", format=
 #%% Plot: TIR and Sleep Efficiency
 
 plt.figure()
-plt.plot(cgm_feature_df['TIR'], epochs_feature_df['Efficiency'], 'o', alpha=0.5)
+plt.plot(feature_df['TIR'], feature_df['Efficiency'], 'o', alpha=0.5)
 plt.title("Sleep Efficiency against TIR", fontsize=16, family='Times New Roman')
 plt.xlabel("TIR (%)", fontsize=16, family='Times New Roman')
 plt.ylabel("Sleep Efficiency (%)", fontsize=16, family='Times New Roman')
@@ -95,7 +66,7 @@ plt.savefig(f"H:\GitHub\Bachelor\Plots\TIR against Sleep Efficiency.png", format
 #%% Plot: TAR and Sleep Efficiency
 
 plt.figure()
-plt.plot(cgm_feature_df['TAR'], epochs_feature_df['Efficiency'], 'o', alpha=0.5)
+plt.plot(feature_df['TAR'], feature_df['Efficiency'], 'o', alpha=0.5)
 plt.title("Sleep Efficiency against TAR", fontsize=16, family='Times New Roman')
 plt.xlabel("TAR (%)", fontsize=16, family='Times New Roman')
 plt.ylabel("Sleep Efficiency (%)", fontsize=16, family='Times New Roman')
@@ -107,7 +78,7 @@ plt.savefig(f"H:\GitHub\Bachelor\Plots\TAR against Sleep Efficiency.png", format
 #%% Plot: TBR and Sleep Efficiency
 
 plt.figure()
-plt.plot(cgm_feature_df['TBR'], epochs_feature_df['Efficiency'], 'o', alpha=0.5)
+plt.plot(feature_df['TBR'], feature_df['Efficiency'], 'o', alpha=0.5)
 plt.title("Sleep Efficiency against TBR", fontsize=16, family='Times New Roman')
 plt.xlabel("TBR (%)", fontsize=16, family='Times New Roman')
 plt.ylabel("Sleep Efficiency (%)", fontsize=16, family='Times New Roman')
@@ -119,7 +90,7 @@ plt.savefig(f"H:\GitHub\Bachelor\Plots\TBR against Sleep Efficiency.png", format
 #%% Plot: max IG and Sleep Efficiency
 
 plt.figure()
-plt.plot(cgm_feature_df['max'], epochs_feature_df['Efficiency'], 'o', alpha=0.5)
+plt.plot(feature_df['max'], feature_df['Efficiency'], 'o', alpha=0.5)
 plt.title("Sleep Efficiency against Max BG", fontsize=16, family='Times New Roman')
 plt.xlabel("Max BG (mmol/L)", fontsize=16, family='Times New Roman')
 plt.ylabel("Sleep Efficiency (%)",fontsize=16, family='Times New Roman')
@@ -131,7 +102,7 @@ plt.savefig(f"H:\GitHub\Bachelor\Plots\Max against Sleep Efficiency.png", format
 #%% Plot: min IG and Sleep Efficiency
 
 plt.figure()
-plt.plot(cgm_feature_df['min'], epochs_feature_df['Efficiency'], 'o', alpha=0.5)
+plt.plot(feature_df['min'], feature_df['Efficiency'], 'o', alpha=0.5)
 plt.title("Sleep Efficiency against Min BG", fontsize=16, family='Times New Roman')
 plt.xlabel("Min BG (mmol/L)", fontsize=16, family='Times New Roman')
 plt.ylabel("Sleep Efficiency (%)", fontsize=16, family='Times New Roman')
@@ -143,7 +114,7 @@ plt.savefig(f"H:\GitHub\Bachelor\Plots\Min against Sleep Efficiency.png", format
 #%% Mean and Sleep Efficiency
 
 plt.figure()
-plt.plot(cgm_feature_df['mean'], epochs_feature_df['Efficiency'], 'o', alpha=0.5)
+plt.plot(feature_df['mean'], feature_df['Efficiency'], 'o', alpha=0.5)
 plt.title("Sleep Efficiency against Mean BG", fontsize=16, family='Times New Roman')
 plt.xlabel("Mean BG (mmol/L)", fontsize=16, family='Times New Roman')
 plt.ylabel("Sleep Efficiency (%)", fontsize=16, family='Times New Roman')
@@ -154,54 +125,47 @@ plt.savefig(f"H:\GitHub\Bachelor\Plots\Mean against Sleep Efficiency.png", forma
 
 #%% 3D plot with Min and Max BG
 
-import matplotlib.pyplot as plt
-import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
-
-# Assuming you have data in cgm_feature_df and epochs_feature_df DataFrames
-
 # Extracting data
-max_bg = cgm_feature_df['max']
-min_bg = cgm_feature_df['min']
-sleep_efficiency = epochs_feature_df['Efficiency']
+max_bg = feature_df['max']
+min_bg = feature_df['min']
+sleep_efficiency = feature_df['Efficiency']
 
 # Creating a 3D plot
-fig = plt.figure(figsize=(12, 10))
+fig = plt.figure(figsize=(14, 12))
 ax = fig.add_subplot(111, projection='3d')
 
 # Scatter plot points
 ax.scatter(max_bg, min_bg, sleep_efficiency, marker='o', alpha=0.9)
 
 # Prediction plane equation parameters
-Zu = 0  # Assuming Zu value
 # Creating a meshgrid for the prediction plane
 max_bg_range = np.linspace(min(max_bg), max(max_bg), 100)
 min_bg_range = np.linspace(min(min_bg), max(min_bg), 100)
 X, Y = np.meshgrid(max_bg_range, min_bg_range)
-Z = 81.05 - 1.62 * X + 0.99 * Y + Zu  # Prediction plane equation
+Z = 81.05 - 1.62 * X + 0.99 * Y  # Prediction plane equation from R
 
 # Plotting the prediction plane
 ax.plot_surface(X, Y, Z, alpha=0.5, color='red')
 
 # Set labels and title with specified font and font size
-label_font = {'fontsize': 24, 'family': 'Times New Roman'}
-title_font = {'fontsize': 25, 'family': 'Times New Roman'}
+label_font = {'fontsize': 40, 'family': 'Times New Roman'}
+title_font = {'fontsize': 40, 'family': 'Times New Roman'}
 
-ax.set_xlabel('Max BG (mmol/L)', fontdict=label_font, labelpad = 15)
-ax.set_ylabel('Min BG (mmol/L)', fontdict=label_font, labelpad = 15)
-ax.set_zlabel('Sleep Efficiency (%)', fontdict=label_font, labelpad = 15)
+ax.set_xlabel('Max BG (mmol/L)', fontdict=label_font, labelpad = 30)
+ax.set_ylabel('Min BG (mmol/L)', fontdict=label_font, labelpad = 30)
+ax.set_zlabel('Sleep Efficiency (%)', fontdict=label_font, labelpad = 30)
 
 # Adjusting tick label font and size
 for tick in ax.xaxis.get_major_ticks():
-    tick.label.set_fontsize(20)
+    tick.label.set_fontsize(35)
     tick.label.set_fontname('Times New Roman')
 
 for tick in ax.yaxis.get_major_ticks():
-    tick.label.set_fontsize(20)
+    tick.label.set_fontsize(35)
     tick.label.set_fontname('Times New Roman')
 
 for tick in ax.zaxis.get_major_ticks():
-    tick.label.set_fontsize(20)
+    tick.label.set_fontsize(35)
     tick.label.set_fontname('Times New Roman')
     
 
