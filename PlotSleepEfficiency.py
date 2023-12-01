@@ -38,92 +38,101 @@ file_path = os.path.join(base_dir+file)
 # Read the cgm and epoch data
 feature_df = pd.read_csv(file_path)
 
+#%% Plotting settings
+
+markersize = 20
+title_size = 55
+labelsize = 50
+ticksize = 45
+padsize = 20
+
 #%% CV and Sleep Efficiency
 
-plt.figure()
-plt.plot(feature_df['cv'], feature_df['Efficiency'], 'o', label='Data Points', alpha=0.5)
-plt.title("Sleep Efficiency against CV", fontsize=16, family='Times New Roman')
-plt.xlabel("CV", fontsize=16, family='Times New Roman')
-plt.ylabel("Sleep Efficiency (%)", fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-#plt.grid()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\CV against Sleep Efficiency.png", format="png")
-
+plt.figure(figsize=(15, 10))
+plt.plot(feature_df['cv'], feature_df['Efficiency'], 'o', label='Data Points', alpha=0.5, markersize=markersize)
+plt.title("Sleep Efficiency against CV", fontsize=title_size, family='Times New Roman')
+plt.xlabel("CV", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.ylabel("Sleep Efficiency (%)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.xticks(fontsize=ticksize, family='Times New Roman')
+plt.yticks(fontsize=ticksize, family='Times New Roman')
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against CV.png", format="png")
 
 #%% Plot: TIR and Sleep Efficiency
 
-plt.figure()
-plt.plot(feature_df['TIR'], feature_df['Efficiency'], 'o', alpha=0.5)
-plt.title("Sleep Efficiency against TIR", fontsize=16, family='Times New Roman')
-plt.xlabel("TIR (%)", fontsize=16, family='Times New Roman')
-plt.ylabel("Sleep Efficiency (%)", fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-#plt.grid()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\TIR against Sleep Efficiency.png", format="png")   
+plt.figure(figsize=(15, 10))
+plt.plot(feature_df['TIR'], feature_df['Efficiency'], 'o', alpha=0.5, markersize=markersize)
+plt.title("Sleep Efficiency against TIR", fontsize=title_size, family='Times New Roman')
+plt.xlabel("TIR (%)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.ylabel("Sleep Efficiency (%)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.xticks(fontsize=ticksize, family='Times New Roman')
+plt.yticks(fontsize=ticksize, family='Times New Roman')
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against TIR.png", format="png")   
 
 #%% Plot: TAR and Sleep Efficiency
 
-plt.figure()
-plt.plot(feature_df['TAR'], feature_df['Efficiency'], 'o', alpha=0.5)
-plt.title("Sleep Efficiency against TAR", fontsize=16, family='Times New Roman')
-plt.xlabel("TAR (%)", fontsize=16, family='Times New Roman')
-plt.ylabel("Sleep Efficiency (%)", fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-#plt.grid()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\TAR against Sleep Efficiency.png", format="png") 
+plt.figure(figsize=(15, 10))
+plt.plot(feature_df['TAR'], feature_df['Efficiency'], 'o', alpha=0.5, markersize=markersize)
+plt.title("Sleep Efficiency against TAR", fontsize=title_size, family='Times New Roman')
+plt.xlabel("TAR (%)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.ylabel("Sleep Efficiency (%)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.xticks(fontsize=ticksize, family='Times New Roman')
+plt.yticks(fontsize=ticksize, family='Times New Roman')
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against TAR.png", format="png") 
 
 #%% Plot: TBR and Sleep Efficiency
 
-plt.figure()
-plt.plot(feature_df['TBR'], feature_df['Efficiency'], 'o', alpha=0.5)
-plt.title("Sleep Efficiency against TBR", fontsize=16, family='Times New Roman')
-plt.xlabel("TBR (%)", fontsize=16, family='Times New Roman')
-plt.ylabel("Sleep Efficiency (%)", fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-#plt.grid()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\TBR against Sleep Efficiency.png", format="png") 
+plt.figure(figsize=(15, 10))
+plt.plot(feature_df['TBR'], feature_df['Efficiency'], 'o', alpha=0.5, markersize=markersize)
+plt.title("Sleep Efficiency against TBR", fontsize=title_size, family='Times New Roman')
+plt.xlabel("TBR (%)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.ylabel("Sleep Efficiency (%)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.xticks(fontsize=ticksize, family='Times New Roman')
+plt.yticks(fontsize=ticksize, family='Times New Roman')
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against TBR.png", format="png") 
 
 #%% Plot: max IG and Sleep Efficiency
 
-plt.figure()
-plt.plot(feature_df['max'], feature_df['Efficiency'], 'o', alpha=0.5)
-plt.title("Sleep Efficiency against Max BG", fontsize=16, family='Times New Roman')
-plt.xlabel("Max BG (mmol/L)", fontsize=16, family='Times New Roman')
-plt.ylabel("Sleep Efficiency (%)",fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-#plt.grid()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\Max against Sleep Efficiency.png", format="png")   
+plt.figure(figsize=(15, 10))
+plt.plot(feature_df['max'], feature_df['Efficiency'], 'o', alpha=0.5, markersize=markersize)
+plt.title("Sleep Efficiency against Max BG", fontsize=title_size, family='Times New Roman')
+plt.xlabel("Max BG (mmol/L)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.ylabel("Sleep Efficiency (%)",fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.xticks(fontsize=ticksize, family='Times New Roman')
+plt.yticks(fontsize=ticksize, family='Times New Roman')
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against Max.png", format="png")   
 
 #%% Plot: min IG and Sleep Efficiency
 
-plt.figure()
-plt.plot(feature_df['min'], feature_df['Efficiency'], 'o', alpha=0.5)
-plt.title("Sleep Efficiency against Min BG", fontsize=16, family='Times New Roman')
-plt.xlabel("Min BG (mmol/L)", fontsize=16, family='Times New Roman')
-plt.ylabel("Sleep Efficiency (%)", fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-#plt.grid()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\Min against Sleep Efficiency.png", format="png")   
+plt.figure(figsize=(15, 10))
+plt.plot(feature_df['min'], feature_df['Efficiency'], 'o', alpha=0.5, markersize=markersize)
+plt.title("Sleep Efficiency against Min BG", fontsize=title_size, family='Times New Roman')
+plt.xlabel("Min BG (mmol/L)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.ylabel("Sleep Efficiency (%)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.xticks(fontsize=ticksize, family='Times New Roman')
+plt.yticks(fontsize=ticksize, family='Times New Roman')
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against Min.png", format="png")   
 
 #%% Mean and Sleep Efficiency
 
-plt.figure()
-plt.plot(feature_df['mean'], feature_df['Efficiency'], 'o', alpha=0.5)
-plt.title("Sleep Efficiency against Mean BG", fontsize=16, family='Times New Roman')
-plt.xlabel("Mean BG (mmol/L)", fontsize=16, family='Times New Roman')
-plt.ylabel("Sleep Efficiency (%)", fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-#plt.grid()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\Mean against Sleep Efficiency.png", format="png") 
+plt.figure(figsize=(15, 10))
+plt.plot(feature_df['mean'], feature_df['Efficiency'], 'o', alpha=0.5, markersize=markersize)
+plt.title("Sleep Efficiency against Mean BG", fontsize=title_size, family='Times New Roman')
+plt.xlabel("Mean BG (mmol/L)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.ylabel("Sleep Efficiency (%)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.xticks(fontsize=ticksize, family='Times New Roman')
+plt.yticks(fontsize=ticksize, family='Times New Roman')
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against Mean.png", format="png") 
 
 #%% 3D plot with Min and Max BG
+
+# Standardization!!!
 
 # Extracting data
 max_bg = feature_df['max']
@@ -170,6 +179,6 @@ for tick in ax.zaxis.get_major_ticks():
     
 
 plt.tight_layout()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\Plot 3D Efficiency.png", format="png") 
+plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency 3D plot.png", format="png") 
 plt.show()
 

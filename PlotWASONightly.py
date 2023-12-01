@@ -37,6 +37,14 @@ file_path = os.path.join(base_dir+file)
 # Read the cgm and epoch data
 feature_df = pd.read_csv(file_path)
 
+#%% Plotting settings
+
+markersize = 20
+title_size = 55
+labelsize = 50
+ticksize = 45
+padsize = 20
+
 #%% Plot: CV and WASO with trend
 
 # Standardizing the data
@@ -70,92 +78,92 @@ plt.ylim(min_val_y, max_val_y)
 plt.tight_layout()
 plt.show()
 
-plt.savefig(f"H:\GitHub\Bachelor\Plots\CV vs. WASO with trend.png", format="png")
+plt.savefig(f"H:\GitHub\Bachelor\Plots\WASO vs. CV with trend.png", format="png")
 
 #%% Plot: CV and WASO
 
-plt.figure()
-plt.plot(feature_df['cv_standardized'], feature_df['WASO'], 'o', label='Data Points', alpha=0.5)
-plt.title("WASO against CV (nightly)", fontsize=16, family='Times New Roman')
-plt.xlabel("CV", fontsize=16, family='Times New Roman')
-plt.ylabel("WASO (min)", fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-#plt.grid()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\CV against WASO.png", format="png")
+plt.figure(figsize=(15, 10))
+plt.plot(feature_df['cv'], feature_df['WASO'], 'o', label='Data Points', alpha=0.5, markersize=markersize)
+plt.title("WASO against CV (nightly)", fontsize=title_size, family='Times New Roman')
+plt.xlabel("CV", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.ylabel("WASO (min)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.xticks(fontsize=ticksize, family='Times New Roman')
+plt.yticks(fontsize=ticksize, family='Times New Roman')
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\WASO against CV.png", format="png")
 
 
 #%% Plot: TIR and WASO
 
-plt.figure()
-plt.plot(feature_df['TIR'], feature_df['WASO'], 'o', alpha=0.5)
-plt.title("WASO against TIR (nightly)", fontsize=16, family='Times New Roman')
-plt.xlabel("TIR (%)", fontsize=16, family='Times New Roman')
-plt.ylabel("WASO (min)", fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-#plt.grid()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\TIR against WASO.png", format="png")   
+plt.figure(figsize=(15, 10))
+plt.plot(feature_df['TIR'], feature_df['WASO'], 'o', alpha=0.5, markersize=20)
+plt.title("WASO against TIR (nightly)", fontsize=title_size, family='Times New Roman')
+plt.xlabel("TIR (%)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.ylabel("WASO (min)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.xticks(fontsize=ticksize, family='Times New Roman')
+plt.yticks(fontsize=ticksize, family='Times New Roman')
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\WASO against TIR.png", format="png")   
 
 #%% Plot: TAR and WASO
 
-plt.figure()
-plt.plot(feature_df['TAR'], feature_df['WASO'], 'o', alpha=0.5)
-plt.title("WASO against TAR (nightly)", fontsize=16, family='Times New Roman')
-plt.xlabel("TAR (%)", fontsize=16, family='Times New Roman')
-plt.ylabel("WASO (min)", fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-#plt.grid()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\TAR against WASO.png", format="png") 
+plt.figure(figsize=(15, 10))
+plt.plot(feature_df['TAR'], feature_df['WASO'], 'o', alpha=0.5, markersize=20)
+plt.title("WASO against TAR (nightly)", fontsize=title_size, family='Times New Roman')
+plt.xlabel("TAR (%)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.ylabel("WASO (min)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.xticks(fontsize=ticksize, family='Times New Roman')
+plt.yticks(fontsize=ticksize, family='Times New Roman')
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\WASO against TAR.png", format="png") 
 
 #%% Plot: TBR and WASO
 
-plt.figure()
-plt.plot(feature_df['TBR'], feature_df['WASO'], 'o', alpha=0.5)
-plt.title("WASO against TBR (nightly)", fontsize=16, family='Times New Roman')
-plt.xlabel("TBR (%)", fontsize=16, family='Times New Roman')
-plt.ylabel("WASO (min)", fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-#plt.grid()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\TBR against WASO.png", format="png") 
+plt.figure(figsize=(15, 10))
+plt.plot(feature_df['TBR'], feature_df['WASO'], 'o', alpha=0.5, markersize=20)
+plt.title("WASO against TBR (nightly)", fontsize=title_size, family='Times New Roman')
+plt.xlabel("TBR (%)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.ylabel("WASO (min)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.xticks(fontsize=ticksize, family='Times New Roman')
+plt.yticks(fontsize=ticksize, family='Times New Roman')
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\WASO against TBR.png", format="png") 
 
 #%% Plot: Max BG and WASO
 
-plt.figure()
-plt.plot(feature_df['max'], feature_df['WASO'], 'o', alpha=0.5)
-plt.title("WASO against Max BG (nightly)", fontsize=16, family='Times New Roman')
-plt.xlabel("Max BG (mmol/L)", fontsize=16, family='Times New Roman')
-plt.ylabel("WASO (min)",fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-#plt.grid()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\Max against WASO.png", format="png")   
+plt.figure(figsize=(15, 10))
+plt.plot(feature_df['max'], feature_df['WASO'], 'o', alpha=0.5, markersize=20)
+plt.title("WASO against Max BG (nightly)", fontsize=title_size, family='Times New Roman')
+plt.xlabel("Max BG (mmol/L)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.ylabel("WASO (min)",fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.xticks(fontsize=ticksize, family='Times New Roman')
+plt.yticks(fontsize=ticksize, family='Times New Roman')
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\WASO against Max.png", format="png")   
 
 #%% Plot: Min BG and WASO
 
-plt.figure()
-plt.plot(feature_df['min'], feature_df['WASO'], 'o', alpha=0.5)
-plt.title("WASO against Min BG (nightly)", fontsize=16, family='Times New Roman')
-plt.xlabel("Min BG (mmol/L)", fontsize=16, family='Times New Roman')
-plt.ylabel("WASO (min)", fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-#plt.grid()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\Min against WASO.png", format="png")   
+plt.figure(figsize=(15, 10))
+plt.plot(feature_df['min'], feature_df['WASO'], 'o', alpha=0.5, markersize=20)
+plt.title("WASO against Min BG (nightly)", fontsize=title_size, family='Times New Roman')
+plt.xlabel("Min BG (mmol/L)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.ylabel("WASO (min)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.xticks(fontsize=ticksize, family='Times New Roman')
+plt.yticks(fontsize=ticksize, family='Times New Roman')
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\WASO against Min.png", format="png")   
 
 #%% Plot: Mean BG and WASO
 
-plt.figure()
-plt.plot(feature_df['mean'], feature_df['WASO'], 'o', alpha=0.5)
-plt.title("WASO against Mean BG (nightly)", fontsize=16, family='Times New Roman')
-plt.xlabel("Mean BG (mmol/L)", fontsize=16, family='Times New Roman')
-plt.ylabel("WASO (min)", fontsize=16, family='Times New Roman')
-plt.xticks(fontsize=12, family='Times New Roman')
-plt.yticks(fontsize=12, family='Times New Roman')
-#plt.grid()
-plt.savefig(f"H:\GitHub\Bachelor\Plots\Mean against WASO.png", format="png") 
+plt.figure(figsize=(15, 10))
+plt.plot(feature_df['mean'], feature_df['WASO'], 'o', alpha=0.5, markersize=20)
+plt.title("WASO against Mean BG (nightly)", fontsize=title_size, family='Times New Roman')
+plt.xlabel("Mean BG (mmol/L)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.ylabel("WASO (min)", fontsize=labelsize, family='Times New Roman', labelpad=padsize)
+plt.xticks(fontsize=ticksize, family='Times New Roman')
+plt.yticks(fontsize=ticksize, family='Times New Roman')
+plt.tight_layout()
+plt.savefig(f"H:\GitHub\Bachelor\Plots\WASO against Mean.png", format="png") 
 
 
 #%% Plot: Logaritmh TAR against WASO
