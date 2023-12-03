@@ -107,10 +107,10 @@ acti_interval1 = extract_one_night(in_bed, out_bed, acti_data)
 # plot_acti(acti_interval1)
 
 plt.figure()
-plt.plot(acti_interval1['DateTime'], acti_interval1['Magnitude'], '-') 
+plt.plot(acti_interval1['DateTime'], acti_interval1['Magnitude'], '-', label='Activity') 
 plt.title("Actigraph data for one night", fontsize=36, family='Times New Roman', pad=20)
 plt.xlabel("Time (hour)", fontsize=36, family='Times New Roman', labelpad=20)
-plt.ylabel("Counts", fontsize=36, family='Times New Roman', labelpad=20)
+plt.ylabel("Magnitude", fontsize=36, family='Times New Roman', labelpad=20)
 plt.xticks(fontsize=32, family='Times New Roman')
 plt.yticks(fontsize=32, family='Times New Roman')
 

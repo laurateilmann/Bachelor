@@ -134,22 +134,43 @@ plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against Mean.png", forma
 
 # Standardization!!!
 
+# # Extracting data
+# max_bg = feature_df['max']
+# min_bg = feature_df['min']
+# sleep_efficiency = feature_df['Efficiency']
+
+# # Creating a 3D plot
+# fig = plt.figure(figsize=(14, 12))
+# ax = fig.add_subplot(111, projection='3d')
+
+# # Scatter plot points
+# ax.scatter(max_bg, min_bg, sleep_efficiency, marker='o', alpha=0.9)
+
+
+
+from sklearn.preprocessing import StandardScaler
+
 # Extracting data
 max_bg = feature_df['max']
 min_bg = feature_df['min']
 sleep_efficiency = feature_df['Efficiency']
 
+# Standardizing 'min' and 'max' BG values
+scaler = StandardScaler()
+max_bg_standardized = scaler.fit_transform(max_bg.values.reshape(-1, 1))
+min_bg_standardized = scaler.fit_transform(min_bg.values.reshape(-1, 1))
+
 # Creating a 3D plot
 fig = plt.figure(figsize=(14, 12))
 ax = fig.add_subplot(111, projection='3d')
 
-# Scatter plot points
-ax.scatter(max_bg, min_bg, sleep_efficiency, marker='o', alpha=0.9)
+# Scatter plot points with standardized values
+ax.scatter(max_bg_standardized, min_bg_standardized, sleep_efficiency, marker='o', alpha=1)
 
 # Prediction plane equation parameters
 # Creating a meshgrid for the prediction plane
-max_bg_range = np.linspace(min(max_bg), max(max_bg), 100)
-min_bg_range = np.linspace(min(min_bg), max(min_bg), 100)
+max_bg_range = np.linspace(min(max_bg_standardized), max(max_bg_standardized), 100)
+min_bg_range = np.linspace(min(min_bg_standardized), max(min_bg_standardized), 100)
 X, Y = np.meshgrid(max_bg_range, min_bg_range)
 Z = 81.05 - 1.62 * X + 0.99 * Y  # Prediction plane equation from R
 
