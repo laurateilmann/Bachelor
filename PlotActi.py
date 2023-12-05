@@ -48,7 +48,7 @@ sleep_onset = summed_data.iloc[i]['Onset DateTime']
 acti_interval1 = extract_one_night(in_bed, out_bed, acti_data)
 
 # Plot
-plt.figure(figsize=(15,10))
+plt.figure(figsize=(20,10))
 plt.plot(acti_interval1['DateTime'], acti_interval1['Magnitude'], '-', label='Activity') 
 plt.title("Actigraph data for one night", fontsize=40, family='Times New Roman', pad=20)
 plt.xlabel("Time (hour)", fontsize=38, family='Times New Roman', labelpad=20)
