@@ -1,11 +1,11 @@
-
+# Load packages
 library(readr)
 library(dplyr)
 
 #########################
 ## Load data
 
-# Set your base directory
+# Base directory
 base_dir <- "L:/LovbeskyttetMapper01/StenoSleepQCGM/Concatenated data"
 
 # Load the nightly data
@@ -54,7 +54,7 @@ t_test_result <- t.test(x = TIR, mu = recommended, alternative = "two.sided",
                          conf.level = 0.95)
 
 # Displaying the t-test results
-cat("Results for t-test comparing TIR with >70%:\n")
+cat("Results for t-test comparing TIR with 70%:\n")
 print(t_test_result)
 
 ###########################
@@ -71,7 +71,7 @@ t_test_result <- t.test(x = TAR, mu = recommended, alternative = "two.sided",
                         conf.level = 0.95)
 
 # Displaying the t-test results
-cat("Results for t-test comparing TAR with <25%:\n")
+cat("Results for t-test comparing TAR with 25%:\n")
 print(t_test_result)
 
 ############################
@@ -88,7 +88,7 @@ t_test_result <- t.test(x = TBR, mu = recommended, alternative = "two.sided",
                         conf.level = 0.95)
 
 # Displaying the t-test results
-cat("Results for t-test comparing TBR with >4%:\n")
+cat("Results for t-test comparing TBR with 4%:\n")
 print(t_test_result)
 
 

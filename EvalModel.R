@@ -1,12 +1,9 @@
+# Clear work space
+rm(list = ls()) 
 
-rm(list = ls()) # Clear work space
-
-# Package for decision tree
+# Load packages
 library(rpart)
-
-# Package for Cross-Validation
 library(caret)
-
 library(dplyr)
 library(readr)
 library(zoo)
@@ -14,13 +11,8 @@ library(lme4)
 library(stats)
 library(olsrr)
 
-# Set your base directory
+# Base directory
 base_dir <- "L:/LovbeskyttetMapper01/StenoSleepQCGM/Concatenated data"
-
-# Variable names
-var_names <- list("TIR", "TAR", "TBR", "min", "max", "mean", "median", "std", "cv", "delta.IG")
-
-### Nightly
 
 # Load the nightly data
 complete_dataset <- read_csv(file.path(base_dir, 'concatenated_all_11.csv'), col_types = cols())
@@ -33,6 +25,7 @@ complete_dataset <- na.omit(complete_dataset)
 x <- complete_dataset %>% select(3:12)
 y <- complete_dataset %>% select(Efficiency)
 
+# Dimensions of x
 N <- nrow(x)
 M <- ncol(x)
 
@@ -42,9 +35,8 @@ Id <- complete_dataset %>% select(id)
 # Standardize data
 x_stan <- scale(x, center = TRUE, scale = TRUE)
 
-# Create a new data frame combining x_stan and y_stan
+# Create a new data frame combining x_stan and y
 X <- data.frame(x_stan, y, id=Id)
-
 
 ###########################################################
 
@@ -62,7 +54,6 @@ K = 5
 p_values_list <- vector("list", K)
 estimates_list <- vector("list", K)
 CI_list <- vector("list",K)
-
 
 # Outer loop - number of times cross-validation and t-test is performed
 for (j in 1:J) {
