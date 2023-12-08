@@ -19,8 +19,7 @@ import plotly.io as io
 from ExtractIntervals import *
 import matplotlib.pyplot as plt
 
-
-#%% Set the base directory for the current family and session
+#%% Set the base directory
 
 # Choose what studies to concatenate
 studies = ["MindYourDiabetes", "Sleep-1-child_2023_Cecilie", "Validationstudy_2020_2021_Cecilie"]

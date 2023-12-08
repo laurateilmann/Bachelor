@@ -36,9 +36,3 @@ sd_h = data_h.iloc[:, 1:].std()
 ran_min_h = data_h.iloc[:, 1:].min()
 ran_max_h = data_h.iloc[:, 1:].max()
 
-#%%
-
-in_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\MindYourDiabetes\Fam01\Third"
-file = "\cgm_data_processed.csv"
-file_path = os.path.join(in_dir+file)
-cgm = pd.read_csv(file_path)

@@ -2,7 +2,7 @@
 """
 Created on Tue Sep 26 10:37:13 2023
 
-@author: LTEI0004
+@authors: LTEI0004 & MGRO0154
 """
 
 #%% Import packages
@@ -35,7 +35,7 @@ else:
 
 #%% Initializing minimum wake up length (minutes) and minimum length for startning sleep (minutes)
 
-min_wake = 5
+min_wake = 1
 min_sleep = 1
 
 #%% Outer loop for families
@@ -69,7 +69,7 @@ for family in families:
             print(f"Summed actigraphy data file does not exist in {family}/{session}. Skipping...")
             continue
         
-       # Create empty list
+        # Create empty lists
         nightly_features_list = []
         hourly_awakenings_list = []
         hourly_waso_list = []
@@ -82,7 +82,6 @@ for family in families:
             in_bed = summed_data.iloc[i]['In Bed DateTime']
             out_bed = summed_data.iloc[i]['Out Bed DateTime']
         
-            
             # Extract one night's worth of actigraph epoch data
             night_data = extract_one_night(in_bed, out_bed, epoch_data)
             
@@ -99,7 +98,7 @@ for family in families:
         
             # WASO per night
             waso = calc_WASO(night_data, min_wake, min_sleep)
-            # WASO per hour per night
+            # WASO per hour
             h_waso = hourly_WASO(night_data, min_wake, min_sleep)
             
             # Average awakening length
@@ -141,7 +140,7 @@ for family in families:
         hourly_avg_awakening_df = pd.DataFrame(hourly_avg_awakening_list, columns=['DateTime start',
                                                                 'Average awakening length'])
                                                                 
-        # Merge dataframes with hourly awakenings and waso to one dataframe
+        # Merge dataframes with hourly awakenings and WASO to one dataframe
         hourly_features1 = pd.merge(hourly_awakenings_df, hourly_WASO_df, on="DateTime start")
         hourly_features2 = pd.merge(hourly_features1, hourly_avg_awakening_df, on="DateTime start")
         

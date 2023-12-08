@@ -19,8 +19,7 @@ import plotly.io as io
 from ExtractIntervals import *
 import matplotlib.pyplot as plt
 
-
-#%% Set the base directory for the current family and session
+#%% Set the base directory
 
 # Choose what studies to concatenate
 studies = ["MindYourDiabetes", "Sleep-1-child_2023_Cecilie", "Validationstudy_2020_2021_Cecilie"]
@@ -99,7 +98,7 @@ merged_data = merged_data.drop(['DateTime start_y', 'id_x'], axis=1)
 if len(studies)==1:
     output_dir = study_dir 
 else:
-    output_dir = base_dir
+    output_dir = base_dir + '\Concatenated data' 
 
 # Specify the filename for the concatenated CGM data and sleep epoch data:
 epochs_output_file = os.path.join(output_dir, "concatenated_hourly_epochs.csv")
