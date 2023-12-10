@@ -1,3 +1,9 @@
+###############################################################################
+# Authors: MGRO0154 & LTEI0004
+
+# Compute the residuals of the three derived models and export as a dataframe.
+###############################################################################
+
 # Load libraries
 library(dplyr)
 library(readr)
@@ -18,7 +24,7 @@ complete_dataset <- na.omit(complete_dataset)
 
 
 ################################
-## WASO vs. CV - Nightly
+## Model_WN
 
 # Define the independent and dependent variables
 x <- complete_dataset %>% select(3:12)
@@ -62,41 +68,10 @@ ggplot(residuals, aes(x = WASO)) +
 # Save residuals to a CSV file
 output_folder <- file.path(base_dir, "Residuals")
 residuals_file <- file.path(output_folder, "residuals_Model_WN.csv")
-
 write.csv(residuals, file = residuals_file, row.names = FALSE)
 
-# Visualization of the model
-# # Calculate predictions and standard errors manually
-# new_data <- data.frame(cv = seq(min(standardized_data$cv), max(standardized_data$cv), length.out = 100))  # Create a sequence of values for CV
-# 
-# # Predictions
-# preds <- predict(model, newdata = new_data, re.form = NA, allow.new.levels = TRUE)
-# 
-# # Extract fixed effects standard errors
-# pred_se <- sqrt(diag(vcov(model)))
-# 
-# # Combine predictions and standard errors into a data frame
-# pred_data <- cbind(new_data, preds, pred_se)
-# colnames(pred_data)[2:3] <- c("predicted", "std.error")
-# 
-# # Calculate upper and lower bounds for uncertainty intervals
-# pred_data <- transform(pred_data, 
-#                        upper = predicted + std.error,
-#                        lower = predicted - std.error)
-# 
-# # Plotting predictions and uncertainty intervals
-# library(ggplot2)
-# 
-# ggplot(pred_data, aes(x = cv, y = predicted)) +
-#   geom_line() +
-#   geom_ribbon(aes(ymin = lower, ymax = upper), fill = "lightgrey", alpha = 0.5) +
-#   geom_point(data = standardized_data, aes(x = cv, y = WASO, color = as.factor(id))) +
-#   labs(x = "CV", y = "WASO", title = "WASO against CV") +
-#   theme_minimal()
-
 #######################################
-
-## Efficiency vs. CV 
+## Model_SE
 
 # Define the independent and dependent variables
 x <- complete_dataset %>% select(3:12)
@@ -140,11 +115,10 @@ ggplot(residuals, aes(x = Efficiency)) +
 # Save residuals to a CSV file
 output_folder <- file.path(base_dir, "Residuals")
 residuals_file <- file.path(output_folder, "residuals_Model_SE.csv")
-
 write.csv(residuals, file = residuals_file, row.names = FALSE)
 
 ################################
-## WASO vs. CV - Hourly
+## Model_WH
 
 # Load hourly data
 complete_dataset_h <- read_csv(file.path(base_dir, 'concatenated_hourly_all_11.csv'), col_types = cols())
@@ -194,5 +168,4 @@ ggplot(residuals, aes(x = WASO)) +
 # Save residuals to a CSV file
 output_folder <- file.path(base_dir, "Residuals")
 residuals_file <- file.path(output_folder, "residuals_Model_WH.csv")
-
 write.csv(residuals, file = residuals_file, row.names = FALSE)

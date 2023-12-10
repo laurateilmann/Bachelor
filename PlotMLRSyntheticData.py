@@ -2,7 +2,9 @@
 """
 Created on Thu Nov  2 08:54:25 2023
 
-@author: LTEI0004
+@author: LTEI0004 & MGRO0154
+
+Illustration og multiple linear regression with sythentic dataset.
 """
 
 #%% Import packages

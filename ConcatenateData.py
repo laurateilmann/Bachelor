@@ -2,22 +2,15 @@
 """
 Created on Thu Oct 12 12:22:10 2023
 
-@author: ltei0004
+@author: LTEI0004 & MGRO0154
+
+Concatenate computed sleep and BG parameters at a nightly level from all the studies.
 """
 
 
 #%% Import packages
 import pandas as pd
-from datetime import datetime
-from ExtractIntervals import extract_one_night
-import numpy as np
 import os
-from ActiFeaturesFunc import *
-import csv
-from PlotFunc import *
-import plotly.io as io
-from ExtractIntervals import *
-import matplotlib.pyplot as plt
 
 #%% Set the base directory
 

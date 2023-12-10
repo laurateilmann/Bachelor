@@ -2,10 +2,12 @@
 """
 Created on Wed Sep 20 13:19:33 2023
 
-@author: LTEI0004
+@author: LTEI0004 & MGRO0154
+
+Create and export dataframe with computed CGM parameters/features. 
 """
 
-#%%
+#%% Import packages
 import os
 import pandas as pd
 from ExtractIntervals import extract_one_night

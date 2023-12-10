@@ -2,11 +2,43 @@
 """
 Created on Fri Sep  8 09:48:29 2023
 
-@author: MGRO0154
+@author: MGRO0154 & LTEI0004
+
+Functions to extract parts of actigraph or CGM data. 
 """
 
 import pandas as pd
 from datetime import datetime, timedelta
+
+
+def extract_one_night(in_bed, out_bed, data):
+    """
+    Extracts one night of data starting from the date given as parameter. The
+    night runs from In Bed to Out Bed the next morning.
+
+    Parameters
+    ----------
+    in_bed : datetime 
+    The time the person turns off light. 
+    
+    out_bed : datetime 
+    The time the perosn is wakes up in the morning. 
+    
+    data : Pandas dataframe
+         Dataframe with a minimum of the columns called 'In Bed DateTime' and 
+        'Out Bed DateTime'.
+
+    Returns
+    -------
+    night_data : Pandas dataframe
+        Dataframe with just one nights data from In Bed to Out Bed. It has the
+        same columns as the parameter 'data'.
+    """
+
+    night_data = data.loc[(data['DateTime'] >= in_bed) & (data['DateTime'] <= out_bed)]
+    
+    return night_data
+
 
 def extract_interval_in_out_bed(data, summed_data):
     """
@@ -50,6 +82,7 @@ def extract_interval_in_out_bed(data, summed_data):
     
     return data_in_out_bed
 
+
 def extract_interval(start, end, data):
     """
     Extracts intervals of actigraphy data from starttime to endtime.
@@ -83,33 +116,4 @@ def extract_interval(start, end, data):
     return data_nights
 
 
-def extract_one_night(in_bed, out_bed, data):
-    """
-    Extracts one night of data starting from the date given as parameter. The
-    night runs from In Bed to Out Bed the next morning.
 
-    Parameters
-    ----------
-    in_bed : datetime 
-    The time the person turns off light. 
-    
-    out_bed : datetime 
-    The time the perosn is out of bed in the morning. 
-    
-    data : Pandas dataframe
-         Dataframe with a minimum of the columns called 'In Bed DateTime' and 
-        'Out Bed DateTime'..
-
-    Returns
-    -------
-    night_data : Pandas dataframe
-        Dataframe with just one nights data from In Bed to Out Bed. It has the
-        same columns as the parameter 'data'.
-
-
-    """
-
-
-    night_data = data.loc[(data['DateTime'] >= in_bed) & (data['DateTime'] <= out_bed)]
-    
-    return night_data

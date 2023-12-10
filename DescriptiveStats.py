@@ -2,17 +2,21 @@
 """
 Created on Thu Oct 19 15:08:17 2023
 
-@author: ltei0004
+@author: LTEI0004 & MGRO0154
+
+Calculate descriptive statistics (mean, standard deviation and range) of BG and
+sleep parameters. 
 """
 
-
+#%% Import packages
 import pandas as pd
-from datetime import datetime
 import os
-import seaborn as sn
-import matplotlib.pyplot as plt
 
+#%% Compute stats
+
+# Base directory
 base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\Concatenated data"
+# File names
 file_n = "\concatenated_all_11.csv"
 file_h = "\concatenated_hourly_all_11.csv"
 

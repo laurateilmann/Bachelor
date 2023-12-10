@@ -2,13 +2,14 @@
 """
 Created on Mon Sep 25 08:33:00 2023
 
-@author: MGRO0154
+@author: MGRO0154 & LTEI0004
+
+Functions for computing sleep parameters/features. 
 """
 
 #%% Import packages
 
 import pandas as pd
-from ExtractIntervals import extract_one_night
 import numpy as np
 import datetime
 

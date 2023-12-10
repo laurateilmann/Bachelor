@@ -2,9 +2,9 @@
 """
 Created on Tue Sep 12 10:26:35 2023
 
-@author: LTEI0004
+@author: LTEI0004 & MGRO0154
 
-
+Functions to calculate TIR, TAR, and TBR.
 """
 
 #%% Import packages
@@ -29,8 +29,6 @@ def calc_ranges(CGM_data_original):
     Returns
     -------
     list of TIR, TAR, TBR
-
-
     """
     
     # Exclude 'id' column 
@@ -94,7 +92,6 @@ def hourly_ranges(CGM_data_original):
     Returns
     -------
     h_ranges : list of hourly TIR, TAR, TBR
-
     """
     
     # Exclude 'id' column 

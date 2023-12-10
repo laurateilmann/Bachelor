@@ -3,13 +3,13 @@
 Created on Tue Sep 26 10:37:13 2023
 
 @authors: LTEI0004 & MGRO0154
+
+Create and export dataframe with computed sleep parameters/features. 
 """
 
 #%% Import packages
 import pandas as pd
-from datetime import datetime
 from ExtractIntervals import extract_one_night
-import numpy as np
 import os
 from ActiFeaturesFunc import *
 

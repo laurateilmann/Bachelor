@@ -4,7 +4,11 @@ Created on Mon Feb 27 12:48:40 2023
 
 @author: LSKO0085
 
-Modified by MGRO0154
+Modified by MGRO0154 on Thu Oct 05 2023:
+    Modification entails that the function inserts NaN at a time interval of dt
+    if data is missing. For instance: if dt=5 (min) and the time between data-
+    point i and i-1 is 15 min, the function inserts two datapoints of NaN, so
+    the time difference between all datapoints is 5 min. 
 """
 
 import pandas as pd

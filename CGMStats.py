@@ -2,7 +2,9 @@
 """
 Created on Thu Sep 21 10:24:40 2023
 
-@author: MGRO0154
+@author: MGRO0154 & LTEI0004
+
+Functions to compute various statistics for CGM data.
 """
 import pandas as pd
 

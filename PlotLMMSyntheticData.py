@@ -2,9 +2,11 @@
 """
 Created on Thu Nov 16 14:17:28 2023
 
-@author: LTEI0004
-"""
+@author: LTEI0004 & MGRO0154
 
+Illustrate different offsets in synthetic dataset containing data points from 
+two individuals.
+"""
 
 #%% Import packages
 

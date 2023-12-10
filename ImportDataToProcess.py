@@ -2,12 +2,11 @@
 """
 Created on Wed Sep 20 12:37:59 2023
 
-@author: LTEI0004
+@author: LTEI0004 & MGRO0154
 
-
-A program to import Actigraph data in agd format, CGM data and the summed actigraph data in csv format and finally export 
-to L-drev. 
-
+A program to import Actigraph data in agd format, CGM data and the summed 
+actigraph data in CSV format. The relevant information is extracted from the 
+data and export to L-drev. 
 """
 
 #%% Import packages
@@ -27,7 +26,6 @@ import numpy as np
 # study = "MindYourDiabetes"
 # study = "Validationstudy_2020_2021_Cecilie"
 study = "Sleep-1-child_2023_Cecilie"
-# study = "Kasper" 
 
 # Base directory/path
 base_dir = os.path.join(r"L:\LovbeskyttetMapper01\StenoSleepQCGM", study)
@@ -114,7 +112,7 @@ for family in families:
         else:
             cgm_dir = os.path.join(base_dir, family, session)
 
-        # List all CGM files (assuming they are all CSV files named "cgm_data.csv") in the current session
+        # List all CGM files (assuming they have a name as in the list below) in the current session
         cgm_files = [file for file in os.listdir(cgm_dir) if file in ["cgm_data.csv", 
                                                                       "cgm_data_clarity.csv", 
                                                                       "cgm_data_guardian.csv", 

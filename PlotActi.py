@@ -2,32 +2,23 @@
 """
 Created on Fri Dec  1 17:54:05 2023
 
-@author: MGRO0154
+@author: MGRO0154 & LTEI0004
+
+Plot of actigraphy data for one person for one night.
 """
 
 #%% Import packages
 
 import pandas as pd
-from datetime import datetime
 from ExtractIntervals import extract_one_night
-import numpy as np
-import os
-from ActiFeaturesFunc import *
-import csv
-from PlotFunc import *
-import plotly.io as io
-from ExtractIntervals import *
-import plotly.graph_objects as go
-import plotly.io as io
 import matplotlib.pyplot as plt
-import seaborn as sns
-from scipy.stats import zscore
 import matplotlib.dates as mdates
 
 plt.close('all')
 
 #%% Import actigraph data
 
+# Base directory
 in_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\MindYourDiabetes\Fam01\Baseline"
 
 # Read actigraphy data
@@ -62,7 +53,8 @@ plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H'))
 # Adding a vertical line at Sleep Onset (21:31)
 plt.axvline(x=sleep_onset, color='red', linestyle='--', label='Sleep Onset', linewidth=3)
 legend_font = {'family': 'Times New Roman', 'size': 35}
-plt.legend(prop=legend_font)  # Place the legend at upper right
+# Place the legend at upper right
+plt.legend(prop=legend_font)  
 
 # Save fig
 plt.savefig(r"H:\GitHub\Bachelor\Plots\Actigraph night plot.png")
