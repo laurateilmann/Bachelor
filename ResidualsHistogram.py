@@ -2,20 +2,20 @@
 """
 Created on Mon Nov 13 17:24:15 2023
 
-@author: MGRO0154
+@author: MGRO0154 & LTEI0004
+
+Plot histograms of residuals of Model_WN, Model_WH, and Model_SE
 """
 
+#%% Import packages
+
 import pandas as pd
-import numpy as np
-import statsmodels.api as sm
-import statsmodels.formula.api as smf
-import sklearn.linear_model as lm
 import matplotlib.pylab as plt
-from scipy.stats import zscore
-from sklearn.preprocessing import StandardScaler
-from sklearn import model_selection, linear_model
 import os
 
+#%% Pre settings 
+
+# Close all figures
 plt.close('all')
 
 # Base directory

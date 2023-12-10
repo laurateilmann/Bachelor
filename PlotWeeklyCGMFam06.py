@@ -2,16 +2,20 @@
 """
 Created on Thu Oct 26 09:24:46 2023
 
-@author: LTEI0004
+@author: LTEI0004 & MGRO0154
+
+Plot 3 sessions worth of CGM data for one person (Fam06 from Mind Your Diabetes)
 """
 
-
+#%% Import packages
 import os 
 import pandas as pd 
 import numpy as np 
 import matplotlib.pyplot as plt  
 from ExtractIntervals import * 
 import matplotlib.dates as mdates 
+
+#%%
 
 # Set the base directory where your files are located 
 base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\MindYourDiabetes" 
@@ -26,6 +30,7 @@ date_ranges = {
     "Third": ["2023-06-18", "2023-06-27"]
 }
 
+# Font family and size
 legend_font = {'family': 'Times New Roman', 'size': 12}
 
 # Empty lists of CGM data and summed data
@@ -104,7 +109,6 @@ for session_index, session in enumerate(sessions):
     row = session_index  # Start the row from the session index
     col = 0
     
-
     # Adjust col based on the session start weekday
     if session_index == 0:  # start of Baseline (session 1)
         col = weekday_start_baseline
@@ -113,23 +117,18 @@ for session_index, session in enumerate(sessions):
     elif session_index == 2:  # start of Third (session 3)
         col = weekday_start_third
 
+    # Iterate over the nights in the session
     for i in range(filtered_summed_data.shape[0]):
         # Extract In Bed and Out Bed times
         in_bed = filtered_summed_data.iloc[i]['In Bed DateTime']
         out_bed = filtered_summed_data.iloc[i]['Out Bed DateTime']
 
-        # Initialize ts here
+        # Extract the time
         ts = extract_one_night(in_bed, out_bed, CGM_data_list[session_index])['DateTime']
 
-        # Initialize data here
+        # Extract the CGM data
         data = extract_one_night(in_bed, out_bed, CGM_data_list[session_index])['CGM']
 
-
-        # # Insert dates 
-        # date_start = in_bed.strftime('%d/%m') 
-        # date_end = out_bed.strftime('-%d/%m') 
-        # axs[row, col].text(.4, .95, str(date_start + date_end), ha='left', va='top', transform=axs[row, col].transAxes, fontsize=24)   
-    
         # Set the default font to Times New Roman
         plt.rcParams['font.family'] = 'Times New Roman'
         
@@ -138,11 +137,9 @@ for session_index, session in enumerate(sessions):
         # Set the interval for x-axis ticks  
         axs[row,col].xaxis.set_major_locator(mdates.HourLocator(interval=4)) 
         # Set the fontsize of the x- and y-axis ticks 
-        # axs[row, col].tick_params(axis='x', labelsize=30) 
         for label in axs[row, col].get_xticklabels():
             label.set_fontname('Times New Roman')
             label.set_fontsize(40)
-                            
         # Set the font family and fontsize for the y-axis ticks
         for label in axs[row, col].get_yticklabels():
             label.set_fontname('Times New Roman')
@@ -188,13 +185,11 @@ fig.subplots_adjust(left=0.07, right=0.95, top=0.95, bottom=0.1, wspace=0.1, hsp
 fig.text(0.5, 0.01, 'Time (hour)', ha='center', fontsize=45, fontname='Times New Roman')   
 fig.text(0.006, 0.5, 'BG (mmol/L)', va='center', fontsize=45, fontname='Times New Roman', rotation=90) 
  
-
 # Necessary for getting a good saved image
 plt.get_current_fig_manager().full_screen_toggle()   
 
 # Save plot 
 plt.savefig("H:\GitHub\Bachelor\Plots\weeklyCGM")
-
-            
+         
 # Display 
 plt.show()  

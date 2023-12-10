@@ -2,37 +2,31 @@
 """
 Created on Fri Nov 17 11:26:04 2023
 
-@author: LTEI0004
+@author: LTEI0004 & MGRO0154
+
+Sleep Efficiency plotted against various BG parameters.
 """
 
 #%% Import packages
 import pandas as pd
-from datetime import datetime
-from ExtractIntervals import extract_one_night
 import numpy as np
 import os
-from ActiFeaturesFunc import *
-import csv
-from PlotFunc import *
-import plotly.io as io
-from ExtractIntervals import *
-import plotly.graph_objects as go
-import plotly.io as io
 import matplotlib.pyplot as plt
-import seaborn as sns
-from scipy.stats import zscore
-from mpl_toolkits.mplot3d import Axes3D
+from sklearn.preprocessing import StandardScaler
+
+#%% Close all figures
 
 plt.close('all')
 
 #%% Import concatenated data
 
+# Base directory
 base_dir = r"L:\LovbeskyttetMapper01\StenoSleepQCGM\Concatenated data"
 
 # File name
 file = "\concatenated_all_11.csv"
 
-# Construct the full file paths
+# Construct the full file path
 file_path = os.path.join(base_dir+file)
 
 # Read the cgm and epoch data
@@ -46,7 +40,7 @@ labelsize = 50
 ticksize = 45
 padsize = 20
 
-#%% CV and Sleep Efficiency
+#%% Plot: CV and Sleep Efficiency
 
 plt.figure(figsize=(15, 10))
 plt.plot(feature_df['cv'], feature_df['Efficiency'], 'o', label='Data Points', alpha=0.5, markersize=markersize)
@@ -56,6 +50,8 @@ plt.ylabel("Sleep Efficiency (%)", fontsize=labelsize, family='Times New Roman',
 plt.xticks(fontsize=ticksize, family='Times New Roman')
 plt.yticks(fontsize=ticksize, family='Times New Roman')
 plt.tight_layout()
+
+# Save fig
 plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against CV.png", format="png")
 
 #%% Plot: TIR and Sleep Efficiency
@@ -68,6 +64,8 @@ plt.ylabel("Sleep Efficiency (%)", fontsize=labelsize, family='Times New Roman',
 plt.xticks(fontsize=ticksize, family='Times New Roman')
 plt.yticks(fontsize=ticksize, family='Times New Roman')
 plt.tight_layout()
+
+# Save fig
 plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against TIR.png", format="png")   
 
 #%% Plot: TAR and Sleep Efficiency
@@ -80,6 +78,8 @@ plt.ylabel("Sleep Efficiency (%)", fontsize=labelsize, family='Times New Roman',
 plt.xticks(fontsize=ticksize, family='Times New Roman')
 plt.yticks(fontsize=ticksize, family='Times New Roman')
 plt.tight_layout()
+
+# Save fig
 plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against TAR.png", format="png") 
 
 #%% Plot: TBR and Sleep Efficiency
@@ -92,9 +92,11 @@ plt.ylabel("Sleep Efficiency (%)", fontsize=labelsize, family='Times New Roman',
 plt.xticks(fontsize=ticksize, family='Times New Roman')
 plt.yticks(fontsize=ticksize, family='Times New Roman')
 plt.tight_layout()
+
+# Save fig
 plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against TBR.png", format="png") 
 
-#%% Plot: max IG and Sleep Efficiency
+#%% Plot: Max BG and Sleep Efficiency
 
 plt.figure(figsize=(15, 10))
 plt.plot(feature_df['max'], feature_df['Efficiency'], 'o', alpha=0.5, markersize=markersize)
@@ -104,9 +106,11 @@ plt.ylabel("Sleep Efficiency (%)",fontsize=labelsize, family='Times New Roman', 
 plt.xticks(fontsize=ticksize, family='Times New Roman')
 plt.yticks(fontsize=ticksize, family='Times New Roman')
 plt.tight_layout()
+
+# Save fig
 plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against Max.png", format="png")   
 
-#%% Plot: min IG and Sleep Efficiency
+#%% Plot: Min BG and Sleep Efficiency
 
 plt.figure(figsize=(15, 10))
 plt.plot(feature_df['min'], feature_df['Efficiency'], 'o', alpha=0.5, markersize=markersize)
@@ -116,9 +120,11 @@ plt.ylabel("Sleep Efficiency (%)", fontsize=labelsize, family='Times New Roman',
 plt.xticks(fontsize=ticksize, family='Times New Roman')
 plt.yticks(fontsize=ticksize, family='Times New Roman')
 plt.tight_layout()
+
+# Save fig
 plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against Min.png", format="png")   
 
-#%% Mean and Sleep Efficiency
+#%% Mean BG and Sleep Efficiency
 
 plt.figure(figsize=(15, 10))
 plt.plot(feature_df['mean'], feature_df['Efficiency'], 'o', alpha=0.5, markersize=markersize)
@@ -128,34 +134,18 @@ plt.ylabel("Sleep Efficiency (%)", fontsize=labelsize, family='Times New Roman',
 plt.xticks(fontsize=ticksize, family='Times New Roman')
 plt.yticks(fontsize=ticksize, family='Times New Roman')
 plt.tight_layout()
+
+# Save fig
 plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency against Mean.png", format="png") 
 
-#%% 3D plot with Min and Max BG
-
-# Standardization!!!
-
-# # Extracting data
-# max_bg = feature_df['max']
-# min_bg = feature_df['min']
-# sleep_efficiency = feature_df['Efficiency']
-
-# # Creating a 3D plot
-# fig = plt.figure(figsize=(14, 12))
-# ax = fig.add_subplot(111, projection='3d')
-
-# # Scatter plot points
-# ax.scatter(max_bg, min_bg, sleep_efficiency, marker='o', alpha=0.9)
-
-
-
-from sklearn.preprocessing import StandardScaler
+#%% 3D plot with Min and Max BG (Model_SE)
 
 # Extracting data
 max_bg = feature_df['max']
 min_bg = feature_df['min']
 sleep_efficiency = feature_df['Efficiency']
 
-# Standardizing 'min' and 'max' BG values
+# Standardizing Min and Max BG values
 scaler = StandardScaler()
 max_bg_standardized = scaler.fit_transform(max_bg.values.reshape(-1, 1))
 min_bg_standardized = scaler.fit_transform(min_bg.values.reshape(-1, 1))
@@ -164,7 +154,7 @@ min_bg_standardized = scaler.fit_transform(min_bg.values.reshape(-1, 1))
 fig = plt.figure(figsize=(14, 12))
 ax = fig.add_subplot(111, projection='3d')
 
-# Scatter plot points with standardized values
+# Scatter plot
 ax.scatter(max_bg_standardized, min_bg_standardized, sleep_efficiency, marker='o', alpha=1)
 
 # Prediction plane equation parameters
@@ -172,7 +162,8 @@ ax.scatter(max_bg_standardized, min_bg_standardized, sleep_efficiency, marker='o
 max_bg_range = np.linspace(min(max_bg_standardized), max(max_bg_standardized), 100)
 min_bg_range = np.linspace(min(min_bg_standardized), max(min_bg_standardized), 100)
 X, Y = np.meshgrid(max_bg_range, min_bg_range)
-Z = 81.05 - 1.62 * X + 0.99 * Y  # Prediction plane equation from R
+# Prediction plane equation from R
+Z = 81.05 - 1.62 * X + 0.99 * Y  
 
 # Plotting the prediction plane
 ax.plot_surface(X, Y, Z, alpha=0.5, color='red')
@@ -198,8 +189,9 @@ for tick in ax.zaxis.get_major_ticks():
     tick.label.set_fontsize(35)
     tick.label.set_fontname('Times New Roman')
     
-
 plt.tight_layout()
+# Save fig
 plt.savefig(f"H:\GitHub\Bachelor\Plots\Sleep Efficiency 3D plot.png", format="png") 
+# Display fig
 plt.show()
 
