@@ -1,11 +1,15 @@
+###############################################################################
+# Authors: MGRO0154 & LTEI0004
+
+# Use linear mixed effects regression to investigate the relationship between
+# the response (nightly WASO, hourly WASO, Sleep Efficiency) and a sinlge
+# predictor (BG parameters).
+###############################################################################
 
 # Load libraries
 library(dplyr)
 library(readr)
-library(zoo)
 library(lme4)
-library(stats)
-library(olsrr)
 
 # Set your base directory
 base_dir <- "L:/LovbeskyttetMapper01/StenoSleepQCGM/Concatenated data"
@@ -23,10 +27,9 @@ complete_dataset <- complete_dataset %>% rename(`SleepQ` = `Sleep quality`)
 # Handling missing and infinite values
 complete_dataset <- na.omit(complete_dataset)
 
-
 # Define the independent and dependent variables
 x <- complete_dataset %>% select(3:12)
-y <- complete_dataset %>% select(WASO)
+y <- complete_dataset %>% select(WASO) # Change 'WASO' to 'Efficiency' when looking at Sleep Efficiency
 
 # Standardize data
 x_stan <- scale(x, center = TRUE, scale = TRUE)
@@ -42,7 +45,7 @@ N = nrow(standardized_data)
 
 for (var in var_names) {
   # Model
-  formula <- as.formula(paste("WASO ~", var, "+ (1 | id)"))
+  formula <- as.formula(paste("WASO ~", var, "+ (1 | id)")) # Change 'WASO' to 'Efficiency' when looking at Sleep Efficiency
   model <- lmer(formula, data = standardized_data)
   print(summary(model))
   
@@ -97,29 +100,6 @@ for (var in var_names) {
   conf_interval <- confint(model_h, level = 0.95)
   print(conf_interval)
 }
-
-
-
-###################
-
-#plot(standardized_data)
-
-#################
-
-# Noter:
-
-# AIC and BIC
-
-# Kig på hver variabel alene op mod WASO (husk intercept)
-
-# Fjern en variabel ad gangen (der ikke er signifikant) indtil alle er signifikante. Derefter lav anova mellem den model vi er nået frem til og den oprindelige model med alle variable, for at se om de er signifikant forskellige.
-
-# Cluster matrix med fx pairwise p-værdier 
-
-# Enten machine learning eller statistik vej
-
-
-
 
 
 

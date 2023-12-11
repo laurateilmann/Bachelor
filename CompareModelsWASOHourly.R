@@ -1,7 +1,7 @@
 ###############################################################################
 # Authors: MGRO0154 & LTEI0004
 
-# Compare regression models for Sleep Efficiency.
+# Compare regression models for hourly WASO.
 ###############################################################################
 
 # Clear work space
@@ -16,17 +16,17 @@ library(lme4)
 # Set your base directory
 base_dir <- "L:/LovbeskyttetMapper01/StenoSleepQCGM/Concatenated data"
 
-# Load the nightly data
-complete_dataset <- read_csv(file.path(base_dir, 'concatenated_all_11.csv'), col_types = cols())
-complete_dataset <- complete_dataset %>% rename(`SleepQ` = `Sleep quality`)
+# Load the hourly data
+complete_dataset <- read_csv(file.path(base_dir, 'concatenated_hourly_all_11.csv'), col_types = cols())
 
 # Handling missing and infinite values
 complete_dataset <- na.omit(complete_dataset)
 
 # Define the independent and dependent variables
-x <- complete_dataset %>% select(3:12)
-y <- complete_dataset %>% select(Efficiency)
+x <- complete_dataset %>% select(2:11)
+y <- complete_dataset %>% select(WASO)
 
+# Dimensions of x
 N <- nrow(x)
 M <- ncol(x)
 
@@ -88,15 +88,15 @@ for (j in 1:J) {
     X_test <- X[CV$which == k, ]
     
     # Train models
-    model <- lmer("Efficiency ~ max + min + (1 | id)", data = X_train)
-    model2 <- lmer("Efficiency ~ (1 | id)", data = X_train)
+    model <- lmer("WASO ~ cv + (1 | id)", data = X_train)
+    model2 <- lmer("WASO ~ (1 | id)", data = X_train)
     
     # Model predictions
     y_est_model <- predict(model, X_test)
     y_est_model2 <- predict(model2, X_test)
     
     # Baseline model predictions
-    mean_value <- mean(X_test$Efficiency)
+    mean_value <- mean(X_test$WASO)
     y_est_baseline <- data.frame(y_est_baseline = rep(mean_value, nrow(X_test)))
     
     # The true output values
@@ -175,8 +175,5 @@ for (j in 1:J) {
     "\n"
   )
 }
-
-
-
 
 

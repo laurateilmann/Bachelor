@@ -1,11 +1,13 @@
+###############################################################################
+# Authors: MGRO0154 & LTEI0004
+
+# Manual forward selection using linear mixed effects model.
+###############################################################################
 
 # Load libraries
 library(dplyr)
 library(readr)
-library(zoo)
 library(lme4)
-library(stats)
-library(olsrr)
 
 # Set your base directory
 base_dir <- "L:/LovbeskyttetMapper01/StenoSleepQCGM/Concatenated data"
@@ -13,7 +15,8 @@ base_dir <- "L:/LovbeskyttetMapper01/StenoSleepQCGM/Concatenated data"
 # Variable names
 var_names <- list("TIR", "TAR", "TBR", "min", "max", "mean", "median", "std", "cv", "delta.IG")
 
-### Nightly
+################################
+## Nightly
 
 # Load the nightly data
 complete_dataset <- read_csv(file.path(base_dir, 'concatenated_all_11.csv'), col_types = cols())
@@ -24,7 +27,7 @@ complete_dataset <- na.omit(complete_dataset)
 
 # Define the independent and dependent variables
 x <- complete_dataset %>% select(3:12)
-y <- complete_dataset %>% select(Efficiency)
+y <- complete_dataset %>% select(Efficiency) # Change 'Efficiency' to 'WASO' when looking at WASO
 
 # Standardize data
 x_stan <- scale(x, center = TRUE, scale = TRUE)
@@ -40,7 +43,7 @@ N = nrow(standardized_data)
 
 for (var in var_names) {
   # Model
-  formula <- as.formula(paste("Efficiency ~", var, " + min + max + (1 | id)"))
+  formula <- as.formula(paste("WASO ~", var, " + min + max + (1 | id)")) # Change 'Efficiency' to 'WASO' when looking at WASO
   model <- lmer(formula, data = standardized_data)
   print(summary(model))
   
@@ -54,7 +57,8 @@ for (var in var_names) {
   print(conf_interval)
 }
 
-### Hourly
+#############################
+## Hourly
 
 # Load the hourly data
 complete_dataset_h <- read_csv(file.path(base_dir, 'concatenated_hourly_all_11.csv'), col_types = cols())
@@ -93,11 +97,4 @@ for (var in var_names) {
   conf_interval <- confint(model, level = 0.90)
   print(conf_interval)
 }
-
-
-
-
-
-
-
 

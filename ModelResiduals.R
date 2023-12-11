@@ -1,16 +1,14 @@
 ###############################################################################
 # Authors: MGRO0154 & LTEI0004
 
-# Compute the residuals of the three derived models and export as a dataframe.
+# Compute the residuals of the three derived models and export as CSV.
 ###############################################################################
 
 # Load libraries
 library(dplyr)
 library(readr)
-library(zoo)
 library(lme4)
-library(stats)
-library(olsrr)
+library(ggplot2)
 
 # Set your base directory
 base_dir <- "L:/LovbeskyttetMapper01/StenoSleepQCGM/Concatenated data"
@@ -58,7 +56,6 @@ abline(a = 0, b = 1, col = "red")
 residuals <- y_est - y
 
 # Plot histogram of residuals
-library(ggplot2)
 ggplot(residuals, aes(x = WASO)) +
   geom_histogram(fill = "skyblue", color = "black", bins = 20) +
   ggtitle("Histogram of WASO nightly Residuals") +
@@ -105,7 +102,6 @@ abline(a = 0, b = 1, col = "red")
 residuals <- y_est - y
 
 # Plot histogram of residuals
-library(ggplot2)
 ggplot(residuals, aes(x = Efficiency)) +
   geom_histogram(fill = "skyblue", color = "black", bins = 20) +
   ggtitle("Histogram of Efficiency Residuals") +
@@ -158,7 +154,6 @@ abline(a = 0, b = 1, col = "red")
 residuals <- y_est - y
 
 # Plot histogram of residuals
-library(ggplot2)
 ggplot(residuals, aes(x = WASO)) +
   geom_histogram(fill = "skyblue", color = "black", bins = 20) +
   ggtitle("Histogram of WASO hourly Residuals") +

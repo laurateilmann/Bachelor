@@ -1,3 +1,9 @@
+###############################################################################
+# Authors: MGRO0154 & LTEI0004
+
+# Perform t-test to compare different sleep and BG parameters with recommendations.
+###############################################################################
+
 # Load packages
 library(readr)
 library(dplyr)
