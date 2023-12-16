@@ -1,9 +1,97 @@
-<mxfile host="app.diagrams.net" modified="2023-12-16T13:01:34.526Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" version="22.1.11" etag="A7oYOg158RnVCbP4BcB3" type="github">
+<mxfile host="app.diagrams.net" modified="2023-12-16T13:42:01.982Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="daMeNj5PIDoTzHCK2o-a" version="22.1.11" type="github">
   <diagram name="Side-1" id="QgZ3mO8IjjAFcuNQ8Tus">
-    <mxGraphModel>
+    <mxGraphModel dx="1687" dy="1347" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-6" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;dashed=1;fontFamily=Times New Roman;" edge="1" parent="1" source="4bFlqd4fvtefUUmcUjgp-1" target="4bFlqd4fvtefUUmcUjgp-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-8" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;dashed=1;fontFamily=Times New Roman;" edge="1" parent="1" source="4bFlqd4fvtefUUmcUjgp-1" target="4bFlqd4fvtefUUmcUjgp-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-11" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;dashed=1;fontFamily=Times New Roman;" edge="1" parent="1" source="4bFlqd4fvtefUUmcUjgp-1" target="4bFlqd4fvtefUUmcUjgp-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-1" value="Our findings in relation to former studies&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontFamily=Times New Roman;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="-162" y="-181" width="162" height="77" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-2" value="P-value" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontFamily=Times New Roman;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="38.5" y="-127" width="91" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-3" value="Predictive models" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontFamily=Times New Roman;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="12" y="-181" width="144" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-16" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;dashed=1;fontFamily=Times New Roman;" edge="1" parent="1" source="4bFlqd4fvtefUUmcUjgp-4" target="4bFlqd4fvtefUUmcUjgp-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-23" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;dashed=1;fontFamily=Times New Roman;" edge="1" parent="1" source="4bFlqd4fvtefUUmcUjgp-4" target="4bFlqd4fvtefUUmcUjgp-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-48" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontSize=12;startSize=8;endSize=8;dashed=1;" edge="1" parent="1" source="4bFlqd4fvtefUUmcUjgp-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-81" y="164.08335876464844" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-4" value="Data limitations" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontFamily=Times New Roman;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="-151" y="19" width="140" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-5" value="WASO" style="whiteSpace=wrap;html=1;fontSize=16;rounded=1;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="-187" y="-60" width="68" height="39" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-7" value="Sleep efficiency" style="whiteSpace=wrap;html=1;fontSize=16;rounded=1;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="-41" y="-60" width="119" height="41.5" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-10" value="TST" style="whiteSpace=wrap;html=1;fontSize=16;rounded=1;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="-101.25" y="-57.5" width="43" height="36.5" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-13" value="Absence of demographic information" style="whiteSpace=wrap;html=1;fontSize=16;rounded=1;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="-228" y="173" width="300.75" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-15" value="Small sample size" style="whiteSpace=wrap;html=1;fontSize=16;rounded=1;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="-58.25" y="122" width="131" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-22" value="Data quality" style="whiteSpace=wrap;html=1;fontSize=16;rounded=1;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="-225.75" y="122" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-28" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;dashed=1;fontFamily=Times New Roman;" edge="1" parent="1" source="4bFlqd4fvtefUUmcUjgp-25" target="4bFlqd4fvtefUUmcUjgp-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-30" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;dashed=1;fontFamily=Times New Roman;" edge="1" parent="1" source="4bFlqd4fvtefUUmcUjgp-25" target="4bFlqd4fvtefUUmcUjgp-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-25" value="Actigraphy" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontFamily=Times New Roman;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="262.5" y="-181" width="120" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-27" value="Sleep algorithm" style="whiteSpace=wrap;html=1;fontSize=16;rounded=1;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="326.5" y="-59" width="120" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-29" value="Accuracy" style="whiteSpace=wrap;html=1;fontSize=16;rounded=1;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="183.5" y="-59" width="120" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-34" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;dashed=1;fontFamily=Times New Roman;" edge="1" parent="1" source="4bFlqd4fvtefUUmcUjgp-31" target="4bFlqd4fvtefUUmcUjgp-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-36" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;dashed=1;fontFamily=Times New Roman;" edge="1" parent="1" source="4bFlqd4fvtefUUmcUjgp-31" target="4bFlqd4fvtefUUmcUjgp-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-50" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontSize=12;startSize=8;endSize=8;dashed=1;" edge="1" parent="1" source="4bFlqd4fvtefUUmcUjgp-31">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="316.5" y="145.7500762939453" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-31" value="Future work" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontFamily=Times New Roman;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="256" y="19" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-33" value="Actigraphy" style="whiteSpace=wrap;html=1;fontSize=16;rounded=1;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="166.5" y="102" width="120" height="41" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-35" value="Non-linear trends" style="whiteSpace=wrap;html=1;fontSize=16;rounded=1;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="338.5" y="101" width="125" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="4bFlqd4fvtefUUmcUjgp-38" value="How sleep is associated with glycemic control the following day?" style="whiteSpace=wrap;html=1;fontSize=16;rounded=1;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="164.5" y="154" width="303" height="64" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
