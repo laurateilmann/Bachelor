@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-12-16T13:42:01.982Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="daMeNj5PIDoTzHCK2o-a" version="22.1.11" type="github">
+<mxfile host="app.diagrams.net" modified="2023-12-16T14:14:24.345Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="tKnA-DIBjqbvdhJwAW-Z" version="22.1.11" type="github" pages="2">
   <diagram name="Side-1" id="QgZ3mO8IjjAFcuNQ8Tus">
     <mxGraphModel dx="1687" dy="1347" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -91,6 +91,73 @@
         </mxCell>
         <mxCell id="4bFlqd4fvtefUUmcUjgp-38" value="How sleep is associated with glycemic control the following day?" style="whiteSpace=wrap;html=1;fontSize=16;rounded=1;fontFamily=Times New Roman;" vertex="1" parent="1">
           <mxGeometry x="164.5" y="154" width="303" height="64" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="TwboodeQULxVIvu2xbG9" name="Side-2">
+    <mxGraphModel dx="1172" dy="968" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-13" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="SNAQe3oiiUktKq3eX7Lm-2" target="SNAQe3oiiUktKq3eX7Lm-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-2" value="&lt;b&gt;Validation study&lt;br&gt;&lt;/b&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;n = 128, age = 6-17&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontFamily=Times New Roman;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="164" y="-41" width="146" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-11" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="SNAQe3oiiUktKq3eX7Lm-3" target="SNAQe3oiiUktKq3eX7Lm-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-3" value="&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Sleep-1-child&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;n = 15, age = 6-17&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontFamily=Times New Roman;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="16" y="-41.5" width="130" height="53" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-6" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="SNAQe3oiiUktKq3eX7Lm-4" target="SNAQe3oiiUktKq3eX7Lm-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-4" value="&lt;b&gt;Mind Your Diabetes&lt;br&gt;&lt;/b&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;n = 10, age = 12-17&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;align=center;fontFamily=Times New Roman;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="-169" y="-41" width="167" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-5" value="Session 1" style="whiteSpace=wrap;html=1;fontSize=14;fontFamily=Times New Roman;rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="-128.75" y="32" width="86.5" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-7" value="Session 2" style="whiteSpace=wrap;html=1;fontSize=14;fontFamily=Times New Roman;rounded=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="-128.75" y="64" width="86.5" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-17" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="SNAQe3oiiUktKq3eX7Lm-8" target="SNAQe3oiiUktKq3eX7Lm-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-8" value="Session 1" style="whiteSpace=wrap;html=1;fontSize=14;fontFamily=Times New Roman;rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="37.75" y="32" width="86.5" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-16" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;rounded=1;" edge="1" parent="1" source="SNAQe3oiiUktKq3eX7Lm-9" target="SNAQe3oiiUktKq3eX7Lm-14">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="237" y="142" />
+              <mxPoint x="81" y="142" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-9" value="Session 1" style="whiteSpace=wrap;html=1;fontSize=14;fontFamily=Times New Roman;rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="193.75" y="32" width="86.5" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-15" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="SNAQe3oiiUktKq3eX7Lm-10" target="SNAQe3oiiUktKq3eX7Lm-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-10" value="Session 3" style="whiteSpace=wrap;html=1;fontSize=14;fontFamily=Times New Roman;rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="-128.75" y="96" width="86.5" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-14" value="&lt;b&gt;Our study&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;CGM, actigraphy &amp;amp; sleep diary&amp;nbsp;&lt;br&gt;&lt;br&gt;n = 23, age = 6-17&lt;br&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontFamily=Times New Roman;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="-17.25" y="164" width="196.5" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-18" value="n = 12" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontFamily=Times New Roman;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="81" y="75" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-19" value="n = 6" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontFamily=Times New Roman;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="-89" y="141" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="SNAQe3oiiUktKq3eX7Lm-20" value="n = 5" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontFamily=Times New Roman;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="179.25" y="141" width="60" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
