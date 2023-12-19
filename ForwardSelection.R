@@ -27,7 +27,7 @@ complete_dataset <- na.omit(complete_dataset)
 
 # Define the independent and dependent variables
 x <- complete_dataset %>% select(3:12)
-y <- complete_dataset %>% select(Efficiency) # Change 'Efficiency' to 'WASO' when looking at WASO
+y <- complete_dataset %>% select(WASO) # Change 'Efficiency' to 'WASO' when looking at WASO
 
 # Standardize data
 x_stan <- scale(x, center = TRUE, scale = TRUE)
@@ -43,14 +43,17 @@ N = nrow(standardized_data)
 
 for (var in var_names) {
   # Model
-  formula <- as.formula(paste("WASO ~", var, " + min + max + (1 | id)")) # Change 'Efficiency' to 'WASO' when looking at WASO
+  formula <- as.formula(paste("WASO ~", var, " + cv + (1 | id)")) # Change 'Efficiency' to 'WASO' when looking at WASO
   model <- lmer(formula, data = standardized_data)
   print(summary(model))
   
   # p-value
   p <- round(2*pt(q=abs(coef(summary(model))[,3]), df=N-1, lower.tail=FALSE),3)
+  p2 <- round(2*pnorm(abs(coef(summary(model))[,3]), lower.tail = FALSE),3)
   print('p-values:')
   print(p)
+  print('p2-values:')
+  print(p2)
   
   # CI
   conf_interval <- confint(model, level = 0.90)
@@ -90,11 +93,17 @@ for (var in var_names) {
   
   # p-value
   p <- round(2*pt(q=abs(coef(summary(model))[,3]), df=N_h-1, lower.tail=FALSE),3)
+  p2 <- round(2*pnorm(abs(coef(summary(model))[,3]), lower.tail = FALSE),3)
   print('p-values:')
   print(p)
+  print('p2-values:')
+  print(p2)
   
   # CI
   conf_interval <- confint(model, level = 0.90)
   print(conf_interval)
 }
+
+
+
 

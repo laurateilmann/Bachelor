@@ -51,8 +51,11 @@ for (var in var_names) {
   
   # p-value
   p <- round(2*pt(q=abs(coef(summary(model))[,3]), df=N-1, lower.tail=FALSE),3)
+  p2 <- round(2*pnorm(abs(coef(summary(model))[,3]), lower.tail = FALSE),3)
   print('p-values:')
   print(p)
+  print('p2-values:')
+  print(p2)
   
   # CI
   conf_interval <- confint(model, level = 0.95)
@@ -93,8 +96,11 @@ for (var in var_names) {
   
   # p-value
   p <- round(2*pt(q=abs(coef(summary(model_h))[,3]), df=N_h-1, lower.tail=FALSE),3)
+  p2 <- round(2*pnorm(abs(coef(summary(model_h))[,3]), lower.tail = FALSE),3)
   print('p-values:')
   print(p)
+  print('p2-values:')
+  print(p2)
   
   # CI
   conf_interval <- confint(model_h, level = 0.95)
